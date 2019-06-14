@@ -9,6 +9,8 @@ For an overview of the Workstream API Overview, [click here](https://s3-us-west-
 - Python >= 3.6
 - Requests >= 2.19.0
 
+#### Getting started
+`pip install workstreams`
 
 `workstreams` is very simple to use -- take a look at the below example:
 ```python
