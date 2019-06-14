@@ -2,7 +2,7 @@
 A Workstreams Python Client Library
 
 
-For an overview of the Workstream API Overview, [click here](https://s3-us-west-2.amazonaws.com/files.workstreams.ai/docs/api-v1.html).
+For an overview of the Workstream API, [click here](https://s3-us-west-2.amazonaws.com/files.workstreams.ai/docs/api-v1.html).
 
 
 #### Requirements
@@ -19,7 +19,7 @@ from workstreams import WorkstreamsClient
 
 workstreams = WorkstreamsClient('your token')
 
-workstreams.tasks.create(team_id='T3T7BFHGV', channel_id='C3T7D66J1', data={
+workstreams.tasks.create(team_id='T3T7BFHGV', channel_id='C3T7D66J1', ws_user_id='U3T716H3N', data={
     'title': 'test task',
     'labels': [
         'init-labelid123'
