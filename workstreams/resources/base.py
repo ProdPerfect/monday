@@ -1,6 +1,7 @@
 import requests
 
 from workstreams import __version__
+from workstreams.exceptions import WorkstreamsError
 
 _URLS = {
     'dev': 'https://api-dev.workstreams.ai/api',
@@ -22,5 +23,9 @@ class BaseResource:
         headers = self._headers
         if ws_user_id:
             headers['ws-user-id'] = ws_user_id
-        return requests.request(method=method, url=url, data=data,
-                                params=params, headers=headers)
+        response = requests.request(method=method, url=url, data=data,
+                                    params=params, headers=headers)
+
+        if response.status_code >= 200:
+            return response.json()
+        raise WorkstreamsError(response.content)

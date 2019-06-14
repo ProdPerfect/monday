@@ -1,11 +1,11 @@
-from workstreams.exceptions import WorkstreamError
+from workstreams.exceptions import WorkstreamsError
 from workstreams.resources.base import BaseResource
 from workstreams.utils import url_join
 
 
 def _validate_iterable(it, it_name):
     if not isinstance(it, (list, tuple)):
-        raise WorkstreamError(f'{it_name} must be a list or tuple')
+        raise WorkstreamsError(f'{it_name} must be a list or tuple')
 
 
 class TaskResource(BaseResource):

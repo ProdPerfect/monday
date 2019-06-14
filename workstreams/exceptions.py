@@ -1,2 +1,2 @@
-class WorkstreamError(RuntimeError):
+class WorkstreamsError(RuntimeError):
     pass
