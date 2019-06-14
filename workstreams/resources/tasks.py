@@ -21,33 +21,33 @@ class TaskResource(BaseResource):
         url = url_join(self._base_url, task_id)
         return self._request('PATCH', url, data=data, ws_user_id=ws_user_id).json()
 
-    def fetch(self, task_id):
+    def fetch(self, task_id, ws_user_id=None):
         url = url_join(self._base_url, task_id)
-        return self._request('GET', url).json()
+        return self._request('GET', url, ws_user_id=ws_user_id).json()
 
-    def fetch_user_tasks(self, team_id, user_id):
+    def fetch_user_tasks(self, team_id, user_id, ws_user_id=None):
         url = url_join(self._base_url, 'team', team_id, 'user', user_id)
-        return self._request('GET', url).json()
+        return self._request('GET', url, ws_user_id=ws_user_id).json()
 
-    def fetch_tasks_for_users(self, team_id, user_ids):
+    def fetch_tasks_for_users(self, team_id, user_ids, ws_user_id=None):
         _validate_iterable(user_ids, 'user_ids')
         url = url_join(self._base_url, 'team', team_id, 'users', ','.join(user_ids))
-        return self._request('GET', url).json()
+        return self._request('GET', url, ws_user_id=ws_user_id).json()
 
-    def fetch_tasks_for_channels(self, team_id, channel_ids):
+    def fetch_tasks_for_channels(self, team_id, channel_ids, ws_user_id=None):
         _validate_iterable(channel_ids, 'channel_ids')
         url = url_join(self._base_url, 'team', team_id, 'channels', ','.join(channel_ids))
-        return self._request('GET', url).json()
+        return self._request('GET', url, ws_user_id=ws_user_id).json()
 
-    def fetch_changed_tasks_for_channels(self, team_id, channel_ids, timestamp):
+    def fetch_changed_tasks_for_channels(self, team_id, channel_ids, timestamp, ws_user_id=None):
         _validate_iterable(channel_ids, 'channel_ids')
         url = url_join(self._base_url, 'team', team_id, 'channels', ','.join(channel_ids), 'after', timestamp)
-        return self._request('GET', url).json()
+        return self._request('GET', url, ws_user_id=ws_user_id).json()
 
-    def fetch_archived_tasks_for_channels(self, team_id, channel_ids):
+    def fetch_archived_tasks_for_channels(self, team_id, channel_ids, ws_user_id=None):
         _validate_iterable(channel_ids, 'channel_ids')
         url = url_join(self._base_url, 'team', team_id, 'channels', ','.join(channel_ids), 'archived')
-        return self._request('GET', url).json()
+        return self._request('GET', url, ws_user_id=ws_user_id).json()
 
     def archive_tasks(self, task_ids, ws_user_id=None):
         _validate_iterable(task_ids, 'task_ids')

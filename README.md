@@ -31,20 +31,19 @@ workstreams.tasks.create(team_id='T3T7BFHGV', channel_id='C3T7D66J1', data={
 ```
 
 #### Tasks Resource
-If there is a need to provide a user for given action, you can optionally 
-provide a user id `ws_user_id=U123456` for all `create` and `update` operations.
+Note: `ws_user_id` must always be provided for app tokens. 
 
 **Available methods:**
 - `create(team_id, channel_id, data, ws_user_id=None)` - Creates a task
 - `update(task_id, data, ws_user_id=None)` - Updates a task
-- `fetch(task_id)` - Fetch a single task
-- `fetch_user_tasks(team_id, user_id)` - Fetch tasks for a single user
-- `fetch_tasks_for_users(team_id, user_ids)` - Fetch tasks for multiple users
-  * Example: `fetch_tasks_for_users(team_id='T3T7BFHGV', 'U123456', 'U123457', 'U123458')`
+- `fetch(task_id, ws_user_id=None)` - Fetch a single task
+- `fetch_user_tasks(team_id, user_id, ws_user_id=None)` - Fetch tasks for a single user
+- `fetch_tasks_for_users(team_id, user_ids, ws_user_id=None)` - Fetch tasks for multiple users
+  * Example: `fetch_tasks_for_users(team_id='T3T7BFHGV', user_ids=['U123456', 'U123457', 'U123458'], ws_user_id=None)`
 - `fetch_tasks_for_channels(team_id, channel_ids)` - Fetch all tasks for multiple channels
-  * Example: `fetch_tasks_for_channels(team_id='T3T7BFHGV', 'C3T7D66J1', 'C3T7D66J2')`
-- `fetch_changed_tasks_for_channels(team_id, channel_ids, timestamp)` - Fetch all tasks for multiple channels which changed since given timestamp
-- `fetch_archived_tasks_for_channels(team_id, channel_ids)` - Fetch all archived tasks for multiple channels
+  * Example: `fetch_tasks_for_channels(team_id='T3T7BFHGV', channel_ids=['C3T7D66J1', 'C3T7D66J2'], ws_user_id=None)`
+- `fetch_changed_tasks_for_channels(team_id, channel_ids, timestamp, ws_user_id=None)` - Fetch all tasks for multiple channels which changed since given timestamp
+- `fetch_archived_tasks_for_channels(team_id, channel_ids, ws_user_id=None)` - Fetch all archived tasks for multiple channels
 - `archive_tasks(task_ids, ws_user_id=None)` - Archive multiple tasks
 - `restore_tasks(task_ids, ws_user_id=None)` - Restore multiple tasks
 
