@@ -39,9 +39,9 @@ class TaskResource(BaseResource):
         url = url_join(self._base_url, 'team', team_id, 'channels', ','.join(channel_ids))
         return self._request('GET', url).json()
 
-    def fetch_changed_tasks_for_channels(self, team_id, channel_ids, epoch):
+    def fetch_changed_tasks_for_channels(self, team_id, channel_ids, timestamp):
         _validate_iterable(channel_ids, 'channel_ids')
-        url = url_join(self._base_url, 'team', team_id, 'channels', ','.join(channel_ids), 'after', epoch)
+        url = url_join(self._base_url, 'team', team_id, 'channels', ','.join(channel_ids), 'after', timestamp)
         return self._request('GET', url).json()
 
     def fetch_archived_tasks_for_channels(self, team_id, channel_ids):

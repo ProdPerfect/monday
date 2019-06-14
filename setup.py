@@ -18,6 +18,9 @@ setup(name='workstreams',
       zip_safe=False,
       license='MIT',
       python_requires='>=3.6',
+      install_requires=[
+          'requests>=2.19.0'
+      ],
       classifiers=[
           "Programming Language :: Python :: 3",
           "Operating System :: OS Independent",
