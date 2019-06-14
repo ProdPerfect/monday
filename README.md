@@ -2,7 +2,7 @@
 A Workstreams Python Client Library
 
 
-For an overview of the Workstream API Overview, [click here](https://s3-us-west-2.amazonaws.com/files.workstreams.ai/docs/api-v1.html).
+For an overview of the Workstream API, [click here](https://s3-us-west-2.amazonaws.com/files.workstreams.ai/docs/api-v1.html).
 
 
 #### Requirements
