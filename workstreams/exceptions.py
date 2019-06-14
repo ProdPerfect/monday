@@ -1,0 +1,2 @@
+class WorkstreamError(RuntimeError):
+    pass
