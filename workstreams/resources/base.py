@@ -27,5 +27,5 @@ class BaseResource:
                                     params=params, headers=headers)
 
         if response.status_code >= 200:
-            return response.json()
+            return response
         raise WorkstreamsError(response.content)
