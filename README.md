@@ -29,7 +29,6 @@ workstreams.tasks.create(team_id='T3T7BFHGV', channel_id='C3T7D66J1', data={
     })
 
 ```
-GET ALL TASKS IN MULTIPLE CHANNELS WHICH CHANGED SINCE GIVEN TIMESTAMP
 
 #### Tasks Resource
 If there is a need to provide a user for given action, you can optionally 
