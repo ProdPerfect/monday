@@ -24,6 +24,10 @@ workstreams.tasks.create(team_id='T3T7BFHGV', channel_id='C3T7D66J1', ws_user_id
     'labels': [
         'init-labelid123'
     ],
+    'checklist': [{
+        'text': 'never gonna give you up',
+        'checked': False
+    }],
     'dueDate': '2018-03-07T11:46:17Z',
     'assignee': 'U3T716H3N'
     })
