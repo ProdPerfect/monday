@@ -4,3 +4,4 @@
 dist/
 build/
 workstreams.egg-info/
+local.py

@@ -39,9 +39,9 @@ Note: `ws_user_id` must always be provided for app tokens.
 #### Tasks Resource (workstreams.tasks)
 
 **Available methods:**
-- `create(team_id, channel_id, data, ws_user_id=None)` - Creates a task
+- `create(team_id, channel_id, data, ws_user_id=None)` - Create a task
 
-- `update(task_id, data, ws_user_id=None)` - Updates a task
+- `update(task_id, data, ws_user_id=None)` - Update a task
 
 - `fetch(task_id, ws_user_id=None)` - Fetch a single task
 
@@ -61,10 +61,12 @@ Note: `ws_user_id` must always be provided for app tokens.
 
 - `restore_tasks(task_ids, ws_user_id=None)` - Restore multiple tasks
 
+- `fetch_all_tasks_by_label(team_id, label_id, ws_user_id=None)` - Fetch all tasks by label
+
 
 #### Tasks Resource (workstreams.labels)
 **Available methods:**
-- `create(team_id, data, ws_user_id=None)` - Creates a new label
+- `create(team_id, data, ws_user_id=None)` - Create a new label
 
 - `update(label_id, data, ws_user_id=None)` - Update a label
 
@@ -73,6 +75,18 @@ Note: `ws_user_id` must always be provided for app tokens.
 - `fetch(label_id, ws_user_id=None)` - Fetch a single label
 
 - `fetch_team_labels(team_id, ws_user_id=None)` - Fetch all labels for a given team
+
+
+#### Goals Resource (workstreams.goals)
+**Available methods:**
+- `create(team_id, data, ws_user_id=None)` - Create a new goal
+
+- `update(team_id, goal_id, data, ws_user_id=None)` - Update a goal
+
+- `archive(team_id, goal_id, ws_user_id=None)` - Archive a goal
+
+- `fetch_all(team_id, ws_user_id=None)` - Fetch all goals visible to the token owner
+
 
 #### Contributions
 TBD
