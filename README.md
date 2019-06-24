@@ -62,7 +62,7 @@ Note: `ws_user_id` must always be provided for app tokens.
 - `restore_tasks(task_ids, ws_user_id=None)` - Restore multiple tasks
 
 
-#### Tasks Resource (workstreams.labels)
+#### Labels Resource (workstreams.labels)
 **Available methods:**
 - `create(team_id, data, ws_user_id=None)` - Creates a new label
 
