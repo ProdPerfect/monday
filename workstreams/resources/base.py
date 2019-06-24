@@ -1,5 +1,6 @@
-import requests
 import json
+
+import requests
 
 from workstreams import __version__
 from workstreams.exceptions import WorkstreamsError
@@ -8,6 +9,15 @@ _URLS = {
     'dev': 'https://api-dev.workstreams.ai/api',
     'prod': 'https://rest.workstreams.ai/api'
 }
+
+_SUCCESS_STATUSES = {200, 201, 204}
+
+
+def _make_response(response):
+    try:
+        return response.json()
+    except json.decoder.JSONDecodeError:
+        return response.content
 
 
 class BaseResource:
@@ -31,6 +41,12 @@ class BaseResource:
         response = requests.request(method=method, url=url, data=data,
                                     params=params, headers=headers)
 
-        if response.status_code in (200, 201, 204):
-            return response
+        if response.status_code in _SUCCESS_STATUSES:
+            return _make_response(response)
         raise WorkstreamsError(response.content)
+
+    def __str__(self):
+        return self.__class__.__name__
+
+    def __repr__(self):
+        return self.__class__.__name__

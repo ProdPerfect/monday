@@ -7,7 +7,7 @@ workstreams.client
 """
 
 from .__version__ import __version__
-from .resources import TaskResource
+from .resources import LabelResource, TaskResource
 
 
 class WorkstreamsClient:
@@ -18,6 +18,7 @@ class WorkstreamsClient:
             development URLs in :class:`BaseResource` object.
         """
         self.tasks = TaskResource(token=token, production=production)
+        self.labels = LabelResource(token=token, production=production)
 
     def __str__(self):
         return f'WorkstreamsClient {__version__}'
