@@ -7,7 +7,7 @@ workstreams.client
 """
 
 from .__version__ import __version__
-from .resources import LabelResource, TaskResource
+from .resources import GoalResource, LabelResource, TaskResource
 
 
 class WorkstreamsClient:
@@ -17,6 +17,7 @@ class WorkstreamsClient:
         :param production: flag used to switch between production and
             development URLs in :class:`BaseResource` object.
         """
+        self.goals = GoalResource(token=token, production=production)
         self.tasks = TaskResource(token=token, production=production)
         self.labels = LabelResource(token=token, production=production)
 
