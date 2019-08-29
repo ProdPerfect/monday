@@ -4,7 +4,9 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+mypy = "*"
 twine = "*"
+pylint = "*"
 
 [packages]
 requests = ">= 2.19.0"
