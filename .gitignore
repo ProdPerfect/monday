@@ -4,3 +4,5 @@
 dist/
 build/
 workstreams.egg-info/
+.mypy_cache/
+.ropeproject/
