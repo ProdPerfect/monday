@@ -1,0 +1,2 @@
+class MondayError(RuntimeError):
+    pass

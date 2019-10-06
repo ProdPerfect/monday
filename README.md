@@ -1,91 +1,36 @@
-# workstreams
-A Workstreams Python Client Library
+# monday
+A Monday Python Client Library
 
 
-For an overview of the Workstream API, [click here](https://s3-us-west-2.amazonaws.com/files.workstreams.ai/docs/api-v1.html).
+For an overview of the Monday API, [click here](https://monday.com/developers/v2#introduction-section).
 
 
 #### Requirements
 - Python >= 3.6
 - Requests >= 2.19.0
+- GraphQLClient
 
 #### Getting started
-`pip install workstreams`
+`pip install monday`
 
-`workstreams` is very simple to use -- take a look at the below example:
+`monday` is very simple to use -- take a look at the below example:
 ```python
-from workstreams import WorkstreamsClient
+from monday import MondayClient
 
 
-workstreams = WorkstreamsClient('your token')
+monday = MondayClient('your token')
 
-workstreams.tasks.create(team_id='T3T7BFHGV', channel_id='C3T7D66J1', ws_user_id='U3T716H3N', data={
-    'title': 'test task',
-    'labels': [
-        'init-labelid123'
-    ],
-    'checklist': [{
-        'text': 'never gonna give you up',
-        'checked': False
-    }],
-    'dueDate': '2018-03-07T11:46:17Z',
-    'assignee': 'U3T716H3N'
-    })
+monday.items.create_item(board='12345678', group='today',  item_name="what up nerds")
 
 ```
-
-Note: `ws_user_id` must always be provided for app tokens. 
 
 #### Tasks Resource (workstreams.tasks)
 
 **Available methods:**
-- `create(team_id, channel_id, data, ws_user_id=None)` - Create a task
+#### Items Resource (monday.items)
+- `create_item(board, group, item_name)` - Create an item on a board in the given group with name item_name. 
 
-- `update(task_id, data, ws_user_id=None)` - Update a task
-
-- `fetch(task_id, ws_user_id=None)` - Fetch a single task
-
-- `fetch_user_tasks(team_id, user_id, ws_user_id=None)` - Fetch tasks for a single user
-
-- `fetch_tasks_for_users(team_id, user_ids, ws_user_id=None)` - Fetch tasks for multiple users
-  * Example: `fetch_tasks_for_users(team_id='T3T7BFHGV', user_ids=['U123456', 'U123457', 'U123458'], ws_user_id=None)`
-  
-- `fetch_tasks_for_channels(team_id, channel_ids)` - Fetch all tasks for multiple channels
-  * Example: `fetch_tasks_for_channels(team_id='T3T7BFHGV', channel_ids=['C3T7D66J1', 'C3T7D66J2'], ws_user_id=None)`
-  
-- `fetch_changed_tasks_for_channels(team_id, channel_ids, timestamp, ws_user_id=None)` - Fetch all tasks for multiple channels which changed since given timestamp
-
-- `fetch_archived_tasks_for_channels(team_id, channel_ids, ws_user_id=None)` - Fetch all archived tasks for multiple channels
-
-- `archive_tasks(task_ids, ws_user_id=None)` - Archive multiple tasks
-
-- `restore_tasks(task_ids, ws_user_id=None)` - Restore multiple tasks
-
-- `fetch_all_tasks_by_label(team_id, label_id, ws_user_id=None)` - Fetch all tasks by label
-
-
-#### Labels Resource (workstreams.labels)
-**Available methods:**
-- `create(team_id, data, ws_user_id=None)` - Create a new label
-
-- `update(label_id, data, ws_user_id=None)` - Update a label
-
-- `delete(label_id, ws_user_id=None)` - Delete a label
-
-- `fetch(label_id, ws_user_id=None)` - Fetch a single label
-
-- `fetch_team_labels(team_id, ws_user_id=None)` - Fetch all labels for a given team
-
-
-#### Goals Resource (workstreams.goals)
-**Available methods:**
-- `create(team_id, data, ws_user_id=None)` - Create a new goal
-
-- `update(team_id, goal_id, data, ws_user_id=None)` - Update a goal
-
-- `archive(team_id, goal_id, ws_user_id=None)` - Archive a goal
-
-- `fetch_all(team_id, ws_user_id=None)` - Fetch all goals visible to the token owner
+- `fetch_item(board_id, column, value)` - Fetch a single item on a board by column value.
 
 
 #### Contributions
