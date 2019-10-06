@@ -6,14 +6,13 @@ def mutate_query_join(board, group, item):
         create_item (
             board_id: %s,
             group_id: %s,
-            item_name: %s,
-            column_values: json.dumps("status0": {"index": 4})
+            item_name: "%s",
         ) {
             id
         }
     }''' % (board, group, item)
 
-    return json.dumps(query)
+    return query
 
 def get_query_join(board, column, value):
     query = '''query 
@@ -21,12 +20,11 @@ def get_query_join(board, column, value):
             items_by_column_values(
                 board_id: %s,
                 column_id: %s,
-                column_value: %s
+                column_value: "%s"
             ) {
                 id
                 name
-                status
             }
         }''' % (board, column, value)
 
-    return json.dumps(query)
+    return query
