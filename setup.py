@@ -20,7 +20,6 @@ setup(name='monday',
       license='MIT',
       python_requires='>=3.6',
       install_requires=[
-          'requests>=2.19.0',
           'graphqlclient>=0.2.4'
       ],
       classifiers=[
