@@ -12,13 +12,13 @@ from .resources import ItemResource
 
 class MondayClient:
     def __init__(self, token):
-        """
+        """q
         :param token: API Token for the new :class:`BaseResource` object.
         """
         self.items = ItemResource(token=token)
 
     def __str__(self):
-        return f'MondayClient {__version__}'
+        return 'MondayClient {}'.format(__version__)
 
     def __repr__(self):
-        return f'MondayClient {__version__}'
+        return 'MondayClient {}'.format(__version__)
