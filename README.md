@@ -7,8 +7,7 @@ For an overview of the Monday API, [click here](https://monday.com/developers/v2
 
 #### Requirements
 - Python >= 3.6
-- Requests >= 2.19.0
-- GraphQLClient
+- GraphQLClient >= 0.2.4
 
 #### Getting started
 `pip install monday`
@@ -20,17 +19,15 @@ from monday import MondayClient
 
 monday = MondayClient('your token')
 
-monday.items.create_item(board='12345678', group='today',  item_name="what up nerds")
+monday.items.create_item(board='12345678', group='today',  item_name='Do a thing'
 
 ```
-
-#### Tasks Resource (workstreams.tasks)
 
 **Available methods:**
 #### Items Resource (monday.items)
 - `create_item(board, group, item_name)` - Create an item on a board in the given group with name item_name. 
 
-- `fetch_item(board_id, column, value)` - Fetch a single item on a board by column value.
+- `fetch_items(board_id, column, value)` - Fetch items on a board by column value.
 
 
 #### Contributions

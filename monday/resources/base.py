@@ -8,9 +8,6 @@ _URLS = {
     'prod': 'https://api.monday.com/v2'
 }
 
-_SUCCESS_STATUSES = {200, 201, 204}
-
-
 class BaseResource:
     def __init__(self, api_key):
         self._api_key = api_key

@@ -9,7 +9,6 @@ twine = "*"
 pylint = "*"
 
 [packages]
-requests = ">= 2.19.0"
 graphqlclient = ">=0.2.4"
 
 [requires]

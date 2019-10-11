@@ -1,4 +1,3 @@
-import json
 
 def mutate_query_join(board, group, item):
     query = '''mutation 
