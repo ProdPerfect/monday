@@ -23,6 +23,11 @@ def get_query_join(board, column, value):
             ) {
                 id
                 name
+                column_values {
+                    id
+                    text
+                    value
+                }
             }
         }''' % (board, column, value)
 
