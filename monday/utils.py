@@ -8,8 +8,8 @@ def python_json_stringify(value):
     # "{\"label\":\"Done\"}"
 
     # Don't do anything with regular ol' string values
-    if type(value) != dict:
-        return
+    if not isinstance(value, dict):
+        return value
 
     value = json.dumps(json.dumps(value))
     # Replace double slashes from above with single slash, or just remove them.
