@@ -19,7 +19,7 @@ from monday import MondayClient
 
 monday = MondayClient('your token')
 
-monday.items.create_item(board='12345678', group='today',  item_name='Do a thing'
+monday.items.create_item(board='12345678', group='today',  item_name='Do a thing')
 
 ```
 
