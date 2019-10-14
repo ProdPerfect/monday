@@ -1,17 +1,21 @@
 from monday.utils import python_json_stringify
 
 
-def mutate_query_join(board, group, item):
+def mutate_query_join(board, group, item, column_values):
+    if column_values == None:
+        column_values = {}
+
     query = '''mutation
     {
         create_item (
             board_id: %s,
             group_id: %s,
             item_name: "%s",
+            column_values: %s
         ) {
             id
         }
-    }''' % (board, group, item)
+    }''' % (board, group, item, python_json_stringify(column_values))
 
     return query
 
@@ -32,7 +36,7 @@ def get_query_join(board, column, value):
                     value
                 }
             }
-        }''' % (board, column, python_json_stringify(value))
+        }''' % (board, column, value)
 
     return query
 
@@ -44,7 +48,7 @@ def update_query_join(board, item, column, value):
                 board_id: %s,
                 item_id: %s,
                 column_id: %s,
-                value: "%s"
+                value: %s
             ) {
                 id
                 name

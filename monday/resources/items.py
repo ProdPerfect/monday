@@ -6,8 +6,8 @@ class ItemResource(BaseResource):
     def __init__(self, token):
         super().__init__(token)
 
-    def create_item(self, board, group, item):
-        query = mutate_query_join(board, group, item)
+    def create_item(self, board, group, item, column_values=None):
+        query = mutate_query_join(board, group, item, column_values)
         return self.client.execute(query)
 
     def fetch_items(self, board, column, value):
