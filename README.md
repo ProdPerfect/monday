@@ -25,9 +25,11 @@ monday.items.create_item(board='12345678', group='today',  item_name='Do a thing
 
 **Available methods:**
 #### Items Resource (monday.items)
-- `create_item(board, group, item_name)` - Create an item on a board in the given group with name item_name. 
+- `create_item(board, group, item_name, column_values=None)` - Create an item on a board in the given group with name item_name.
 
 - `fetch_items(board_id, column, value)` - Fetch items on a board by column value.
+
+- `change_item_value(board_id, item_id, column, value)` - Change column values for item on a board. Check Monday's API for which columns are supported.
 
 
 #### Contributions
