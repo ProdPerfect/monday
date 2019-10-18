@@ -31,11 +31,14 @@ def get_query_join(board, column, value):
             ) {
                 id
                 name
+                updates {
+                    id
+                    body
+                }
                 column_values {
                     id
                     text
                     value
-                    updates
                 }
             }
         }''' % (board, column, value)
