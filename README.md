@@ -32,6 +32,12 @@ monday.items.create_item(board='12345678', group='today',  item_name='Do a thing
 - `change_item_value(board_id, item_id, column, value)` - Change column values for item on a board. Check Monday's API for which columns are supported.
 
 
+#### Updates Resource (monday.updates)
+- `create_update(item_id, update_body)` - Create an update attached to a given item.
+
+- `fetch_updates(limit, page=None)` - Fetch a certain number of updates, starting from the given page. Default is 1
+
+
 #### Contributions
 TBD
 

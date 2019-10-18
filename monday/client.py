@@ -7,7 +7,7 @@ monday.client
 """
 
 from .__version__ import __version__
-from .resources import ItemResource
+from .resources import ItemResource, UpdateResource
 
 
 class MondayClient:
@@ -16,6 +16,7 @@ class MondayClient:
         :param token: API Token for the new :class:`BaseResource` object.
         """
         self.items = ItemResource(token=token)
+        self.updates = UpdateResource(token=token)
 
     def __str__(self):
         return f'MondayClient {__version__}'

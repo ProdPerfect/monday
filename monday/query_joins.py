@@ -1,6 +1,7 @@
 from monday.utils import python_json_stringify
 
 
+# ITEM RESOURCE QUERIES
 def mutate_query_join(board, group, item, column_values):
     if column_values == None:
         column_values = {}
@@ -34,6 +35,7 @@ def get_query_join(board, column, value):
                     id
                     text
                     value
+                    updates
                 }
             }
         }''' % (board, column, value)
@@ -59,5 +61,35 @@ def update_query_join(board, item, column, value):
                 }
             }
         }''' % (board, item, column, python_json_stringify(value))
+
+    return query
+
+
+# UPDATE RESOURCE QUERIES
+def create_update_query(item_id, update_value):
+    query = '''mutation
+        {
+            create_update(
+                item_id: %s,
+                body: "%s"
+            ) {
+                id
+            }
+        }''' % (item_id, update_value)
+
+    return query
+
+
+def get_update_query(limit, page):
+    query = '''query
+        {
+            updates (
+                limit: %s,
+                page: %s
+            ) {
+                id,
+                body
+            }
+        }''' % (limit, page if page else 1)
 
     return query

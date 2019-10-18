@@ -7,8 +7,4 @@ def python_json_stringify(value):
     # According to their API, a proper value for label should look like this:
     # "{\"label\":\"Done\"}"
 
-    # Don't do anything with regular ol' string values
-    if not isinstance(value, dict):
-        return value
-
     return json.dumps(json.dumps(value))
