@@ -3,7 +3,7 @@ from monday.utils import python_json_stringify
 
 # ITEM RESOURCE QUERIES
 def mutate_query_join(board, group, item, column_values):
-    if column_values == None:
+    if column_values is None:
         column_values = {}
 
     query = '''mutation
@@ -94,5 +94,22 @@ def get_update_query(limit, page):
                 body
             }
         }''' % (limit, page if page else 1)
+
+    return query
+
+
+# TAG RESOURCE QUERIES
+def get_tags_query(tags):
+    if tags is None:
+        tags = []
+
+    query = '''query
+        {
+            tags (ids: %s) {
+                name,
+                color,
+                id
+            }
+        }''' % tags
 
     return query

@@ -7,7 +7,7 @@ monday.client
 """
 
 from .__version__ import __version__
-from .resources import ItemResource, UpdateResource
+from .resources import ItemResource, UpdateResource, TagsResource
 
 
 class MondayClient:
@@ -17,6 +17,7 @@ class MondayClient:
         """
         self.items = ItemResource(token=token)
         self.updates = UpdateResource(token=token)
+        self.tags = TagsResource(token=token)
 
     def __str__(self):
         return f'MondayClient {__version__}'
