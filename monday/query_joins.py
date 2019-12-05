@@ -35,6 +35,10 @@ def get_query_join(board, column, value):
                     id
                     body
                 }
+                group {
+                    id
+                    title
+                }
                 column_values {
                     id
                     text
