@@ -2,7 +2,7 @@ import json
 
 from monday import __version__
 from monday.exceptions import MondayError
-from graphqlclient import GraphQLClient
+from monday.graphqlclient.client import GraphQLClient
 
 _URLS = {
     'prod': 'https://api.monday.com/v2'

@@ -19,9 +19,6 @@ setup(name='monday',
       zip_safe=False,
       license='MIT',
       python_requires='>=3.6',
-      install_requires=[
-          'graphqlclient>=0.2.4'
-      ],
       classifiers=[
           "Programming Language :: Python :: 3",
           "Programming Language :: Python :: 3.6",

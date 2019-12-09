@@ -9,7 +9,6 @@ twine = "*"
 pylint = "*"
 
 [packages]
-graphqlclient = ">=0.2.4"
 
 [requires]
 python_version = "3.7"
