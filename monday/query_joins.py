@@ -2,7 +2,7 @@ from monday.utils import python_json_stringify
 
 
 # ITEM RESOURCE QUERIES
-def mutate_query_join(board, group, item, column_values):
+def mutate_item_query(board, group, item, column_values):
     if column_values is None:
         column_values = {}
 
@@ -21,7 +21,7 @@ def mutate_query_join(board, group, item, column_values):
     return query
 
 
-def get_query_join(board, column, value):
+def get_item_query(board, column, value):
     query = '''query
         {
             items_by_column_values(
@@ -50,7 +50,23 @@ def get_query_join(board, column, value):
     return query
 
 
-def update_query_join(board, item, column, value):
+def get_item_by_id_query(ids):
+    query = '''query
+        {
+            items (ids: %s) {
+                name,
+                column_values {
+                    id,
+                    text,
+                    value
+                }
+            }
+        }''' % ids
+
+    return query
+
+
+def update_item_query(board, item, column, value):
     query = '''mutation
         {
             change_column_value(
