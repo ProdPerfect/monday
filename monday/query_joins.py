@@ -1,3 +1,4 @@
+import json
 from monday.utils import python_json_stringify
 
 
@@ -94,11 +95,11 @@ def create_update_query(item_id, update_value):
         {
             create_update(
                 item_id: %s,
-                body: "%s"
+                body: %s
             ) {
                 id
             }
-        }''' % (item_id, update_value)
+        }''' % (item_id, json.dumps(update_value))
 
     return query
 
