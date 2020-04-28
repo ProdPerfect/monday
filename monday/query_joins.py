@@ -134,3 +134,19 @@ def get_tags_query(tags):
         }''' % tags
 
     return query
+
+
+# BOARD RESOURCE QUERIES
+def get_board_items_query(board_id):
+    query = '''query
+    {
+        boards(ids: %s) {
+            name
+            items {
+                id
+                name
+            }
+        }
+    }''' % board_id
+
+    return query
