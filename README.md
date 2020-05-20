@@ -32,6 +32,8 @@ monday.items.create_item(board='12345678', group='today',  item_name='Do a thing
 
 - `change_item_value(board_id, item_id, column, value)` - Change column values for item on a board. Check Monday's API for which columns are supported.
 
+- `change_multiple_column_values(board_id, item_id, column_values)` - Change multiple column values for item on a board. Column values should be passed in as JSON. Check Monday's API for which columns are supported.
+
 
 #### Updates Resource (monday.updates)
 - `create_update(item_id, update_body)` - Create an update attached to a given item.

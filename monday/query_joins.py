@@ -89,6 +89,27 @@ def update_item_query(board, item, column, value):
     return query
 
 
+def update_multiple_column_values_query(board_id, item_id, column_values):
+
+   query = '''mutation
+        {
+            change_multiple_column_values (
+                board_id: %s,
+                item_id: %s,
+                column_values: %s
+            ) {
+                id
+                name
+                column_values {
+                  id
+                  text
+                }
+            }
+        }''' % (board_id, item_id, python_json_stringify(column_values))
+
+   return query
+
+
 # UPDATE RESOURCE QUERIES
 def create_update_query(item_id, update_value):
     query = '''mutation
