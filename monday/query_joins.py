@@ -166,6 +166,12 @@ def get_board_items_query(board_id):
             items {
                 id
                 name
+                column_values {
+                  id
+                  text
+                  type
+                  value
+                }
             }
         }
     }''' % board_id
