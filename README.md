@@ -45,6 +45,19 @@ monday.items.create_item(board='12345678', group='today',  item_name='Do a thing
 - `fetch_tags(tag_ids=None)` - Fetch all tags associated with an account. Optionally takes a list containing tag ids (if you know them). Returns IDs, names, and colors.
 
 
+#### Boards Resource (monday.boards)
+- `fetch_boards(**kwargs)` - Fetch boards associated with an account. Returns boards and their groups, tags, and columns. Accepts keyword arguments. See Monday API docs for a list of accepted keyword arguments.
+
+- `fetch_boards_by_id([board_ids])` - Since Monday does not allow querying boards by name, you can use `fetch_boards` to get a list of boards, and then `fetch_boards_by_id` to get more detailed info about the groups and columns on that board. Accepts a comma separated list of board ids.
+
+- `fetch_columns_by_board_id([board_ids])` - Get all columns, as well as their ids, types, and settings. Accepts a comma separated list of board ids.
+
+- `fetch_items_by_board_id([board_ids])` - Get all items on a board(s). Accepts a comma separated list of board ids.
+
+
+#### Users Resource (monday.users)
+- `fetch_users(**kwargs)` - Fetch user information associated with an account. See Monday API docs for a list of accepted keyword arguments.
+
 #### Contributions
 TBD
 

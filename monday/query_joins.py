@@ -2,6 +2,8 @@ import json
 from monday.utils import python_json_stringify
 
 
+# Eventually I will organize this file better but you know what today is not that day.
+
 # ITEM RESOURCE QUERIES
 def mutate_item_query(board, group, item, column_values):
     if column_values is None:
@@ -56,6 +58,10 @@ def get_item_by_id_query(ids):
         {
             items (ids: %s) {
                 name,
+                group {
+                    id
+                    title
+                }
                 column_values {
                     id,
                     text,
@@ -176,4 +182,92 @@ def get_board_items_query(board_id):
         }
     }''' % board_id
 
+    return query
+
+
+def get_boards_query(**kwargs):
+    query = '''query
+    {
+        boards (%s) {
+            id
+            name
+            permissions
+            tags {
+              id
+              name
+            }
+            groups {
+                id
+                title
+            }
+            columns {
+                id
+                title
+                type
+            }
+        }
+    }''' % ', '.join(["%s: %s" % (arg, kwargs.get(arg)) for arg in kwargs])
+    return query
+
+
+def get_boards_by_id_query(board_ids):
+    return '''query
+    {
+        boards (ids: %s) {
+            id
+            name
+            permissions
+            tags {
+              id
+              name
+            }
+            groups {
+                id
+                title
+            }
+            columns {
+                id
+                title
+                type
+                settings_str
+            }
+        }
+    }''' % board_ids
+
+
+def get_columns_by_board_query(board_ids):
+    return '''query
+        {
+            boards(ids: %s) {
+                id
+                name
+                groups {
+                    id
+                    title
+                }
+                columns {
+                    title
+                    id
+                    type
+                    settings_str
+                 }
+            }
+        }''' % board_ids
+
+
+# USER RESOURCE QUERIES
+def get_users_query(**kwargs):
+    query = '''query
+    {
+        users (%s) {
+            id
+            name
+            email
+            enabled
+            teams {
+              id
+              name
+            }
+        }
+    }''' % ', '.join(["%s: %s" % (arg, kwargs.get(arg)) for arg in kwargs])
     return query
