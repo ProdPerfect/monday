@@ -146,7 +146,7 @@ def add_file_to_column_query(item_id, column_id):
         add_file_to_column (
             file: $file,
             item_id: %s,
-            column_id: "%s"
+            column_id: %s
         ) {
             id
         }
@@ -390,7 +390,7 @@ def delete_group_query(board_id, group_id):
     query = '''
     mutation
     {
-        delete_group(board_id: %s, group_id: "%s")
+        delete_group(board_id: %s, group_id: %s)
         {
             id
             deleted
