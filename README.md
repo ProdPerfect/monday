@@ -36,6 +36,7 @@ monday.items.create_item(board='12345678', group='today',  item_name='Do a thing
 
 - `change_multiple_column_values(board_id, item_id, column_values)` - Change multiple column values for item on a board. Column values should be passed in as JSON. Check Monday's API for which columns are supported.
 
+- `add_file_to_column(item_id, column_id, file)` - Upload a file to a file type column specified by column_id. Monday limits uploads to 500MB in size.
 
 #### Updates Resource (monday.updates)
 - `create_update(item_id, update_body)` - Create an update attached to a given item.
@@ -59,6 +60,20 @@ monday.items.create_item(board='12345678', group='today',  item_name='Do a thing
 
 #### Users Resource (monday.users)
 - `fetch_users(**kwargs)` - Fetch user information associated with an account. See Monday API docs for a list of accepted keyword arguments.
+
+
+### Groups Resource (monday.groups)
+- `get_groups_by_board([board_ids])` - Get all groups associated with a certain board or boards. Accepts a single id or a comma separated list of ids.
+
+- `get_items_by_group(board_id, group_id)` - Get all items that are members of a given group.
+
+- `create_group(board_id, group_name)` - Create a group on a given board.
+
+- `duplicate_group(board_id, group_id)` - Duplicate a group and all its items on a given board.
+
+- `archive_group(board_id, group_id)` - Archive a group on a given board.
+
+- `delete_group(board_id, group_id)` - Delete a group on a given board.
 
 #### Contributions
 TBD

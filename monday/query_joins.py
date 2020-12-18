@@ -141,6 +141,19 @@ def update_multiple_column_values_query(board_id, item_id, column_values):
    return query
 
 
+def add_file_to_column_query(item_id, column_id):
+    query = '''mutation ($file: File!) {
+        add_file_to_column (
+            file: $file,
+            item_id: %s,
+            column_id: "%s"
+        ) {
+            id
+        }
+    }''' % (item_id, column_id)
+    return query
+
+
 # UPDATE RESOURCE QUERIES
 def create_update_query(item_id, update_value):
     query = '''mutation
@@ -195,6 +208,10 @@ def get_board_items_query(board_id):
         boards(ids: %s) {
             name
             items {
+                group {
+                    id
+                    title
+                }
                 id
                 name
                 column_values {
@@ -295,4 +312,88 @@ def get_users_query(**kwargs):
             }
         }
     }''' % ', '.join(["%s: %s" % (arg, kwargs.get(arg)) for arg in kwargs])
+    return query
+
+
+# GROUP RESOURCE QUERIES
+def get_groups_by_board_query(board_ids):
+    query = '''query
+    {
+        boards(ids: %s) {
+            groups {
+                id
+                title
+                archived
+                deleted
+                color
+            }
+        }
+    }''' % board_ids
+    return query
+
+
+def get_items_by_group_query(board_id, group_id):
+    query = '''query
+    {
+        boards(ids: %s) {
+            groups(ids: "%s") {
+                id
+                title
+                items {
+                    id
+                    name
+                }
+            }
+        }
+    }''' % (board_id, group_id)
+    return query
+
+
+def create_group_query(board_id, group_name):
+    query = '''
+    mutation
+    {
+        create_group(board_id: %s, group_name: "%s")
+        {
+            id
+        }
+    }''' % (board_id, group_name)
+    return query
+
+
+def duplicate_group_query(board_id, group_id):
+    query = '''
+    mutation
+    {
+        duplicate_group(board_id: %s, group_id: "%s")
+        {
+            id
+        }
+    }''' % (board_id, group_id)
+    return query
+
+
+def archive_group_query(board_id, group_id):
+    query = '''
+    mutation
+    {
+        archive_group(board_id: %s, group_id: "%s")
+        {
+            id
+            archived
+        }
+    }''' % (board_id, group_id)
+    return query
+
+
+def delete_group_query(board_id, group_id):
+    query = '''
+    mutation
+    {
+        delete_group(board_id: %s, group_id: "%s")
+        {
+            id
+            deleted
+        }
+    }''' % (board_id, group_id)
     return query
