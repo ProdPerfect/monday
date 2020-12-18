@@ -2,7 +2,7 @@ import json
 
 from monday.resources.base import BaseResource
 from monday.query_joins import mutate_item_query, get_item_query, update_item_query, get_item_by_id_query, \
-    update_multiple_column_values_query, mutate_subitem_query
+    update_multiple_column_values_query, mutate_subitem_query, add_file_to_column_query
 
 
 class ItemResource(BaseResource):
@@ -33,3 +33,6 @@ class ItemResource(BaseResource):
         query = update_multiple_column_values_query(board, item_id, column_values)
         return json.loads(self.client.execute(query))
 
+    def add_file_to_column(self, item_id, column_id, file):
+        query = add_file_to_column_query(item_id, column_id)
+        return json.loads(self.file_upload_client.execute(query, variables={'file': file}))
