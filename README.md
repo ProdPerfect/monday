@@ -18,21 +18,21 @@ from monday import MondayClient
 
 monday = MondayClient('your token')
 
-monday.items.create_item(board='12345678', group='today',  item_name='Do a thing')
+monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a thing')
 
 ```
 
 **Available methods:**
 #### Items Resource (monday.items)
-- `create_item(board, group, item_name, column_values=None)` - Create an item on a board in the given group with name item_name.
+- `create_item(board_id, group_id, item_name, column_values=None)` - Create an item on a board in the given group with name item_name.
 
 - `create_subitem(parent_item_id, subitem_name, column_values=None)` - Create a subitem underneath a given parent item. Monday API will return an error if the board you're trying to add to does not have a subitems column/at least one subitem created.
 
-- `fetch_items_by_column_value(board_id, column, value)` - Fetch items on a board by column value.
+- `fetch_items_by_column_value(board_id, column_id, value)` - Fetch items on a board by column value.
 
 - `fetch_items_by_id(board_id, [ids])` - Fetch items from any board by ids, passed in as an array of integers.
 
-- `change_item_value(board_id, item_id, column, value)` - Change column values for item on a board. Check Monday's API for which columns are supported.
+- `change_item_value(board_id, item_id, column_id, value)` - Change column values for item on a board. Check Monday's API for which columns are supported.
 
 - `change_multiple_column_values(board_id, item_id, column_values)` - Change multiple column values for item on a board. Column values should be passed in as JSON. Check Monday's API for which columns are supported.
 

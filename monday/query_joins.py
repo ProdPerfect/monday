@@ -5,7 +5,7 @@ from monday.utils import monday_json_stringify
 # Eventually I will organize this file better but you know what today is not that day.
 
 # ITEM RESOURCE QUERIES
-def mutate_item_query(board, group, item_name, column_values):
+def mutate_item_query(board_id, group_id, item_name, column_values):
     # Monday does not allow passing through non-JSON null values here,
     # so if you choose not to specify column values, need to set column_values to empty object.
     column_values = column_values if column_values else {}
@@ -20,7 +20,7 @@ def mutate_item_query(board, group, item_name, column_values):
         ) {
             id
         }
-    }''' % (board, group, item_name, monday_json_stringify(column_values))
+    }''' % (board_id, group_id, item_name, monday_json_stringify(column_values))
 
     return query
 
@@ -49,7 +49,7 @@ def mutate_subitem_query(parent_item_id, subitem_name, column_values):
     }''' % (parent_item_id, subitem_name, monday_json_stringify(column_values))
 
 
-def get_item_query(board, column, value):
+def get_item_query(board_id, column_id, value):
     query = '''query
         {
             items_by_column_values(
@@ -73,7 +73,7 @@ def get_item_query(board, column, value):
                     value
                 }
             }
-        }''' % (board, column, value)
+        }''' % (board_id, column_id, value)
 
     return query
 
@@ -98,7 +98,7 @@ def get_item_by_id_query(ids):
     return query
 
 
-def update_item_query(board, item_id, column, value):
+def update_item_query(board_id, item_id, column_id, value):
     query = '''mutation
         {
             change_column_value(
@@ -115,7 +115,7 @@ def update_item_query(board, item_id, column, value):
                     value
                 }
             }
-        }''' % (board, item_id, column, monday_json_stringify(value))
+        }''' % (board_id, item_id, column_id, monday_json_stringify(value))
 
     return query
 
