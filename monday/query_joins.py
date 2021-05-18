@@ -169,7 +169,7 @@ def create_update_query(item_id, update_value):
     return query
 
 
-def get_update_for_item_query(board, item, limit):
+def get_updates_for_item_query(board, item, limit):
     query = '''query 
     {boards (ids: %s) 
         {items (ids: %s) {
