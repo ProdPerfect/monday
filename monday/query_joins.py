@@ -176,30 +176,31 @@ def get_updates_for_item_query(board, item, limit):
             updates (limit: %s) {
                 id,
                 body,
+                created_at,
+                updated_at,
+                creator {
+                  id,
+                  name,
+                  email
+                },
                 assets {
                   id,
                   name,
                   url,
                   file_extension,
-                  fil_size                  
+                  file_size                  
                 },
                 replies {
                   id,
                   body,
                   creator{
                     id,
-                    name
+                    name,
+                    email
                   },
                   created_at,
                   updated_at
-                },
-                creator {
-                  id,
-                  name,
-                  email
-                },
-                created_at,
-                updated_at  
+                }
                 }
             }
         }
