@@ -43,8 +43,6 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 - `fetch_updates(limit, page=None)` - Fetch a certain number of updates, starting from the given page. Default is 1
 
-- `fetch_updates_for_item(board_id, item_id, limit)` - Fetch all updates for a certain item on a certain board up to a certain limit, set by you. Default is 100 updates
-
 
 #### Tags Resource (monday.tags)
 - `fetch_tags(tag_ids=None)` - Fetch all tags associated with an account. Optionally takes a list containing tag ids (if you know them). Returns IDs, names, and colors.

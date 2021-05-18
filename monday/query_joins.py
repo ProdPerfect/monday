@@ -169,45 +169,6 @@ def create_update_query(item_id, update_value):
     return query
 
 
-def get_updates_for_item_query(board, item, limit):
-    query = '''query 
-    {boards (ids: %s) 
-        {items (ids: %s) {
-            updates (limit: %s) {
-                id,
-                body,
-                assets {
-                  id,
-                  name,
-                  url,
-                  file_extension,
-                  fil_size                  
-                },
-                replies {
-                  id,
-                  body,
-                  creator{
-                    id,
-                    name
-                  },
-                  created_at,
-                  updated_at
-                },
-                creator {
-                  id,
-                  name,
-                  email
-                },
-                created_at,
-                updated_at  
-                }
-            }
-        }
-    }''' % (board, item, limit)
-
-    return query
-
-
 def get_update_query(limit, page):
     query = '''query
         {
