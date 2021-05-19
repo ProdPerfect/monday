@@ -1,5 +1,3 @@
-import json
-
 from monday.resources.base import BaseResource
 from monday.query_joins import get_users_query
 
@@ -10,4 +8,4 @@ class UserResource(BaseResource):
 
     def fetch_users(self, **kwargs):
         query = get_users_query(**kwargs)
-        return json.loads(self.client.execute(query))
+        return self.client.execute(query)

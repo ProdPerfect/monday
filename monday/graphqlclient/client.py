@@ -34,7 +34,8 @@ class GraphQLClient:
 
         try:
             response = requests.request("POST", self.endpoint, headers=headers, data=payload, files=files)
-            return response.text
+            response.raise_for_status()
+            return response.json()
         except requests.HTTPError as e:
             print(e)
             raise e
