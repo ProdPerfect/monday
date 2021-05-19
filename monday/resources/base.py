@@ -1,5 +1,3 @@
-from monday import __version__
-from monday.exceptions import MondayError
 from monday.graphqlclient.client import GraphQLClient
 
 _URLS = {
