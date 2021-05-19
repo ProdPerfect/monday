@@ -24,9 +24,9 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 **Available methods:**
 #### Items Resource (monday.items)
-- `create_item(board_id, group_id, item_name, column_values=None)` - Create an item on a board in the given group with name item_name.
+- `create_item(board_id, group_id, item_name, column_values=None, create_labels_if_missing=False)` - Create an item on a board in the given group with name item_name.
 
-- `create_subitem(parent_item_id, subitem_name, column_values=None)` - Create a subitem underneath a given parent item. Monday API will return an error if the board you're trying to add to does not have a subitems column/at least one subitem created.
+- `create_subitem(parent_item_id, subitem_name, column_values=None, create_labels_if_missing=False)` - Create a subitem underneath a given parent item. Monday API will return an error if the board you're trying to add to does not have a subitems column/at least one subitem created.
 
 - `fetch_items_by_column_value(board_id, column_id, value)` - Fetch items on a board by column value.
 
