@@ -1,4 +1,5 @@
 import json
+
 from monday.utils import monday_json_stringify
 
 
@@ -121,8 +122,7 @@ def update_item_query(board_id, item_id, column_id, value):
 
 
 def update_multiple_column_values_query(board_id, item_id, column_values):
-
-   query = '''mutation
+    query = '''mutation
         {
             change_multiple_column_values (
                 board_id: %s,
@@ -138,7 +138,7 @@ def update_multiple_column_values_query(board_id, item_id, column_values):
             }
         }''' % (board_id, item_id, monday_json_stringify(column_values))
 
-   return query
+    return query
 
 
 def add_file_to_column_query(item_id, column_id):
