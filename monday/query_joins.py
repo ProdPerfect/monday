@@ -6,7 +6,8 @@ from monday.utils import monday_json_stringify
 # Eventually I will organize this file better but you know what today is not that day.
 
 # ITEM RESOURCE QUERIES
-def mutate_item_query(board_id, group_id, item_name, column_values):
+def mutate_item_query(board_id, group_id, item_name, column_values,
+                      create_labels_if_missing):
     # Monday does not allow passing through non-JSON null values here,
     # so if you choose not to specify column values, need to set column_values to empty object.
     column_values = column_values if column_values else {}
@@ -17,16 +18,19 @@ def mutate_item_query(board_id, group_id, item_name, column_values):
             board_id: %s,
             group_id: "%s",
             item_name: "%s",
-            column_values: %s
+            column_values: %s,
+            create_labels_if_missing: %s
         ) {
             id
         }
-    }''' % (board_id, group_id, item_name, monday_json_stringify(column_values))
+    }''' % (board_id, group_id, item_name, monday_json_stringify(column_values),
+            str(create_labels_if_missing).lower())
 
     return query
 
 
-def mutate_subitem_query(parent_item_id, subitem_name, column_values):
+def mutate_subitem_query(parent_item_id, subitem_name, column_values,
+                         create_labels_if_missing):
     column_values = column_values if column_values else {}
 
     return '''mutation
@@ -34,7 +38,8 @@ def mutate_subitem_query(parent_item_id, subitem_name, column_values):
         create_subitem (
             parent_item_id: %s,
             item_name: "%s",
-            column_values: %s
+            column_values: %s,
+            create_labels_if_missing: %s
         ) {
             id,
             name,
@@ -47,7 +52,8 @@ def mutate_subitem_query(parent_item_id, subitem_name, column_values):
                 name
             }
         }
-    }''' % (parent_item_id, subitem_name, monday_json_stringify(column_values))
+    }''' % (parent_item_id, subitem_name, monday_json_stringify(column_values),
+            str(create_labels_if_missing).lower())
 
 
 def get_item_query(board_id, column_id, value):
