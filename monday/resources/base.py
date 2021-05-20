@@ -1,5 +1,3 @@
-import json
-
 from monday.graphqlclient.client import GraphQLClient
 
 _URLS = {
@@ -20,7 +18,7 @@ class BaseResource:
         result = self.client.execute(query)
 
         if result:
-            return json.loads(result)
+            return result
 
     def __str__(self):
         return self.__class__.__name__
