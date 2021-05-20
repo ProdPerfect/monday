@@ -15,7 +15,7 @@ def mutate_item_query(board_id, group_id, item_name, column_values):
     {
         create_item (
             board_id: %s,
-            group_id: %s,
+            group_id: "%s",
             item_name: "%s",
             column_values: %s
         ) {
@@ -376,7 +376,7 @@ def get_items_by_group_query(board_id, group_id):
     query = '''query
     {
         boards(ids: %s) {
-            groups(ids: %s) {
+            groups(ids: "%s") {
                 id
                 title
                 items {
@@ -405,7 +405,7 @@ def duplicate_group_query(board_id, group_id):
     query = '''
     mutation
     {
-        duplicate_group(board_id: %s, group_id: %s)
+        duplicate_group(board_id: %s, group_id: "%s")
         {
             id
         }
@@ -417,7 +417,7 @@ def archive_group_query(board_id, group_id):
     query = '''
     mutation
     {
-        archive_group(board_id: %s, group_id: %s)
+        archive_group(board_id: %s, group_id: "%s")
         {
             id
             archived
@@ -430,7 +430,7 @@ def delete_group_query(board_id, group_id):
     query = '''
     mutation
     {
-        delete_group(board_id: %s, group_id: %s)
+        delete_group(board_id: %s, group_id: "%s")
         {
             id
             deleted
