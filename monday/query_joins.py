@@ -443,3 +443,16 @@ def delete_group_query(board_id, group_id):
         }
     }''' % (board_id, group_id)
     return query
+
+
+def get_complexity_query():
+    query = '''
+    query
+    {
+        complexity {
+            after,
+            reset_in_x_seconds
+        }
+    }'''
+
+    return query
