@@ -17,6 +17,9 @@ jobs:
           pip install pipenv
           pipenv install --dev
           pip install setuptools wheel twine
+      - name: Run unit tests
+        run: |
+          pytest
       - name: Build and publish
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
