@@ -456,3 +456,14 @@ def get_complexity_query():
     }'''
 
     return query
+
+def delete_item_query(item_id):
+    query = '''
+    mutation
+    {
+        delete_item (item_id: %s)
+        {
+            id
+        }
+    }''' % (item_id)
+    return query
