@@ -9,3 +9,11 @@ class TagTestCase(BaseTestCase):
     def test_get_tags_query(self):
         query = get_tags_query(self.tags)
         self.assertIn(str(self.tags), query)
+        self.assertEqual('''query
+        {
+            tags (ids: [123, 456, 789]) {
+                name,
+                color,
+                id
+            }
+        }'''.replace(" ", ""), query.replace(" ", ""))

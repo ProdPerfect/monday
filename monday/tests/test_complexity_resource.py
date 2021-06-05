@@ -7,4 +7,12 @@ class ComplexityTestCase(BaseTestCase):
         super(ComplexityTestCase, self).setUp()
 
     def test_get_complexity_query(self):
-        pass
+        query = get_complexity_query()
+        self.assertEqual('''
+        query
+        {
+            complexity {
+                after,
+                reset_in_x_seconds
+            }
+        }'''.replace(" ", ""), query.replace(" ", ""))

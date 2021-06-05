@@ -30,6 +30,15 @@ class GroupTestCase(BaseTestCase):
         query = delete_group_query(board_id=self.board_id, group_id=self.group_id)
         self.assertIn(str(self.board_id), query)
         self.assertIn(str(self.group_id), query)
+        self.assertEqual('''
+        mutation
+        {
+            delete_group(board_id: 12, group_id: "7")
+            {
+                id
+                deleted
+            }
+        }'''.replace(" ", ""), query.replace(" ", ""))
 
     def test_archive_group_query(self):
         query = archive_group_query(board_id=self.board_id, group_id=self.group_id)

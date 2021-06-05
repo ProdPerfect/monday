@@ -26,3 +26,38 @@ class UpdateTestCase(BaseTestCase):
         self.assertIn(str(self.item_id), query)
         self.assertIn(str(self.board_id), query)
         self.assertIn("25", query)
+        self.assertEqual('''query 
+            {boards (ids: 12) 
+                {items (ids: 24) {
+                    updates (limit: 25) {
+                        id,
+                        body,
+                        created_at,
+                        updated_at,
+                        creator {
+                          id,
+                          name,
+                          email
+                        },
+                        assets {
+                          id,
+                          name,
+                          url,
+                          file_extension,
+                          file_size                  
+                        },
+                        replies {
+                          id,
+                          body,
+                          creator{
+                            id,
+                            name,
+                            email
+                          },
+                          created_at,
+                          updated_at
+                        }
+                        }
+                    }
+                }
+            }'''.replace(" ", ""), query.replace(" ", ""))
