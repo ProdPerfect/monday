@@ -1,6 +1,6 @@
 from monday.tests.test_case_resource import BaseTestCase
 from monday.query_joins import mutate_item_query, get_item_query, update_item_query, get_item_by_id_query, \
-    update_multiple_column_values_query, mutate_subitem_query, add_file_to_column_query
+    update_multiple_column_values_query, mutate_subitem_query, add_file_to_column_query, delete_item_query
 from monday.utils import monday_json_stringify
 
 
@@ -52,3 +52,7 @@ class ItemTestCase(BaseTestCase):
         query = add_file_to_column_query(item_id=self.item_id, column_id=self.column_id)
         self.assertIn(str(self.item_id), query)
         self.assertIn(str(self.column_id), query)
+    
+    def test_delete_item_by_id(self):
+        query = delete_item_query(item_id=self.item_id)
+        self.assertIn(str(self.item_id))
