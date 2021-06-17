@@ -85,10 +85,12 @@ def get_item_query(board_id, column_id, value):
     return query
 
 
-def get_item_by_id_query(ids):
+def get_item_by_id_query(ids, limit):
     query = '''query
         {
-            items (ids: %s) {
+            items (ids: %s,
+                  limit %s
+            ) {
                 name,
                 group {
                     id
@@ -100,7 +102,7 @@ def get_item_by_id_query(ids):
                     value
                 }
             }
-        }''' % ids
+        }''' % (ids, limit)
 
     return query
 
