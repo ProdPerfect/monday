@@ -55,4 +55,12 @@ class ItemTestCase(BaseTestCase):
     
     def test_delete_item_by_id(self):
         query = delete_item_query(item_id=self.item_id)
-        self.assertIn(str(self.item_id))
+        self.assertIn(str(self.item_id), query)
+        self.assertEqual('''
+        mutation
+        {
+            delete_item (item_id: 24)
+            {
+                id
+            }
+        }'''.replace(" ", ""), query.replace(" ", ""))
