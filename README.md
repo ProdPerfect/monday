@@ -38,6 +38,8 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 - `add_file_to_column(item_id, column_id, file)` - Upload a file to a file type column specified by column_id. Monday limits uploads to 500MB in size.
 
+- `delete_item_by_id(item_id)` - Delete the item by item_id.
+
 #### Updates Resource (monday.updates)
 - `create_update(item_id, update_body)` - Create an update attached to a given item.
 

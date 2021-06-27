@@ -6,3 +6,6 @@ build/
 .mypy_cache/
 .ropeproject/
 .vscode/
+venv/
+test.py
+*.egg-info

@@ -6,6 +6,18 @@ from monday.utils import monday_json_stringify
 # Eventually I will organize this file better but you know what today is not that day.
 
 # ITEM RESOURCE QUERIES
+def delete_item_query(item_id):
+    query = '''
+    mutation
+    {
+        delete_item (item_id: %s)
+        {
+            id
+        }
+    }''' % (item_id)
+    return query
+
+
 def mutate_item_query(board_id, group_id, item_name, column_values,
                       create_labels_if_missing):
     # Monday does not allow passing through non-JSON null values here,
