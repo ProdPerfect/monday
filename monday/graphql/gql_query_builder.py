@@ -33,6 +33,7 @@ class GraphQLQueryBuilder:
             else values[0]
 
     def query_fields(self, query_type, **kwargs):
+        # Very, very brutish handling of nested query fields. Needs refinement.
         if self.fields:
             new_fields = ", ".join(["{key}: {value}".format(key=key, value=self.encode_values(key, value))
                                     for key, value in kwargs.items()])

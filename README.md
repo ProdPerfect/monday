@@ -88,11 +88,12 @@ from monday import MondayClient
 monday = MondayClient('your token')
 
 custom_query = monday.custom_query.query_fields(
+    query_type="boards",
     ids=[1234567]
 ).return_values(
     ['id', 'name', 'permissions', 'groups.id.title',
      'columns.id.title.type.settings_str']
-).make_query(operation="query", query_method="boards")
+).make_query(operation='query')
 
 monday.custom_query.execute(custom_query)
 
@@ -115,6 +116,38 @@ columns {
     settings_str
 }
 ```
+
+If you want to create a query with nested fields, chain query_fields method calls, with
+the parent objects being passed in before the child objects. This method call:
+```python
+client.custom_query.query_fields(
+    query_type='boards', ids=1234567
+).query_fields(
+    query_type='groups', ids='topics'
+).return_values(
+    ['id', 'title', 'items.id.name']
+).make_query(
+    operation='query'
+)
+```
+generates the following query:
+
+```
+query
+{
+    boards(ids: 1234567) {
+        groups(ids: "topics") {
+            id
+            title
+            items {
+                id
+                name
+            }
+        }
+    }
+}
+```
+
 
 #### Contributions
 TBD
