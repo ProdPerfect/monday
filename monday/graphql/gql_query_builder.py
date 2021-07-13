@@ -29,7 +29,7 @@ class GraphQLQueryBuilder:
 
     def format_return_value(self, return_value):
         values = return_value.split('.')
-        return "{column} {{ {values} }}".format(column=values.pop(0), values=",".join(values)) if len(values) > 1 \
+        return "{column} {{{values}}}".format(column=values.pop(0), values=",".join(values)) if len(values) > 1 \
             else values[0]
 
     def query_fields(self, query_type, **kwargs):
@@ -53,7 +53,7 @@ class GraphQLQueryBuilder:
         return self
 
     def make_query(self, operation: str) -> str:
-        return "{operation}{{ {query_fields} {{ {return_vals} }} }} {closing_brackets}".format(operation=operation,
+        return "{operation}{{{query_fields}{{{return_vals}}}}}{closing_brackets}".format(operation=operation,
                                                                                                query_fields=self.fields,
                                                                                                return_vals=self.return_vals,
                                                                                                closing_brackets=self.closing_brackets)
