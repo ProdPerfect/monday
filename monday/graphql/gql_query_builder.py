@@ -29,7 +29,7 @@ class GraphQLQueryBuilder:
 
     def format_return_value(self, return_value):
         values = return_value.split('.')
-        return "{column} {{{values}}}".format(column=values.pop(0), values=",".join(values)) if len(values) > 1 \
+        return "{column}{{{values}}}".format(column=values.pop(0), values=",".join(values)) if len(values) > 1 \
             else values[0]
 
     def query_fields(self, query_type, **kwargs):
@@ -37,9 +37,9 @@ class GraphQLQueryBuilder:
         if self.fields:
             new_fields = ", ".join(["{key}: {value}".format(key=key, value=self.encode_values(key, value))
                                     for key, value in kwargs.items()])
-            self.fields = '{existing_fields} {{ {query_type}({new_fields}) '.format(existing_fields=self.fields,
-                                                                                    query_type=query_type,
-                                                                                    new_fields=new_fields)
+            self.fields = '{existing_fields}{{{query_type}({new_fields}) '.format(existing_fields=self.fields,
+                                                                                  query_type=query_type,
+                                                                                  new_fields=new_fields)
             self.closing_brackets += '}'
         else:
             query_field_string = ", ".join(
@@ -54,6 +54,6 @@ class GraphQLQueryBuilder:
 
     def make_query(self, operation: str) -> str:
         return "{operation}{{{query_fields}{{{return_vals}}}}}{closing_brackets}".format(operation=operation,
-                                                                                               query_fields=self.fields,
-                                                                                               return_vals=self.return_vals,
-                                                                                               closing_brackets=self.closing_brackets)
+                                                                                         query_fields=self.fields,
+                                                                                         return_vals=self.return_vals,
+                                                                                         closing_brackets=self.closing_brackets)
