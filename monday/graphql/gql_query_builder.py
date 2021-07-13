@@ -11,28 +11,27 @@ class GraphQLQueryBuilder:
         super(GraphQLQueryBuilder, self).__init__()
 
     @staticmethod
-    def monday_json_stringify(value):
+    def monday_json_stringify(value: dict) -> str:
         # This is necessary because Monday's API says that it requires a JSON encoded string for JSON values
         # What it ACTUALLY requires (anything else returns an error) is a JSON encoded, JSON encoded string.
         # I have tried and had fail requests that were only "dumped" once.
         # According to their API, a proper value for label should look like this:
         # "{\"label\":\"Done\"}"
-
         return json.dumps(json.dumps(value))
 
-    def encode_values(self, key, value):
+    def encode_values(self, key: str, value):
         if key in self.quoted_args:
             value = '"{value}"'.format(value=value)
         elif key in self.specially_encoded_fields:
             return self.monday_json_stringify(value)
         return value
 
-    def format_return_value(self, return_value):
+    def format_return_value(self, return_value: str) -> str:
         values = return_value.split('.')
         return "{column}{{{values}}}".format(column=values.pop(0), values=",".join(values)) if len(values) > 1 \
             else values[0]
 
-    def query_fields(self, query_type, **kwargs):
+    def query_fields(self, query_type: str, **kwargs):
         # Very, very brutish handling of nested query fields. Needs refinement.
         if self.fields:
             new_fields = ", ".join(["{key}: {value}".format(key=key, value=self.encode_values(key, value))
@@ -44,7 +43,7 @@ class GraphQLQueryBuilder:
             self.closing_brackets += '}'
         else:
             fields = ", ".join(["{key}: {value}".format(key=key, value=self.encode_values(key, value))
-                                            for key, value in kwargs.items()])
+                                for key, value in kwargs.items()])
             self.fields = '{query_type}({fields})'.format(query_type=query_type, fields=fields)
         return self
 
