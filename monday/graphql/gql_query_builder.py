@@ -40,12 +40,12 @@ class GraphQLQueryBuilder:
             self.fields = '{existing_fields}{{{query_type}({new_fields}) '.format(existing_fields=self.fields,
                                                                                   query_type=query_type,
                                                                                   new_fields=new_fields)
+            # Will need to add one closing bracket at the end of the query for each additional nested query field.
             self.closing_brackets += '}'
         else:
-            query_field_string = ", ".join(
-                ["{key}: {value}".format(key=key, value=self.encode_values(key, value)) for key, value in
-                 kwargs.items()])
-            self.fields = '{query_type}({fields})'.format(query_type=query_type, fields=query_field_string)
+            fields = ", ".join(["{key}: {value}".format(key=key, value=self.encode_values(key, value))
+                                            for key, value in kwargs.items()])
+            self.fields = '{query_type}({fields})'.format(query_type=query_type, fields=fields)
         return self
 
     def return_values(self, return_values: list):
