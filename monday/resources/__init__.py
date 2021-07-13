@@ -5,5 +5,7 @@ from .boards import BoardResource
 from .users import UserResource
 from .groups import GroupResource
 from .complexity import ComplexityResource
+from .custom_query import CustomQueryResource
 
-__all__ = ['ItemResource', 'UpdateResource', 'TagResource', 'BoardResource', 'UserResource', 'GroupResource', 'ComplexityResource']
+__all__ = ['ItemResource', 'UpdateResource', 'TagResource', 'BoardResource', 'UserResource', 'GroupResource',
+           'ComplexityResource', 'CustomQueryResource']

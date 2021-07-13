@@ -1,4 +1,4 @@
-from monday.graphqlclient.client import GraphQLClient
+from monday.graphql.client import GraphQLClient
 
 _URLS = {
     'prod': 'https://api.monday.com/v2',
@@ -13,6 +13,7 @@ class BaseResource:
         self.file_upload_client = GraphQLClient(_URLS['file'])
         self.client.inject_token(api_key)
         self.file_upload_client.inject_token(api_key)
+        super(BaseResource, self).__init__()
 
     def _query(self, query):
         result = self.client.execute(query)

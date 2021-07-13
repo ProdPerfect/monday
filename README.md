@@ -79,6 +79,43 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 - `delete_group(board_id, group_id)` - Delete a group on a given board.
 
+### Build your own query
+You can use the graphql query builder to build your own query to send to Monday.
+Here is an example of a query to get boards by id.
+```python
+from monday import MondayClient
+
+monday = MondayClient('your token')
+
+custom_query = monday.custom_query.query_fields(
+    ids=[1234567]
+).return_values(
+    ['id', 'name', 'permissions', 'groups.id.title',
+     'columns.id.title.type.settings_str']
+).make_query(operation="query", query_method="boards")
+
+monday.custom_query.execute(custom_query)
+
+```
+Note the formatting of the list passed as return values. This is equivalent to 
+adding nested return values to your GraphQL query, like so:
+
+```
+id
+name
+permissions
+groups {
+    id
+    title
+}
+columns {
+    id
+    title
+    type
+    settings_str
+}
+```
+
 #### Contributions
 TBD
 

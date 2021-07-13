@@ -7,7 +7,8 @@ monday.client
 """
 
 from .__version__ import __version__
-from .resources import ItemResource, UpdateResource, TagResource, BoardResource, UserResource, GroupResource, ComplexityResource
+from .resources import ItemResource, UpdateResource, TagResource, BoardResource, UserResource, GroupResource, \
+    ComplexityResource, CustomQueryResource
 
 
 class MondayClient:
@@ -22,6 +23,7 @@ class MondayClient:
         self.users = UserResource(token=token)
         self.groups = GroupResource(token=token)
         self.complexity = ComplexityResource(token=token)
+        self.custom_query = CustomQueryResource(token=token)
 
     def __str__(self):
         return f'MondayClient {__version__}'
