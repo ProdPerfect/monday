@@ -36,7 +36,9 @@ class GraphQLQueryBuilderTestCase(unittest.TestCase):
         self.assertEqual(full_query, 'query{complexity{after,reset_in_x_seconds}}')
 
     def test_chained_query_build(self):
-        query = self.query_builder.query_fields(query_type='boards', ids=1234567).query_fields(
-            query_type='groups', ids="topics").return_values(['id', 'title', 'items.id.name']).make_query(
-            operation='query')
+        query = self.query_builder\
+            .query_fields(query_type='boards', ids=1234567)\
+            .query_fields(query_type='groups', ids='topics')\
+            .return_values(return_values=['id', 'title', 'items.id.name'])\
+            .make_query(operation='query')
         self.assertEqual(query, 'query{boards(ids: 1234567){groups(ids: topics) {id, title, items{id,name}}}}')
