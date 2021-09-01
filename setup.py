@@ -17,7 +17,7 @@ setup(name='monday',
       url='https://github.com/ProdPerfect/monday',
       include_package_data=True,
       zip_safe=False,
-      license='MIT',
+      license='BSD',
       python_requires='>=3.6',
       classifiers=[
           "Programming Language :: Python :: 3",
