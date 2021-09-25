@@ -79,6 +79,10 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 - `delete_group(board_id, group_id)` - Delete a group on a given board.
 
+### Additional Resources and Code Samples
+
+- [Read and format all of the items on a board](https://github.com/ProdPerfect/monday/wiki/Code-Examples#whole-board-formatting-example)
+
 #### Contributions
 TBD
 
