@@ -280,7 +280,10 @@ def get_board_items_query(board_id):
                 }
             }
         }
-    }''' % board_id
+    }''' % (
+        board_id if not isinstance(board_id, list) 
+        else [int(i) for i in board_id]
+    )
 
     return query
 
