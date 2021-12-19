@@ -65,6 +65,18 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 #### Users Resource (monday.users)
 - `fetch_users(**kwargs)` - Fetch user information associated with an account. See Monday API docs for a list of accepted keyword arguments.
 
+### Workspaces Resource (monday.workspaces)
+- `get_workspaces()` - Get all workspaces.
+
+- `create_workspace(name, kind, description)` - Create workspace with the given name, kind and description. 
+
+- `add_users_to_workspace(workspace_id, user_ids, kind)` - Add given users of the given kind to the given workspace.
+
+- `delete_users_from_workspace(workspace_id, user_ids)` - Delete given users from the given workspace.
+
+- `add_teams_to_workspace(workspace_id, team_ids)` - Add given teams to the given workspace.
+
+- `delete_teams_from_workspace(workspace_id, team_ids)` - Delete given teams from the given workspace.
 
 ### Groups Resource (monday.groups)
 - `get_groups_by_board([board_ids])` - Get all groups associated with a certain board or boards. Accepts a single id or a comma separated list of ids.
