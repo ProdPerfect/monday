@@ -469,18 +469,6 @@ def get_complexity_query():
 
     return query
 
-def get_complexity_query():
-    query = '''
-    query
-    {
-        complexity {
-            after,
-            reset_in_x_seconds
-        }
-    }'''
-
-    return query
-
 def get_workspaces_query():
     query = '''
     query {
