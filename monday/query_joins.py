@@ -468,3 +468,69 @@ def get_complexity_query():
     }'''
 
     return query
+
+def get_workspaces_query():
+    query = '''
+    query {
+        boards {
+            workspace {
+                id
+                name
+                kind
+                description
+            }
+        }
+    }
+    '''
+    return query
+
+def create_workspace_query(name, kind, description=""):
+    query = '''
+    mutation {
+        create_workspace (name:"%s", kind: %s, description: "%s") {
+            id
+            description
+        }
+    }
+    ''' % (name, kind, description)
+    return query 
+
+def add_users_to_workspace_query(id, user_ids, kind):
+    query = '''
+    mutation {
+        add_users_to_workspace (workspace_id: %s, user_ids: %s, kind: %s) {
+            id
+        }
+    }
+    ''' % (id, user_ids, kind)
+    return query
+
+def delete_users_from_workspace_query(id, user_ids):
+    query = '''
+    mutation {
+        add_users_to_workspace (workspace_id: %s, user_ids: %s) {
+            id
+        }
+    }
+    ''' % (id, user_ids)
+    return query
+
+def add_teams_to_workspace_query(id, team_ids):
+    query = '''
+    mutation {
+        add_teams_to_workspace (workspace_id: %s, team_ids: %s) {
+            id
+        }
+    }
+    ''' % (id, team_ids)
+    return query
+
+def delete_teams_from_workspace_query(id, team_ids):
+    query = '''
+    mutation {
+        delete_teams_from_workspace (workspace_id: %s, team_ids: %s) {
+            id
+        }
+    }
+    ''' % (id, team_ids)
+    return query

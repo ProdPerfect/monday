@@ -16,3 +16,9 @@ class BaseTestCase(unittest.TestCase):
         self.tags = [123, 456, 789]
         self.subitem_name = "A subitem"
         self.column_values = {"foo": "bar", "bar": 12}
+        self.workspace_name = "my_group_workspace"
+        self.workspace_kind = "open"
+        self.workspace_id = "123456"
+        self.workspace_user_kind = "subscriber"
+        self.team_ids = [105939, 105940, 105941]
+    
