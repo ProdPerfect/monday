@@ -10,7 +10,18 @@ class WorkspaceTestCase(BaseTestCase):
 
     def test_get_workspaces_query(self):
         query = get_workspaces_query()
-        self.assertIn(query)
+        self.assertEqual('''
+        query {
+            boards {
+                workspace {
+                    id
+                    name
+                    kind
+                    description
+                }
+            }
+        }
+        '''.replace(" ", ""), query.replace(" ", ""))
 
     def test_create_workspace_query(self):
         query = create_workspace_query(self.workspace_name, self.workspace_kind)
