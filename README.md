@@ -65,7 +65,7 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 #### Users Resource (monday.users)
 - `fetch_users(**kwargs)` - Fetch user information associated with an account. See Monday API docs for a list of accepted keyword arguments.
 
-### Workspaces Resource (monday.workspaces)
+#### Workspaces Resource (monday.workspaces)
 - `get_workspaces()` - Get all workspaces.
 
 - `create_workspace(name, kind, description)` - Create workspace with the given name, kind and description. 
@@ -78,7 +78,7 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 - `delete_teams_from_workspace(workspace_id, [team_ids])` - Delete given teams from the given workspace.
 
-### Groups Resource (monday.groups)
+#### Groups Resource (monday.groups)
 - `get_groups_by_board([board_ids])` - Get all groups associated with a certain board or boards. Accepts a single id or a comma separated list of ids.
 
 - `get_items_by_group(board_id, group_id)` - Get all items that are members of a given group.
@@ -91,12 +91,14 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 - `delete_group(board_id, group_id)` - Delete a group on a given board.
 
+#### Notifications Resource (monday.notifications)
+- `create_notification(user_id, target_id, text, target_type)` - The create_notification mutation allows to trigger a notification within the platform (will also send out an email if the recipient's email preferences are set up accordingly). 
 ### Additional Resources and Code Samples
 
 - [Read and format all of the items on a board](https://github.com/ProdPerfect/monday/wiki/Code-Examples#whole-board-formatting-example)
 
-#### Contributions
+### Contributions
 TBD
 
-#### Bug Reports
+### Bug Reports
 TBD 
