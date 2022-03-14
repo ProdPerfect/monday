@@ -540,3 +540,18 @@ def delete_teams_from_workspace_query(id, team_ids):
     }
     ''' % (id, team_ids)
     return query
+
+
+def create_notification_query(user_id, target_id, text, target_type):
+    query = '''
+    mutation {
+        create_notification (user_id: %s, target_id: %s, text: "%s", target_type: %s) {
+            text
+            user_id
+            target_id
+            target_type
+        }
+    }
+    ''' % (user_id, target_id, text, target_type)
+    # Target type may be: Project/Post    
+    return query
