@@ -31,14 +31,15 @@ class ItemResource(BaseResource):
         query = update_item_query(board_id, item_id, column_id, value)
         return self.client.execute(query)
 
-    def change_multiple_column_values(self, board_id, item_id, column_values):
-        query = update_multiple_column_values_query(board_id, item_id, column_values)
+    def change_multiple_column_values(self, board_id, item_id, column_values, create_labels_if_missing=False):
+        query = update_multiple_column_values_query(
+            board_id, item_id, column_values, create_labels_if_missing)
         return self.client.execute(query)
 
     def add_file_to_column(self, item_id, column_id, file):
         query = add_file_to_column_query(item_id, column_id)
         return self.file_upload_client.execute(query, variables={'file': file})
-    
+
     def delete_item_by_id(self, item_id):
         query = delete_item_query(item_id)
         return self.client.execute(query)

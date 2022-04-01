@@ -34,7 +34,7 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 - `change_item_value(board_id, item_id, column_id, value)` - Change column values for item on a board. Check Monday's API for which columns are supported.
 
-- `change_multiple_column_values(board_id, item_id, column_values)` - Change multiple column values for item on a board. Column values should be passed in as JSON. Check Monday's API for which columns are supported.
+- `change_multiple_column_values(board_id, item_id, column_values, create_labels_if_missing=False)` - Change multiple column values for item on a board. Column values should be passed in as JSON. Check Monday's API for which columns are supported.
 
 - `add_file_to_column(item_id, column_id, file)` - Upload a file to a file type column specified by column_id. Monday limits uploads to 500MB in size.
 
