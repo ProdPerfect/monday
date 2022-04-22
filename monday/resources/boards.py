@@ -1,6 +1,6 @@
 from monday.resources.base import BaseResource
 from monday.query_joins import get_boards_query, get_boards_by_id_query, get_board_items_query, \
-    get_columns_by_board_query
+    get_columns_by_board_query, duplicate_board_query
 
 
 class BoardResource(BaseResource):
@@ -21,4 +21,8 @@ class BoardResource(BaseResource):
 
     def fetch_columns_by_board_id(self, board_ids):
         query = get_columns_by_board_query(board_ids)
+        return self.client.execute(query)
+    
+    def duplicate_board(self, board_name, board_id, workspace_id, duplicate_type, keep_subscribers=False):
+        query = duplicate_board_query(board_name, board_id, workspace_id, duplicate_type, keep_subscribers)
         return self.client.execute(query)
