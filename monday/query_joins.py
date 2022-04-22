@@ -17,7 +17,7 @@ def mutate_item_query(board_id, group_id, item_name, column_values,
         create_item (
             board_id: %s,
             group_id: "%s",
-            item_name: "%s",
+            item_name: '%s',
             column_values: %s,
             create_labels_if_missing: %s
         ) {
