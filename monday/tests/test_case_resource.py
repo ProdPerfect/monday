@@ -7,6 +7,8 @@ class BaseTestCase(unittest.TestCase):
         self.group_name = "my_group"
         self.item_name = "Nerd"
         self.item_id = 24
+        self.board_name = "My_board"
+        self.duplicate_type = "duplicate_board_with_pulses"
         self.board_id = 12
         self.board_kind = "public"
         self.group_id = 7
@@ -23,4 +25,5 @@ class BaseTestCase(unittest.TestCase):
         self.team_ids = [105939, 105940, 105941]
         self.notification_text = "This is an awesome notification."
         self.notification_target_type = "Project"
+        self.keep_subscribers = False
     
