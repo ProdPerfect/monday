@@ -61,7 +61,7 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 - `fetch_items_by_board_id([board_ids])` - Get all items on a board(s). Accepts a comma separated list of board ids.
 
-- `duplicate_board_query(board_name, board_id, workspace_id, duplicate_type, keep_subscribers: Boolean)` - Duplicate a board. `duplicate_type` values are duplicate_board_with_structure / duplicate_board_with_pulses / duplicate_board_with_pulses_and_updates.
+- `duplicate_board(board_name, board_id, workspace_id, duplicate_type, keep_subscribers: Boolean)` - Duplicate a board. `duplicate_type` values are duplicate_board_with_structure / duplicate_board_with_pulses / duplicate_board_with_pulses_and_updates.
 
 
 #### Users Resource (monday.users)
