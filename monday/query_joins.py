@@ -355,6 +355,20 @@ def get_columns_by_board_query(board_ids):
         }''' % board_ids
 
 
+def duplicate_board_query(board_name, workspace_id, board_id, duplicate_type, keep_subscribers=False):
+    
+    query = '''
+    mutation {
+        duplicate_board(board_id:%s, duplicate_type: %s, board_name:"%s", workspace_id: %s, keep_subscribers: %s) {
+            board {
+                id
+            }
+        }
+    }
+    ''' % (board_id, duplicate_type.lower(), board_name, workspace_id, keep_subscribers.lower())
+
+    return query
+    
 # USER RESOURCE QUERIES
 def get_users_query(**kwargs):
     query = '''query
