@@ -139,13 +139,14 @@ def delete_item_query(item_id):
     return query
 
 
-def update_multiple_column_values_query(board_id, item_id, column_values):
+def update_multiple_column_values_query(board_id, item_id, column_values, create_labels_if_missing):
     query = '''mutation
         {
             change_multiple_column_values (
                 board_id: %s,
                 item_id: %s,
-                column_values: %s
+                column_values: %s,
+                create_labels_if_missing: %s
             ) {
                 id
                 name
@@ -154,7 +155,7 @@ def update_multiple_column_values_query(board_id, item_id, column_values):
                   text
                 }
             }
-        }''' % (board_id, item_id, monday_json_stringify(column_values))
+        }''' % (board_id, item_id, monday_json_stringify(column_values), str(create_labels_if_missing).lower())
 
     return query
 
@@ -495,7 +496,7 @@ def create_workspace_query(name, kind, description=""):
         }
     }
     ''' % (name, kind, description)
-    return query 
+    return query
 
 
 def add_users_to_workspace_query(id, user_ids, kind):
@@ -553,5 +554,5 @@ def create_notification_query(user_id, target_id, text, target_type):
         }
     }
     ''' % (user_id, target_id, text, target_type)
-    # Target type may be: Project/Post    
+    # Target type may be: Project/Post
     return query
