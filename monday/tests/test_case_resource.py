@@ -7,6 +7,7 @@ class BaseTestCase(unittest.TestCase):
         self.group_name = "my_group"
         self.item_name = "Nerd"
         self.item_id = 24
+        self.board_name = "my_board"
         self.board_id = 12
         self.board_kind = "public"
         self.group_id = 7

@@ -356,6 +356,18 @@ def get_columns_by_board_query(board_ids):
         }''' % board_ids
 
 
+def create_board_by_workspace_query(board_name, board_kind, workspace_id = None):
+    workspace_query = f'workspace_id: {workspace_id}' if workspace_id else ''
+    query = '''
+    mutation {
+        create_board (board_name:"%s", board_kind: %s, %s) {
+            id
+        }
+    }
+    ''' % (board_name, board_kind, workspace_query)
+    return query
+
+
 # USER RESOURCE QUERIES
 def get_users_query(**kwargs):
     query = '''query
