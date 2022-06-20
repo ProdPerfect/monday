@@ -76,3 +76,9 @@ class BoardTestCase(BaseTestCase):
         self.assertNotIn(str(self.board_kind), query_b)
         self.assertIn(str(self.board_kind.value), query_b)
         self.assertNotIn(str(self.workspace_id), query_b)
+
+    def test_duplicate_board_query(self):
+        query = duplicate_board_query(board_id=self.board_id, duplicate_type=self.duplicate_type)
+        self.assertIn(str(self.board_id), query)
+        self.assertNotIn(str(self.duplicate_type), query)
+        self.assertIn(str(self.duplicate_type.value), query)

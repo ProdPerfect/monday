@@ -452,6 +452,22 @@ def create_board_by_workspace_query(board_name: str, board_kind: BoardKind, work
     return query
 
 
+def duplicate_board_query(board_id: int, duplicate_type: DuplicateTypes):
+    query = """
+    mutation {
+        duplicate_board(board_id: %s, duplicate_type: %s) {
+            board {
+                id
+            }
+        }
+    }
+    """ % (
+        board_id,
+        duplicate_type.value,
+    )
+    return query
+
+
 # USER RESOURCE QUERIES
 def get_users_query(**kwargs):
     query = '''query
