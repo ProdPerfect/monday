@@ -1,5 +1,7 @@
 import unittest
 
+from monday.resources.types import DuplicateTypes
+
 
 class BaseTestCase(unittest.TestCase):
 
@@ -9,6 +11,7 @@ class BaseTestCase(unittest.TestCase):
         self.item_id = 24
         self.board_id = 12
         self.board_kind = "public"
+        self.duplicate_type = DuplicateTypes.WITH_PULSES
         self.group_id = 7
         self.column_id = "file_column"
         self.user_ids = [1287123, 1230919]

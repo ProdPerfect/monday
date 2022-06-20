@@ -1,4 +1,5 @@
 import json
+from monday.resources.types import DuplicateTypes
 
 from monday.utils import monday_json_stringify
 
@@ -354,6 +355,22 @@ def get_columns_by_board_query(board_ids):
                  }
             }
         }''' % board_ids
+
+
+def duplicate_board_query(board_id: int, duplicate_type: DuplicateTypes):
+    query = """
+    mutation {
+        duplicate_board(board_id: %s, duplicate_type: %s) {
+            board {
+                id
+            }
+        }
+    }
+    """ % (
+        board_id,
+        duplicate_type.value,
+    )
+    return query
 
 
 # USER RESOURCE QUERIES
