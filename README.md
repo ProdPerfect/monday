@@ -85,6 +85,8 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 - `create_board(board_name, board_kind, workspace_id)` - Create board with the given name and kind by (and optional) workspace id.
 
+- `duplicate_board(board_id, duplicate_type)` - Duplicate a board by its id. It requires a duplication type to be chosen (*duplicate_board_with_structure / duplicate_board_with_pulses / duplicate_board_with_pulses_and_updates*).
+
 
 #### Users Resource (monday.users)
 - `fetch_users(**kwargs)` - Fetch user information associated with an account. See Monday API docs for a list of accepted keyword arguments.
