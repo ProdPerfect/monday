@@ -604,3 +604,44 @@ def create_notification_query(user_id, target_id, text, target_type):
     ''' % (user_id, target_id, text, target_type)
     # Target type may be: Project/Post
     return query
+
+
+# ME RESOURCE QUERIES
+def get_me_query():
+    query = """{
+    me {
+        account {
+            id
+        },
+        birthday,   
+        country_code,   
+        created_at, 
+        join_date,  
+        email,  
+        enabled,
+        id, 
+        is_admin,   
+        is_guest,   
+        is_pending, 
+        is_view_only,   
+        location,   
+        mobile_phone,   
+        name,   
+        phone,  
+        photo_original, 
+        photo_small,
+        photo_thumb,
+        photo_thumb_small,  
+        photo_tiny, 
+        teams {
+            id,
+            name
+        },  
+        time_zone_identifier,   
+        title,  
+        url,
+        utc_hours_diff, 
+        }
+    }"""
+    return query
+
