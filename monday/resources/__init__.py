@@ -1,5 +1,6 @@
 from .custom import CustomResource
 from .items import ItemResource
+from .columns import ColumnsResource
 from .updates import UpdateResource
 from .tags import TagResource
 from .boards import BoardResource
@@ -12,6 +13,7 @@ from .notification import NotificationResource
 __all__ = [
     'CustomResource',
     'ItemResource',
+    'ColumnsResource',
     'UpdateResource',
     'TagResource',
     'BoardResource',
