@@ -189,6 +189,18 @@ def create_update_query(item_id, update_value):
     return query
 
 
+def delete_update_query(item_id):
+    query = """mutation {
+        delete_update (id: %s) {
+            id
+        }
+    }""" % (
+        item_id
+    )
+
+    return query
+
+
 def get_updates_for_item_query(board, item, limit):
     query = '''query 
     {boards (ids: %s) 
