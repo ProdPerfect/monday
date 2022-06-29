@@ -1,5 +1,5 @@
 from monday.resources.base import BaseResource
-from monday.query_joins import get_boards_query, get_boards_by_id_query, get_board_items_query, \
+from monday.query_joins import create_board_by_workspace_query, get_boards_query, get_boards_by_id_query, get_board_items_query, \
     get_columns_by_board_query
 
 
@@ -21,4 +21,8 @@ class BoardResource(BaseResource):
 
     def fetch_columns_by_board_id(self, board_ids):
         query = get_columns_by_board_query(board_ids)
+        return self.client.execute(query)
+
+    def create_board(self, board_name, board_kind, workspace_id):
+        query = create_board_by_workspace_query(board_name, board_kind, workspace_id)
         return self.client.execute(query)

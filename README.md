@@ -61,6 +61,8 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 - `fetch_items_by_board_id([board_ids])` - Get all items on a board(s). Accepts a comma separated list of board ids.
 
+- `create_board(board_name, board_kind, workspace_id)` - Create board with the given name and kind by (and optional) workspace id.
+
 
 #### Users Resource (monday.users)
 - `fetch_users(**kwargs)` - Fetch user information associated with an account. See Monday API docs for a list of accepted keyword arguments.

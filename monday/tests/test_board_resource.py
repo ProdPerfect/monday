@@ -1,5 +1,5 @@
 from monday.tests.test_case_resource import BaseTestCase
-from monday.query_joins import get_boards_query, get_boards_by_id_query, get_board_items_query, \
+from monday.query_joins import create_board_by_workspace_query, get_boards_query, get_boards_by_id_query, get_board_items_query, \
     get_columns_by_board_query
 
 
@@ -22,3 +22,13 @@ class BoardTestCase(BaseTestCase):
     def test_get_columns_by_board_query(self):
         query = get_columns_by_board_query(board_ids=self.board_id)
         self.assertIn(str(self.board_id), query)
+
+    def test_create_board_by_workspace_query(self):
+        query_a = create_board_by_workspace_query(board_name=self.board_name, board_kind=self.board_kind, workspace_id=self.workspace_id)
+        self.assertIn(str(self.board_name), query_a)
+        self.assertIn(str(self.board_kind), query_a)
+        self.assertIn(str(self.workspace_id), query_a)
+        query_b = create_board_by_workspace_query(board_name=self.board_name, board_kind=self.board_kind)
+        self.assertIn(str(self.board_name), query_b)
+        self.assertIn(str(self.board_kind), query_b)
+        self.assertNotIn(str(self.workspace_id), query_b)
