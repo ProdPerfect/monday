@@ -140,6 +140,75 @@ def delete_item_query(item_id):
     return query
 
 
+# COLUMNS RESOURCE QUERIES
+def create_column(
+    board_id: int, column_title: str, column_type: ColumnTypes = None, defaults: Dict[str, Any] = None, description: str = None
+):
+    """C```reate a new column by board ID
+
+    Args:
+        board_id [int]: Board ID
+        column_title [str]: Column's title
+        column_type [ColumnTypes]: Column's type
+        defaults [Dict[str,Any]]: Default value
+        description [str]: Column's description
+
+    Return:
+        [Dict[str,Any]]: Column's Monday details after creation
+    """
+    defaults = defaults if defaults else ""
+    description = description if description else ""
+
+    if not column_type:
+        query = """mutation{
+            create_column(board_id: %s, title: "%s") {
+                id
+                title
+                description
+            }
+        }""" % (
+            board_id,
+            column_title,
+        )
+    else:
+
+        query = """mutation{
+            create_column(board_id: %s, title: "%s", description: "%s", column_type: %s, defaults: %s) {
+                id
+                title
+                description
+            }
+        }""" % (
+            board_id,
+            column_title,
+            description,
+            column_type,
+            monday_json_stringify(defaults),
+        )
+
+    return query
+
+
+def get_columns_by_board_query(board_ids):
+    return '''query
+        {
+            boards(ids: %s) {
+                id
+                name
+                groups {
+                    id
+                    title
+                }
+                columns {
+                    title
+                    id
+                    type
+                    settings_str
+                 }
+            }
+        }''' % board_ids
+
+
 def update_multiple_column_values_query(board_id, item_id, column_values, create_labels_if_missing):
     query = '''mutation
         {
