@@ -9,6 +9,7 @@ from .groups import GroupResource
 from .complexity import ComplexityResource
 from .workspaces import WorkspaceResource
 from .notification import NotificationResource
+from .me import MeResource
 
 __all__ = [
     'CustomResource',
@@ -22,4 +23,5 @@ __all__ = [
     'ComplexityResource',
     'WorkspaceResource',
     'NotificationResource',
+    'MeResource',
 ]

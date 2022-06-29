@@ -19,6 +19,7 @@ from .resources import (
     ComplexityResource,
     WorkspaceResource,
     NotificationResource,
+    MeResource,
 )
 
 
@@ -38,6 +39,7 @@ class MondayClient:
         self.complexity = ComplexityResource(token=token)
         self.workspaces = WorkspaceResource(token=token)
         self.notifications = NotificationResource(token=token)
+        self.me = MeResource(token=token)
 
     def __str__(self):
         return f'MondayClient {__version__}'
