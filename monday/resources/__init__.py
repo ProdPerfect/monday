@@ -1,3 +1,4 @@
+from .custom import CustomResource
 from .items import ItemResource
 from .columns import ColumnsResource
 from .updates import UpdateResource
@@ -10,13 +11,15 @@ from .workspaces import WorkspaceResource
 from .notification import NotificationResource
 
 __all__ = [
-    "ItemResource",
-    "ColumnsResource",
-    "UpdateResource",
-    "TagResource",
-    "BoardResource",
-    "UserResource",
-    "GroupResource",
-    "ComplexityResource",
-    "WorkspaceResource"
+    'CustomResource',
+    'ItemResource',
+    'ColumnsResource',
+    'UpdateResource',
+    'TagResource',
+    'BoardResource',
+    'UserResource',
+    'GroupResource',
+    'ComplexityResource',
+    'WorkspaceResource',
+    'NotificationResource',
 ]
