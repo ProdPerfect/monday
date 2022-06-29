@@ -1,4 +1,5 @@
 from .items import ItemResource
+from .columns import ColumnsResource
 from .updates import UpdateResource
 from .tags import TagResource
 from .boards import BoardResource
@@ -8,4 +9,14 @@ from .complexity import ComplexityResource
 from .workspaces import WorkspaceResource
 from .notification import NotificationResource
 
-__all__ = ['ItemResource', 'UpdateResource', 'TagResource', 'BoardResource', 'UserResource', 'GroupResource', 'ComplexityResource', 'WorkspaceResource', 'NotificationResource']
+__all__ = [
+    "ItemResource",
+    "ColumnsResource",
+    "UpdateResource",
+    "TagResource",
+    "BoardResource",
+    "UserResource",
+    "GroupResource",
+    "ComplexityResource",
+    "WorkspaceResource"
+]
