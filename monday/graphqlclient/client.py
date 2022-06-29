@@ -1,3 +1,4 @@
+from monday.exceptions import MondayQueryError
 import requests
 import json
 
@@ -35,7 +36,15 @@ class GraphQLClient:
         try:
             response = requests.request("POST", self.endpoint, headers=headers, data=payload, files=files)
             response.raise_for_status()
+            self._catch_error(response)
             return response.json()
         except requests.HTTPError as e:
             print(e)
             raise e
+        except MondayQueryError as ex:
+            print(ex)
+            raise ex
+
+    def _catch_error(self, response):
+        if 'errors' in response.json():
+            raise MondayQueryError(response.json()['errors'][0]['message'])
