@@ -7,7 +7,18 @@ monday.client
 """
 
 from .__version__ import __version__
-from .resources import ItemResource, UpdateResource, TagResource, BoardResource, UserResource, GroupResource, ComplexityResource, WorkspaceResource, NotificationResource
+from .resources import (
+    CustomResource,
+    ItemResource,
+    UpdateResource,
+    TagResource,
+    BoardResource,
+    UserResource,
+    GroupResource,
+    ComplexityResource,
+    WorkspaceResource,
+    NotificationResource,
+)
 
 
 class MondayClient:
@@ -15,6 +26,7 @@ class MondayClient:
         """
         :param token: API Token for the new :class:`BaseResource` object.
         """
+        self.custom = CustomResource(token=token)
         self.items = ItemResource(token=token)
         self.updates = UpdateResource(token=token)
         self.tags = TagResource(token=token)
