@@ -47,6 +47,14 @@ class BoardResource(BaseResource):
         query = create_board_by_workspace_query(board_name, board_kind, workspace_id)
         return self.client.execute(query)
 
-    def duplicate_board(self, board_id: int, duplicate_type: DuplicateTypes):
-        query = duplicate_board_query(board_id, duplicate_type)
+    def duplicate_board(
+        self,
+        board_id: int,
+        duplicate_type: DuplicateTypes,
+        board_name: str = None,
+        workspace_id: int = None,
+        folder_id: int = None,
+        keep_subscribers: bool = None,
+    ):
+        query = duplicate_board_query(board_id, duplicate_type, board_name, workspace_id, folder_id, keep_subscribers)
         return self.client.execute(query)
