@@ -337,25 +337,44 @@ def get_boards_by_id_query(board_ids):
     }''' % board_ids
 
 
-def get_columns_by_board_query(board_ids):
-    return '''query
-        {
-            boards(ids: %s) {
-                id
-                name
-                groups {
-                    id
-                    title
-                }
-                columns {
-                    title
-                    id
-                    type
-                    settings_str
-                 }
-            }
-        }''' % board_ids
+def duplicate_board_query(
+    board_id: int,
+    duplicate_type: DuplicateTypes,
+    board_name: str = None,
+    workspace_id: int = None,
+    folder_id: int = None,
+    keep_subscribers: bool = None,
+) -> str:
+    board_name = board_name if board_name else ""
+    workspace_id = workspace_id if workspace_id else None
+    folder_id = folder_id if folder_id else None
+    keep_subscribers = keep_subscribers if keep_subscribers else False
 
+    params = """board_id: %s, duplicate_type: %s, board_name: \"%s\"""" % (
+        board_id,
+        duplicate_type.value,
+        board_name,
+    )
+
+    if workspace_id:
+        params += """,  workspace_id: %s"""
+
+    query = """
+    mutation {
+        duplicate_board(%s) {
+            board {
+                id
+                groups{
+                    id
+                }
+            }
+        }
+    }
+    """ % (
+        params
+    )
+
+    return query
 
 def duplicate_board_query(board_id: int, duplicate_type: DuplicateTypes):
     query = """

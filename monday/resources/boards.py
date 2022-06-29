@@ -24,6 +24,15 @@ class BoardResource(BaseResource):
         query = get_columns_by_board_query(board_ids)
         return self.client.execute(query)
 
-    def duplicate_board(self, board_id: int, duplicate_type: DuplicateTypes):
-        query = duplicate_board_query(board_id, duplicate_type)
+    def duplicate_board(
+        self,
+        board_id: int,
+        duplicate_type: DuplicateTypes,
+        board_name: str = None,
+        workspace_id: int = None,
+        folder_id: int = None,
+        keep_subscribers: bool = None,
+    ):
+        query = duplicate_board_query(board_id, duplicate_type, board_name, workspace_id, folder_id, keep_subscribers)
+        return self.client.execute(query)
         return self.client.execute(query)
