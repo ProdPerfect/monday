@@ -127,6 +127,30 @@ def update_item_query(board_id, item_id, column_id, value):
     return query
 
 
+def move_item_to_group_query(item_id, group_id):
+    query = '''
+    mutation
+    {
+        move_item_to_group (item_id: %s, group_id: %s)
+        {
+            id
+        }
+    }''' % (item_id, group_id)
+    return query
+
+
+def archive_item_query(item_id):
+    query = '''
+    mutation
+    {
+        archive_item (item_id: %s)
+        {
+            id
+        }
+    }''' % item_id
+    return query
+
+
 def delete_item_query(item_id):
     query = '''
     mutation
@@ -189,7 +213,7 @@ def create_update_query(item_id, update_value):
 
 
 def get_updates_for_item_query(board, item, limit):
-    query = '''query 
+    query = '''query
     {boards (ids: %s) 
         {items (ids: %s) {
             updates (limit: %s) {
