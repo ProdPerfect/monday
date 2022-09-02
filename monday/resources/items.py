@@ -1,6 +1,7 @@
 from monday.resources.base import BaseResource
 from monday.query_joins import mutate_item_query, get_item_query, update_item_query, get_item_by_id_query, \
-    update_multiple_column_values_query, mutate_subitem_query, add_file_to_column_query, delete_item_query
+    update_multiple_column_values_query, mutate_subitem_query, add_file_to_column_query, delete_item_query, \
+    archive_item_query, move_item_to_group_query
 
 
 class ItemResource(BaseResource):
@@ -40,6 +41,14 @@ class ItemResource(BaseResource):
         query = add_file_to_column_query(item_id, column_id)
         return self.file_upload_client.execute(query, variables={'file': file})
 
+    def move_item_to_group(self, item_id, group_id):
+        query = move_item_to_group_query(item_id, group_id)
+        return self.client.execute(query)
+
+    def archive_item_by_id(self, item_id):
+        query = archive_item_query(item_id)
+        return self.client.execute(query)
+    
     def delete_item_by_id(self, item_id):
         query = delete_item_query(item_id)
         return self.client.execute(query)

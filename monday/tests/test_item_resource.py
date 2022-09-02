@@ -1,6 +1,7 @@
 from monday.tests.test_case_resource import BaseTestCase
 from monday.query_joins import mutate_item_query, get_item_query, update_item_query, get_item_by_id_query, \
-    update_multiple_column_values_query, mutate_subitem_query, add_file_to_column_query, delete_item_query
+    update_multiple_column_values_query, mutate_subitem_query, add_file_to_column_query, delete_item_query, \
+    archive_item_query, move_item_to_group_query
 from monday.utils import monday_json_stringify
 
 
@@ -68,3 +69,20 @@ class ItemTestCase(BaseTestCase):
                 id
             }
         }'''.replace(" ", ""), query.replace(" ", ""))
+        
+    def test_archive_item_by_id(self):
+        query = archive_item_query(item_id=self.item_id)
+        self.assertIn(str(self.item_id), query)
+        self.assertEqual('''
+        mutation
+        {
+            archive_item (item_id: 24)
+            {
+                id
+            }
+        }'''.replace(" ", ""), query.replace(" ", ""))
+
+    def test_move_item_to_group_query(self):
+        query = move_item_to_group_query(item_id=self.item_id, group_id=self.group_id)
+        self.assertIn(str(self.item_id), query)
+        self.assertIn(str(self.group_id), query)
