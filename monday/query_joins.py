@@ -89,6 +89,7 @@ def get_item_by_id_query(ids):
     query = '''query
         {
             items (ids: %s) {
+                id,
                 name,
                 group {
                     id
