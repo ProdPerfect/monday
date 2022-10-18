@@ -53,7 +53,14 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 
 #### Boards Resource (monday.boards)
-- `fetch_boards(**kwargs)` - Fetch boards associated with an account. Returns boards and their groups, tags, and columns. Accepts keyword arguments. See Monday API docs for a list of accepted keyword arguments.
+- `fetch_boards(**kwargs)` - Fetch boards associated with an account. Returns boards and their groups, tags, and columns. Accepts keyword arguments:
+    - `limit` - The number of boards returned (*int*. Default is 25).
+    - `page` - The page number returned, should you implement pagination(*int*. Starts at 1).
+    - `ids` - A list of the unique board identifier(s) (*List[int]*).
+    - `board_kind` - The board's kind (*BoardKind*. public / private / share).
+    - `state` - The state of the board (*BoardState*. all / active / archived / deleted. Default is active).
+    - `order_by` - The order in which to retrieve your boards (*BoardsOrderBy*. created_at / used_at).
+    
 
 - `fetch_boards_by_id([board_ids])` - Since Monday does not allow querying boards by name, you can use `fetch_boards` to get a list of boards, and then `fetch_boards_by_id` to get more detailed info about the groups and columns on that board. Accepts a comma separated list of board ids.
 
