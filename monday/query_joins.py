@@ -1,4 +1,5 @@
 import json
+from monday.resources.types import BoardKind
 
 from monday.utils import monday_json_stringify
 
@@ -356,7 +357,7 @@ def get_columns_by_board_query(board_ids):
         }''' % board_ids
 
 
-def create_board_by_workspace_query(board_name, board_kind, workspace_id = None):
+def create_board_by_workspace_query(board_name: str, board_kind: BoardKind, workspace_id = None) -> str:
     workspace_query = f'workspace_id: {workspace_id}' if workspace_id else ''
     query = '''
     mutation {
