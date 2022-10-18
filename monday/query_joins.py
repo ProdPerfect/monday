@@ -376,21 +376,6 @@ def duplicate_board_query(
 
     return query
 
-def duplicate_board_query(board_id: int, duplicate_type: DuplicateTypes):
-    query = """
-    mutation {
-        duplicate_board(board_id: %s, duplicate_type: %s) {
-            board {
-                id
-            }
-        }
-    }
-    """ % (
-        board_id,
-        duplicate_type.value,
-    )
-    return query
-
 
 def create_board_by_workspace_query(board_name, board_kind, workspace_id = None):
     workspace_query = f'workspace_id: {workspace_id}' if workspace_id else ''
