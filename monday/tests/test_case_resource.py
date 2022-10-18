@@ -1,5 +1,7 @@
 import unittest
 
+from monday.resources.types import BoardKind
+
 
 class BaseTestCase(unittest.TestCase):
 
@@ -9,7 +11,7 @@ class BaseTestCase(unittest.TestCase):
         self.item_id = 24
         self.board_name = "my_board"
         self.board_id = 12
-        self.board_kind = "public"
+        self.board_kind = BoardKind.PUBLIC.value
         self.group_id = 7
         self.column_id = "file_column"
         self.user_ids = [1287123, 1230919]
