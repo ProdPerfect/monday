@@ -1,5 +1,5 @@
-import json
 from enum import Enum
+import json
 from typing import List, Union, Optional
 from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateTypes
 
@@ -418,72 +418,6 @@ def duplicate_board_query(
         params
     )
 
-    return query
-
-def duplicate_board_query(
-    board_id: int,
-    duplicate_type: DuplicateTypes,
-    board_name: str = "",
-    workspace_id: Union[int, None] = None,
-    folder_id: Union[int, None] = None,
-    keep_subscribers: bool = False,
-) -> str:
-    params = """board_id: %s, duplicate_type: %s, board_name: \"%s\", keep_subscribers: %s""" % (
-        board_id,
-        duplicate_type.value,
-        board_name,
-        keep_subscribers,
-    )
-
-    if folder_id:
-        params += f",  folder_id: {folder_id}"
-
-    if workspace_id:
-        params += f",  workspace_id: {workspace_id}"
-
-    query = """
-    mutation {
-        duplicate_board(%s) {
-            board {
-                id
-                groups{
-                    id
-                }
-            }
-        }
-    }
-    """ % (
-        params
-    )
-
-    return query
-
-
-def create_board_by_workspace_query(board_name: str, board_kind: BoardKind, workspace_id = None) -> str:
-    workspace_query = f'workspace_id: {workspace_id}' if workspace_id else ''
-    query = '''
-    mutation {
-        create_board (board_name:"%s", board_kind: %s, %s) {
-            id
-        }
-    }
-    ''' % (board_name, board_kind.value, workspace_query)
-    return query
-
-
-def duplicate_board_query(board_id: int, duplicate_type: DuplicateTypes):
-    query = """
-    mutation {
-        duplicate_board(board_id: %s, duplicate_type: %s) {
-            board {
-                id
-            }
-        }
-    }
-    """ % (
-        board_id,
-        duplicate_type.value,
-    )
     return query
 
 

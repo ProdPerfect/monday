@@ -52,19 +52,6 @@ class BoardTestCase(BaseTestCase):
         query = get_columns_by_board_query(board_ids=self.board_id)
         self.assertIn(str(self.board_id), query)
 
-    def test_duplicate_board_query(self):
-        query_a = duplicate_board_query(board_id=self.board_id, duplicate_type=self.duplicate_type)
-        self.assertIn(str(self.board_id), query_a)
-        self.assertNotIn(str(self.duplicate_type), query_a)
-        self.assertIn(str(self.duplicate_type.value), query_a)
-        query_b = duplicate_board_query(board_id=self.board_id, duplicate_type=self.duplicate_type, board_name='testing_name', workspace_id=self.workspace_id, folder_id=self.folder_id)
-        self.assertIn(str(self.board_id), query_b)
-        self.assertNotIn(str(self.duplicate_type), query_b)
-        self.assertIn(str(self.duplicate_type.value), query_b)
-        self.assertIn(str('testing_name'), query_b)
-        self.assertIn(self.workspace_id, query_b)
-        self.assertIn(self.folder_id, query_b)
-
     def test_create_board_by_workspace_query(self):
         query_a = create_board_by_workspace_query(board_name=self.board_name, board_kind=self.board_kind, workspace_id=self.workspace_id)
         self.assertIn(str(self.board_name), query_a)
@@ -78,12 +65,23 @@ class BoardTestCase(BaseTestCase):
         self.assertNotIn(str(self.workspace_id), query_b)
 
     def test_duplicate_board_query(self):
-        query = duplicate_board_query(board_id=self.board_id, duplicate_type=self.duplicate_type)
-        self.assertIn(str(self.board_id), query)
-        self.assertNotIn(str(self.duplicate_type), query)
-        self.assertIn(str(self.duplicate_type.value), query)
-        self.assertIn(str(self.board_kind), query)
-        self.assertIn(str(self.workspace_id), query)
+        query_a = duplicate_board_query(board_id=self.board_id, duplicate_type=self.duplicate_type)
+        self.assertIn(str(self.board_id), query_a)
+        self.assertNotIn(str(self.duplicate_type), query_a)
+        self.assertIn(str(self.duplicate_type.value), query_a)
+        query_b = duplicate_board_query(board_id=self.board_id, duplicate_type=self.duplicate_type, board_name='testing_name', workspace_id=1, folder_id=2)
+        self.assertIn(str(self.board_id), query_b)
+        self.assertNotIn(str(self.duplicate_type), query_b)
+        self.assertIn(str(self.duplicate_type.value), query_b)
+        self.assertIn(str('testing_name'), query_b)
+        self.assertIn(str(1), query_b)
+        self.assertIn(str(2), query_b)
+
+    def test_create_board_by_workspace_query(self):
+        query_a = create_board_by_workspace_query(board_name=self.board_name, board_kind=self.board_kind, workspace_id=self.workspace_id)
+        self.assertIn(str(self.board_name), query_a)
+        self.assertIn(str(self.board_kind), query_a)
+        self.assertIn(str(self.workspace_id), query_a)
         query_b = create_board_by_workspace_query(board_name=self.board_name, board_kind=self.board_kind)
         self.assertIn(str(self.board_name), query_b)
         self.assertIn(str(self.board_kind), query_b)
