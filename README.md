@@ -85,7 +85,7 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 - `create_board(board_name, board_kind, workspace_id)` - Create board with the given name and kind by (and optional) workspace id.
 
-- `duplicate_board(board_id, duplicate_type)` - Duplicate a board by its id. It requires a duplication type to be chosen (*duplicate_board_with_structure / duplicate_board_with_pulses / duplicate_board_with_pulses_and_updates*).
+- `duplicate_board(board_id, duplicate_type, board_name, workspace_id, folder_id, keep_subscribers)` - Duplicate a board by its id. It requires a duplication type to be chosen (*duplicate_board_with_structure / duplicate_board_with_pulses / duplicate_board_with_pulses_and_updates*). Optionaly you can use `board_name` (*String*) to give it a new name, also the destination `workspace_id` (*Int*. Defaults to the original board's workspace) and the destination `folder_id` (*Int*. Defaults to originals board's folder) within the destination workspace. *Note: The folder_id is required if you are duplicating to another workspace. Optional otherwise.* Finally, you can make use of `keep_subscribers` (*Boolean*. Defaults to false) to duplicate the subscribers to the new board.
 
 - `create_board(board_name, board_kind, workspace_id)` - Create board with the given name and kind by (and optional) workspace id.
 
