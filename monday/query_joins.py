@@ -1,4 +1,7 @@
+from enum import Enum
 import json
+from typing import List
+from monday.resources.types import BoardKind, BoardState, BoardsOrderBy
 
 from monday.utils import monday_json_stringify
 
@@ -311,7 +314,18 @@ def get_board_items_query(board_id):
     return query
 
 
-def get_boards_query(**kwargs):
+def get_boards_query(limit: int = None, page: int = None, ids: List[int] = None, board_kind: BoardKind = None, state: BoardState = None, order_by: BoardsOrderBy = None):
+    parameters = locals().items()
+    query_params = []
+    for k, v in parameters:
+        if v is not None:
+            value = v
+            if isinstance(v, Enum):
+                value = v.value
+
+            query_params.append("%s: %s" % (k, value))
+
+
     query = '''query
     {
         boards (%s) {
@@ -332,7 +346,8 @@ def get_boards_query(**kwargs):
                 type
             }
         }
-    }''' % ', '.join(["%s: %s" % (arg, kwargs.get(arg)) for arg in kwargs])
+    }''' % ', '.join(query_params)
+
     return query
 
 
@@ -379,6 +394,18 @@ def get_columns_by_board_query(board_ids):
                  }
             }
         }''' % board_ids
+
+
+def create_board_by_workspace_query(board_name: str, board_kind: BoardKind, workspace_id = None) -> str:
+    workspace_query = f'workspace_id: {workspace_id}' if workspace_id else ''
+    query = '''
+    mutation {
+        create_board (board_name:"%s", board_kind: %s, %s) {
+            id
+        }
+    }
+    ''' % (board_name, board_kind.value, workspace_query)
+    return query
 
 
 # USER RESOURCE QUERIES
