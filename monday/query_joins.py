@@ -395,6 +395,22 @@ def get_columns_by_board_query(board_ids):
             }
         }''' % board_ids
 
+def get_subcolumns_by_item_query(board_id, item_id):
+    return '''query
+        {
+            boards(ids: %s) {
+                items (ids:%s){
+                    subitems {
+                        column_values {
+                        id
+                        title
+                        }
+                    }
+                }
+            }
+        }''' % (board_id, item_id)
+
+
 
 def create_board_by_workspace_query(board_name: str, board_kind: BoardKind, workspace_id = None) -> str:
     workspace_query = f'workspace_id: {workspace_id}' if workspace_id else ''
@@ -447,7 +463,7 @@ def get_items_by_group_query(board_id, group_id):
     query = '''query
     {
         boards(ids: %s) {
-            groups(ids: "%s") {
+            groups(ids: %s) {
                 id
                 title
                 items {
@@ -457,6 +473,22 @@ def get_items_by_group_query(board_id, group_id):
             }
         }
     }''' % (board_id, group_id)
+    return query
+
+def get_subitems_by_item_query(board_id, item_id):
+    query = '''query
+    {
+        boards(ids: %s) {
+            items(ids: %s) {
+                id
+                name
+                subitems {
+                    id
+                    name
+                }
+            }
+        }
+    }''' % (board_id, item_id)
     return query
 
 

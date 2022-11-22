@@ -3,9 +3,10 @@ import json
 
 
 class GraphQLClient:
-    def __init__(self, endpoint):
+    def __init__(self, endpoint, proxies=None):
         self.endpoint = endpoint
         self.token = None
+        self.proxies = proxies
         self.headername = None
 
     def execute(self, query, variables=None):
@@ -16,7 +17,7 @@ class GraphQLClient:
         self.headername = headername
 
     def _send(self, query, variables):
-        payload = {'query': query}
+        payload = {'query': json.dumps(query)}
         headers = {}
         files = None
 
@@ -26,6 +27,7 @@ class GraphQLClient:
         if variables is None:
             headers['Content-Type'] = 'application/json'
             payload = json.dumps({'query': query}).encode('utf-8')
+            #payload = {'query': json.dumps(query)}
         elif variables.get('file', None) is not None:
             headers['content'] = 'multipart/form-data'
             files = [
@@ -33,7 +35,7 @@ class GraphQLClient:
             ]
 
         try:
-            response = requests.request("POST", self.endpoint, headers=headers, data=payload, files=files)
+            response = requests.request("POST", self.endpoint, headers=headers, data=payload, files=files, proxies=self.proxies)
             response.raise_for_status()
             return response.json()
         except requests.HTTPError as e:

@@ -3,8 +3,8 @@ from monday.query_joins import create_notification_query
 
 
 class NotificationResource(BaseResource):
-    def __init__(self, token):
-        super().__init__(token)
+    def __init__(self, token, proxies):
+        super().__init__(token, proxies)
 
     def create_notification(self, user_id, target_id, text, target_type):
         """
