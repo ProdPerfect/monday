@@ -15,12 +15,26 @@ For an overview of the Monday API, [click here](https://monday.com/developers/v2
 ```python
 from monday import MondayClient
 
-
 monday = MondayClient('your token')
 
 monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a thing')
 
 ```
+`monday` can be used with proxies as well -- take a look at the below example:
+```python
+from monday import MondayClient
+
+proxies = {
+  'http' : 'http://proxy_address.com:001',
+  'https' : 'https://proxy_address.com:001'
+}
+
+monday = MondayClient('your token', proxies=proxies)
+
+monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a thing')
+
+```
+`proxies` takes `None` as default
 
 **Available methods:**
 #### Items Resource (monday.items)

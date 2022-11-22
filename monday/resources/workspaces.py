@@ -5,8 +5,8 @@ from monday.query_joins import (get_workspaces_query, create_workspace_query,
 
 
 class WorkspaceResource(BaseResource):
-    def __init__(self, token):
-        super().__init__(token)
+    def __init__(self, token, proxies):
+        super().__init__(token, proxies)
 
     def get_workspaces(self):
         query = get_workspaces_query()

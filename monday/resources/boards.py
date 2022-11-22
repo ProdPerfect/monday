@@ -11,8 +11,8 @@ from monday.resources.types import BoardKind, BoardState, BoardsOrderBy
 
 
 class BoardResource(BaseResource):
-    def __init__(self, token):
-        super().__init__(token)
+    def __init__(self, token, proxies):
+        super().__init__(token, proxies)
 
     def fetch_boards(self, limit: int = None, page: int = None, ids: List[int] = None, board_kind: BoardKind = None, state: BoardState = None, order_by: BoardsOrderBy = None):
         query = get_boards_query(limit, page, ids, board_kind, state, order_by)
