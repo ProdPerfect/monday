@@ -218,7 +218,7 @@ def create_update_query(item_id, update_value):
 
 def get_updates_for_item_query(board, item, limit):
     query = '''query
-    {boards (ids: %s) 
+    {boards (ids: %s)
         {items (ids: %s) {
             updates (limit: %s) {
                 id,
@@ -235,7 +235,7 @@ def get_updates_for_item_query(board, item, limit):
                   name,
                   url,
                   file_extension,
-                  file_size                  
+                  file_size
                 },
                 replies {
                   id,
@@ -310,6 +310,30 @@ def get_board_items_query(board_id):
             }
         }
     }''' % board_id
+
+    return query
+
+def get_board_items_query_with_limit(board_id: int, limit: int):
+    query = '''query
+    {
+        boards(ids: %s) {
+            name
+            items(limit: %s) {
+                group {
+                    id
+                    title
+                }
+                id
+                name
+                column_values {
+                  id
+                  text
+                  type
+                  value
+                }
+            }
+        }
+    }''' % board_id, limit
 
     return query
 
