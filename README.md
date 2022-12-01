@@ -133,7 +133,9 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
       <td align="center"><a href="https://github.com/lucioseki"><img src="https://avatars.githubusercontent.com/u/1480296?v=4?s=100" width="100px;" alt="Lucio Mitsuru Seki"/><br /><sub><b>Lucio Mitsuru Seki</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=lucioseki" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/yogeshnile"><img src="https://avatars.githubusercontent.com/u/54445087?v=4?s=100" width="100px;" alt="YOGESH NILE"/><br /><sub><b>YOGESH NILE</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=yogeshnile" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/spencersamuel7"><img src="https://avatars.githubusercontent.com/u/20449820?v=4?s=100" width="100px;" alt="spencersamuel7"/><br /><sub><b>spencersamuel7</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=spencersamuel7" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/albcl"><img src="https://avatars.githubusercontent.com/u/17050266?v=4?s=100" width="100px;" alt="Alb. C"/><br /><sub><b>Alb. C</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=albcl" title="Code">💻</a></td>
     </tr>
+    
   </tbody>
 </table>
 
