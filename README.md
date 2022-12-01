@@ -127,7 +127,7 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://github.com/rhymiz"><img src="https://avatars.githubusercontent.com/u/7029352?v=4?s=100" width="100px;" alt="Lemi Boyce"/><br /><sub><b>Lemi Boyce</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=rhymiz" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/rhymiz"><img src="https://avatars.githubusercontent.com/u/7029352?v=4?s=100" width="100px;" alt="Lemi Boyce"/><br /><sub><b>Lemi Boyce</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=rhymiz" title="Code">💻</a> <a href="https://github.com/ProdPerfect/monday/issues?q=author%3Arhymiz" title="Bug reports">🐛</a> <a href="#maintenance-rhymiz" title="Maintenance">🚧</a></td>
       <td align="center"><a href="https://github.com/tonymorello"><img src="https://avatars.githubusercontent.com/u/7967400?v=4?s=100" width="100px;" alt="Tony Morello"/><br /><sub><b>Tony Morello</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=tonymorello" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/chdastolfo"><img src="https://avatars.githubusercontent.com/u/9096407?v=4?s=100" width="100px;" alt="chdastolfo"/><br /><sub><b>chdastolfo</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=chdastolfo" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/lucioseki"><img src="https://avatars.githubusercontent.com/u/1480296?v=4?s=100" width="100px;" alt="Lucio Mitsuru Seki"/><br /><sub><b>Lucio Mitsuru Seki</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=lucioseki" title="Code">💻</a></td>
@@ -135,7 +135,6 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
       <td align="center"><a href="https://github.com/spencersamuel7"><img src="https://avatars.githubusercontent.com/u/20449820?v=4?s=100" width="100px;" alt="spencersamuel7"/><br /><sub><b>spencersamuel7</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=spencersamuel7" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/albcl"><img src="https://avatars.githubusercontent.com/u/17050266?v=4?s=100" width="100px;" alt="Alb. C"/><br /><sub><b>Alb. C</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=albcl" title="Code">💻</a></td>
     </tr>
-    
   </tbody>
 </table>
 
