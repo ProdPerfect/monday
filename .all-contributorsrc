@@ -70,6 +70,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "pevner-p2",
+      "name": "pevner-p2",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45570949?v=4",
+      "profile": "https://github.com/pevner-p2",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
