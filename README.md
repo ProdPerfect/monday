@@ -1,4 +1,7 @@
 # monday
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 A monday.com Python Client Library
 
 
@@ -113,6 +116,20 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/rhymiz"><img src="https://avatars.githubusercontent.com/u/7029352?v=4?s=100" width="100px;" alt="Lemi Boyce"/><br /><sub><b>Lemi Boyce</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=rhymiz" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
