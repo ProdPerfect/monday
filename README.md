@@ -1,6 +1,6 @@
 # monday
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 A monday.com Python Client Library
 
@@ -126,6 +126,7 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
       <td align="center"><a href="https://github.com/chdastolfo"><img src="https://avatars.githubusercontent.com/u/9096407?v=4?s=100" width="100px;" alt="chdastolfo"/><br /><sub><b>chdastolfo</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=chdastolfo" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/lucioseki"><img src="https://avatars.githubusercontent.com/u/1480296?v=4?s=100" width="100px;" alt="Lucio Mitsuru Seki"/><br /><sub><b>Lucio Mitsuru Seki</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=lucioseki" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/yogeshnile"><img src="https://avatars.githubusercontent.com/u/54445087?v=4?s=100" width="100px;" alt="YOGESH NILE"/><br /><sub><b>YOGESH NILE</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=yogeshnile" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/spencersamuel7"><img src="https://avatars.githubusercontent.com/u/20449820?v=4?s=100" width="100px;" alt="spencersamuel7"/><br /><sub><b>spencersamuel7</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=spencersamuel7" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
