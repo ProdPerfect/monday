@@ -116,8 +116,16 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 - [Read and format all of the items on a board](https://github.com/ProdPerfect/monday/wiki/Code-Examples#whole-board-formatting-example)
 
-### Contributions
-TBD
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ### Bug Reports
 TBD 
