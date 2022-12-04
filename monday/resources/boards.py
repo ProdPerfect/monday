@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from monday.resources.base import BaseResource
 from monday.query_joins import (
     get_boards_query,
@@ -22,8 +22,8 @@ class BoardResource(BaseResource):
         query = get_boards_by_id_query(board_ids)
         return self.client.execute(query)
 
-    def fetch_items_by_board_id(self, board_ids):
-        query = get_board_items_query(board_ids)
+    def fetch_items_by_board_id(self, board_ids, limit: Optional[int]=None, page: Optional[int]=None):
+        query = get_board_items_query(board_ids, limit=limit, page=page)
         return self.client.execute(query)
 
     def fetch_columns_by_board_id(self, board_ids):
