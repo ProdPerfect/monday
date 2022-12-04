@@ -41,7 +41,7 @@ class BoardTestCase(BaseTestCase):
         page = 1
         query = get_board_items_query(board_id=self.board_id, limit=limit, page=page)
         self.assertIn(str(self.board_id), query)
-        items_line = f'items(limit: {limit} page: {page})'
+        items_line = f'items(limit: {limit}, page: {page})'
         self.assertIn(items_line, query)
 
     def test_get_columns_by_board_query(self):

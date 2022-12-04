@@ -289,20 +289,22 @@ def get_tags_query(tags):
 
 
 # BOARD RESOURCE QUERIES
-def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None, pagination: Optional[bool] = None) -> str:
-    def _gather_params(params):
-        valid_params: list[str] = []
+def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None, page: Optional[int] = None) -> str:
+    def _gather_params(params) -> List[str]:
+        valid_params: List[str] = []
         for param, value in params:
-            if value is None or param == 'board_id':
+            if value is None or param in ['board_id', '_gather_params']:
                 continue
             if isinstance(value, Enum):
                 valid_params.append(f"{param}: {value.value}")
                 continue
 
             valid_params.append(f"{param}: {value}")
+        return valid_params
 
     raw_params = locals().items()
     item_params = _gather_params(raw_params)
+    joined_params = ', '.join(item_params)
 
     query = '''query
     {
@@ -323,7 +325,7 @@ def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None
                 }
             }
         }
-    }''' % (board_id, item_params)
+    }''' % (board_id, joined_params)
 
     return query
 
