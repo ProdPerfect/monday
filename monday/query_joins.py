@@ -1,6 +1,6 @@
 from enum import Enum
 import json
-from typing import List
+from typing import List, Union, Optional
 from monday.resources.types import BoardKind, BoardState, BoardsOrderBy
 
 from monday.utils import monday_json_stringify
@@ -218,7 +218,7 @@ def create_update_query(item_id, update_value):
 
 def get_updates_for_item_query(board, item, limit):
     query = '''query
-    {boards (ids: %s) 
+    {boards (ids: %s)
         {items (ids: %s) {
             updates (limit: %s) {
                 id,
@@ -235,7 +235,7 @@ def get_updates_for_item_query(board, item, limit):
                   name,
                   url,
                   file_extension,
-                  file_size                  
+                  file_size
                 },
                 replies {
                   id,
@@ -289,12 +289,26 @@ def get_tags_query(tags):
 
 
 # BOARD RESOURCE QUERIES
-def get_board_items_query(board_id):
+def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None, pagination: Optional[bool] = None) -> str:
+    def _gather_params(params):
+        valid_params: list[str] = []
+        for param, value in params:
+            if value is None or param == 'board_id':
+                continue
+            if isinstance(value, Enum):
+                valid_params.append(f"{param}: {value.value}")
+                continue
+
+            valid_params.append(f"{param}: {value}")
+
+    raw_params = locals().items()
+    item_params = _gather_params(raw_params)
+
     query = '''query
     {
         boards(ids: %s) {
             name
-            items {
+            items(%s) {
                 group {
                     id
                     title
@@ -309,7 +323,7 @@ def get_board_items_query(board_id):
                 }
             }
         }
-    }''' % board_id
+    }''' % (board_id, item_params)
 
     return query
 
