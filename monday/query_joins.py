@@ -3,7 +3,7 @@ import json
 from typing import List, Union, Optional
 from monday.resources.types import BoardKind, BoardState, BoardsOrderBy
 
-from monday.utils import monday_json_stringify
+from monday.utils import monday_json_stringify, gather_params
 
 
 # Eventually I will organize this file better but you know what today is not that day.
@@ -290,20 +290,9 @@ def get_tags_query(tags):
 
 # BOARD RESOURCE QUERIES
 def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None, page: Optional[int] = None) -> str:
-    def _gather_params(params) -> List[str]:
-        valid_params: List[str] = []
-        for param, value in params:
-            if value is None or param in ['board_id', '_gather_params']:
-                continue
-            if isinstance(value, Enum):
-                valid_params.append(f"{param}: {value.value}")
-                continue
-
-            valid_params.append(f"{param}: {value}")
-        return valid_params
 
     raw_params = locals().items()
-    item_params = _gather_params(raw_params)
+    item_params = gather_params(raw_params, exclusion_list=["board_id"])
     joined_params = ', '.join(item_params)
 
     query = '''query
