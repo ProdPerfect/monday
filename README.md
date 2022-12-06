@@ -72,10 +72,10 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 - `fetch_boards_by_id([board_ids])` - Since Monday does not allow querying boards by name, you can use `fetch_boards` to get a list of boards, and then `fetch_boards_by_id` to get more detailed info about the groups and columns on that board. Accepts a comma separated list of board ids.
 
 - `fetch_columns_by_board_id([board_ids])` - Get all columns, as well as their ids, types, and settings. Accepts a comma separated list of board ids.
-    - `limit` - The number of rows returned (*int*. no default).
-    - `page` - The page number returned, should you implement pagination(*int*. no default).
 
 - `fetch_items_by_board_id([board_ids], **kwargs)` - Get all items on a board(s). Accepts a comma separated list of board ids.
+    - `limit` - The number of rows returned (*int*. no default).
+    - `page` - The page number returned, should you implement pagination(*int*. no default).
 
 - `create_board(board_name, board_kind, workspace_id)` - Create board with the given name and kind by (and optional) workspace id.
 
