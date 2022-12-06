@@ -39,9 +39,10 @@ class BoardTestCase(BaseTestCase):
     def test_get_board_items_query(self):
         query = get_board_items_query(board_id=self.board_id)
         self.assertIn(str(self.board_id), query)
-        items_line = f'items()'
+        items_line = 'items()'
         self.assertIn(items_line, query)
 
+    def test_get_board_items_query_with_limit_and_pages(self):
         limit = 100
         page = 1
         query = get_board_items_query(board_id=self.board_id, limit=limit, page=page)
