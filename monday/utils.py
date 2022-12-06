@@ -1,4 +1,6 @@
 import json
+from typing import List
+from enum import Enum
 
 
 def monday_json_stringify(value):
@@ -9,3 +11,15 @@ def monday_json_stringify(value):
     # "{\"label\":\"Done\"}"
 
     return json.dumps(json.dumps(value))
+
+
+def gather_params(params, exclusion_list:  List[str]) -> List[str]:
+    valid_params: List[str] = []
+    for param, value in params:
+        if value is None or param in exclusion_list:
+            continue
+        if isinstance(value, Enum):
+            valid_params.append(f"{param}: {value.value}")
+            continue
+        valid_params.append(f"{param}: {value}")
+    return valid_params
