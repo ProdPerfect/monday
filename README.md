@@ -67,13 +67,15 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
     - `board_kind` - The board's kind (*BoardKind*. public / private / share).
     - `state` - The state of the board (*BoardState*. all / active / archived / deleted. Default is active).
     - `order_by` - The order in which to retrieve your boards (*BoardsOrderBy*. created_at / used_at).
-    
+
 
 - `fetch_boards_by_id([board_ids])` - Since Monday does not allow querying boards by name, you can use `fetch_boards` to get a list of boards, and then `fetch_boards_by_id` to get more detailed info about the groups and columns on that board. Accepts a comma separated list of board ids.
 
 - `fetch_columns_by_board_id([board_ids])` - Get all columns, as well as their ids, types, and settings. Accepts a comma separated list of board ids.
 
-- `fetch_items_by_board_id([board_ids])` - Get all items on a board(s). Accepts a comma separated list of board ids.
+- `fetch_items_by_board_id([board_ids], **kwargs)` - Get all items on a board(s). Accepts a comma separated list of board ids.
+    - `limit` - The number of rows returned (*int*. no default).
+    - `page` - The page number returned, should you implement pagination(*int*. no default).
 
 - `duplicate_board(board_id, duplicate_type, board_name, workspace_id, folder_id, keep_subscribers)` - Duplicate a board by its id. It requires a duplication type to be chosen (*duplicate_board_with_structure / duplicate_board_with_pulses / duplicate_board_with_pulses_and_updates*). Optionaly you can use:
     - `board_name` - The duplicated board's name (*string*).
@@ -90,7 +92,7 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 #### Workspaces Resource (monday.workspaces)
 - `get_workspaces()` - Get all workspaces.
 
-- `create_workspace(name, kind, description)` - Create workspace with the given name, kind and description. 
+- `create_workspace(name, kind, description)` - Create workspace with the given name, kind and description.
 
 - `add_users_to_workspace(workspace_id, [user_ids], kind)` - Add given users of the given kind to the given workspace.
 
@@ -114,7 +116,7 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 - `delete_group(board_id, group_id)` - Delete a group on a given board.
 
 #### Notifications Resource (monday.notifications)
-- `create_notification(user_id, target_id, text, target_type)` - The create_notification mutation allows to trigger a notification within the platform (will also send out an email if the recipient's email preferences are set up accordingly). 
+- `create_notification(user_id, target_id, text, target_type)` - The create_notification mutation allows to trigger a notification within the platform (will also send out an email if the recipient's email preferences are set up accordingly).
 ### Additional Resources and Code Samples
 
 - [Read and format all of the items on a board](https://github.com/ProdPerfect/monday/wiki/Code-Examples#whole-board-formatting-example)
@@ -154,4 +156,4 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ### Bug Reports
-TBD 
+TBD
