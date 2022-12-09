@@ -2,6 +2,7 @@ import json
 from enum import Enum
 from typing import List, Union, Optional
 from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateTypes
+
 from monday.utils import monday_json_stringify, gather_params
 
 
