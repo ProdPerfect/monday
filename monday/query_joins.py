@@ -413,10 +413,14 @@ def duplicate_board_query(
         board_id,
         duplicate_type.value,
         board_name,
+        keep_subscribers,
     )
 
+    if folder_id:
+        params += f",  folder_id: {folder_id}"
+
     if workspace_id:
-        params += """,  workspace_id: %s"""
+        params += f",  workspace_id: {workspace_id}"
 
     query = """
     mutation {
