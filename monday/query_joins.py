@@ -404,10 +404,10 @@ def get_columns_by_board_query(board_ids):
 def duplicate_board_query(
     board_id: int,
     duplicate_type: DuplicateTypes,
-    board_name: str = None,
-    workspace_id: int = None,
-    folder_id: int = None,
-    keep_subscribers: bool = None,
+    board_name: str = "",
+    workspace_id: Union[int, None] = None,
+    folder_id: Union[int, None] = None,
+    keep_subscribers: bool = False,
 ) -> str:
     params = """board_id: %s, duplicate_type: %s, board_name: \"%s\", keep_subscribers: %s""" % (
         board_id,
