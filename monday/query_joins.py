@@ -409,12 +409,7 @@ def duplicate_board_query(
     folder_id: int = None,
     keep_subscribers: bool = None,
 ) -> str:
-    board_name = board_name if board_name else ""
-    workspace_id = workspace_id if workspace_id else None
-    folder_id = folder_id if folder_id else None
-    keep_subscribers = keep_subscribers if keep_subscribers else False
-
-    params = """board_id: %s, duplicate_type: %s, board_name: \"%s\"""" % (
+    params = """board_id: %s, duplicate_type: %s, board_name: \"%s\", keep_subscribers: %s""" % (
         board_id,
         duplicate_type.value,
         board_name,
