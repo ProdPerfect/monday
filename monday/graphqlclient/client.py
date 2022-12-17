@@ -3,10 +3,11 @@ import json
 
 
 class GraphQLClient:
-    def __init__(self, endpoint):
+    def __init__(self, endpoint, proxies):
         self.endpoint = endpoint
         self.token = None
         self.headername = None
+        self.proxies = proxies
 
     def execute(self, query, variables=None):
         return self._send(query, variables)
@@ -33,7 +34,7 @@ class GraphQLClient:
             ]
 
         try:
-            response = requests.request("POST", self.endpoint, headers=headers, data=payload, files=files)
+            response = requests.request("POST", self.endpoint, proxies=self.proxies, headers=headers, data=payload, files=files)
             response.raise_for_status()
             return response.json()
         except requests.HTTPError as e:

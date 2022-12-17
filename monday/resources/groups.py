@@ -4,8 +4,8 @@ from monday.query_joins import get_groups_by_board_query, get_items_by_group_que
 
 
 class GroupResource(BaseResource):
-    def __init__(self, token):
-        super().__init__(token)
+    def __init__(self, token, proxies):
+        super().__init__(token, proxies)
 
     def get_groups_by_board(self, board_ids):
         query = get_groups_by_board_query(board_ids=board_ids)

@@ -11,19 +11,19 @@ from .resources import ItemResource, UpdateResource, TagResource, BoardResource,
 
 
 class MondayClient:
-    def __init__(self, token):
+    def __init__(self, token, proxies=none):
         """
         :param token: API Token for the new :class:`BaseResource` object.
         """
-        self.items = ItemResource(token=token)
-        self.updates = UpdateResource(token=token)
-        self.tags = TagResource(token=token)
-        self.boards = BoardResource(token=token)
-        self.users = UserResource(token=token)
-        self.groups = GroupResource(token=token)
-        self.complexity = ComplexityResource(token=token)
-        self.workspaces = WorkspaceResource(token=token)
-        self.notifications = NotificationResource(token=token)
+        self.items = ItemResource(token=token, proxies=proxies)
+        self.updates = UpdateResource(token=token, proxies=proxies)
+        self.tags = TagResource(token=token, proxies=proxies)
+        self.boards = BoardResource(token=token, proxies=proxies)
+        self.users = UserResource(token=token, proxies=proxies)
+        self.groups = GroupResource(token=token, proxies=proxies)
+        self.complexity = ComplexityResource(token=token, proxies=proxies)
+        self.workspaces = WorkspaceResource(token=token, proxies=proxies)
+        self.notifications = NotificationResource(token=token, proxies=proxies)
 
     def __str__(self):
         return f'MondayClient {__version__}'
