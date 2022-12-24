@@ -11,7 +11,7 @@ from .resources import ItemResource, UpdateResource, TagResource, BoardResource,
 
 
 class MondayClient:
-    def __init__(self, token, proxies=none):
+    def __init__(self, token, proxies=None):
         """
         :param token: API Token for the new :class:`BaseResource` object.
         """
