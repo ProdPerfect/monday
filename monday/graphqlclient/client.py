@@ -3,7 +3,7 @@ import json
 
 
 class GraphQLClient:
-    def __init__(self, endpoint, proxies):
+    def __init__(self, endpoint, proxies=None):
         self.endpoint = endpoint
         self.token = None
         self.headername = None
