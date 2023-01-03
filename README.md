@@ -18,8 +18,22 @@ For an overview of the Monday API, [click here](https://monday.com/developers/v2
 ```python
 from monday import MondayClient
 
-
 monday = MondayClient('your token')
+
+monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a thing')
+
+```
+
+It is also possible to use proxy addresses for the workplace -- take a look at the below example:
+```python
+from monday import MondayClient
+
+proxies = {
+	'http' : 'http_address',
+	'https' : 'https_address'
+}
+
+monday = MondayClient('your token', proxies)
 
 monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a thing')
 
@@ -134,7 +148,9 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
     <tr>
       <td align="center"><a href="https://github.com/pevner-p2"><img src="https://avatars.githubusercontent.com/u/45570949?v=4?s=100" width="100px;" alt="pevner-p2"/><br /><sub><b>pevner-p2</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=pevner-p2" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/t-a-y-l-o-r"><img src="https://avatars.githubusercontent.com/u/32030464?v=4?s=100" width="100px;" alt="Taylor Cochran"/><br /><sub><b>Taylor Cochran</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=t-a-y-l-o-r" title="Code">💻</a></td>
-    </tr>
+      <td align="center"><a href="https://github.com/ravid1323"><img src="https://avatars.githubusercontent.com/u/4204232?s=400&v=4?s=100" width="100px;" alt="ravid1323"/><br /><sub><b>Ravid Maduni</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=ravid1323" title="Code">💻</a></td>
+
+	</tr>
   </tbody>
 </table>
 
