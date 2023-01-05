@@ -26,7 +26,7 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 ```
 ### Additional Resources and Code Samples
 
-- Read our [Wiki](https://github.com/ProdPerfect/monday/wiki) for a full list of available resources and methods for interacting with those resources.
+- Read our [docs](https://monday.readthedocs.io/en/latest/) for a full list of available resources and methods for interacting with those resources.
 
 ## Contributors
 
