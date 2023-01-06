@@ -5,7 +5,7 @@
 A monday.com Python Client Library
 
 
-For an overview of the Monday API, [click here](https://monday.com/developers/v2#introduction-section).
+For an overview of the Monday API, [click here](https://developer.monday.com/api-reference/docs).
 
 
 #### Requirements
