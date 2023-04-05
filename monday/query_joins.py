@@ -58,6 +58,37 @@ def mutate_subitem_query(parent_item_id, subitem_name, column_values,
             str(create_labels_if_missing).lower())
 
 
+def mutate_multiple_items_query(items_data):
+    mutation_parts = []
+    for index, item_data in enumerate(items_data):
+        method = item_data.pop('method')
+        params = ', '.join([f"{key}: %s" for key in item_data.keys()])
+        values = [
+            monday_json_stringify(value) if not isinstance(value, (int, bool, str)) else
+            (str(value).lower() if isinstance(value, bool) else
+             f'"{value}"' if isinstance(value, str) else value)
+            for value in item_data.values()
+        ]
+
+        mutation_part = f'''
+            item{index}: {method}({params}) {{
+                id
+                name
+                column_values {{
+                    id
+                    text
+                }}
+            }}
+        ''' % tuple(values)
+
+        mutation_parts.append(mutation_part)
+
+    query = '''mutation {
+        %s
+    }''' % ' '.join(mutation_parts)
+    return query
+
+
 def get_item_query(board_id, column_id, value, limit=None, cursor=None):
     if not isinstance(value, list):
         value = [value]
