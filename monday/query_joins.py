@@ -59,6 +59,37 @@ def mutate_subitem_query(parent_item_id, subitem_name, column_values,
             str(create_labels_if_missing).lower())
 
 
+def mutate_multiple_items_query(items_data):
+    mutation_parts = []
+    for index, item_data in enumerate(items_data):
+        method = item_data.pop('method')
+        params = ', '.join([f"{key}: %s" for key in item_data.keys()])
+        values = [
+            monday_json_stringify(value) if not isinstance(value, (int, bool, str)) else
+            (str(value).lower() if isinstance(value, bool) else
+             f'"{value}"' if isinstance(value, str) else value)
+            for value in item_data.values()
+        ]
+
+        mutation_part = f'''
+            item{index}: {method}({params}) {{
+                id
+                name
+                column_values {{
+                    id
+                    text
+                }}
+            }}
+        ''' % tuple(values)
+
+        mutation_parts.append(mutation_part)
+
+    query = '''mutation {
+        %s
+    }''' % ' '.join(mutation_parts)
+    return query
+
+
 def get_item_query(board_id, column_id, value):
     query = '''query
         {
@@ -290,7 +321,6 @@ def get_tags_query(tags):
 
 # BOARD RESOURCE QUERIES
 def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None, page: Optional[int] = None) -> str:
-
     raw_params = locals().items()
     item_params = gather_params(raw_params, exclusion_list=["board_id"])
     joined_params = ', '.join(item_params)
@@ -319,7 +349,8 @@ def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None
     return query
 
 
-def get_boards_query(limit: int = None, page: int = None, ids: List[int] = None, board_kind: BoardKind = None, state: BoardState = None, order_by: BoardsOrderBy = None):
+def get_boards_query(limit: int = None, page: int = None, ids: List[int] = None, board_kind: BoardKind = None,
+                     state: BoardState = None, order_by: BoardsOrderBy = None):
     parameters = locals().items()
     query_params = []
     for k, v in parameters:
@@ -329,7 +360,6 @@ def get_boards_query(limit: int = None, page: int = None, ids: List[int] = None,
                 value = v.value
 
             query_params.append("%s: %s" % (k, value))
-
 
     query = '''query
     {
@@ -401,7 +431,7 @@ def get_columns_by_board_query(board_ids):
         }''' % board_ids
 
 
-def create_board_by_workspace_query(board_name: str, board_kind: BoardKind, workspace_id = None) -> str:
+def create_board_by_workspace_query(board_name: str, board_kind: BoardKind, workspace_id=None) -> str:
     workspace_query = f'workspace_id: {workspace_id}' if workspace_id else ''
     query = '''
     mutation {
