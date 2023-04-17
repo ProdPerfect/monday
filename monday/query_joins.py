@@ -9,6 +9,25 @@ from monday.utils import monday_json_stringify, gather_params
 # Eventually I will organize this file better but you know what today is not that day.
 
 # ITEM RESOURCE QUERIES
+def create_column_in_board(board_id, title, description, column_type):
+    # List of acceptable types 2023-04-17:  https://asset.cloudinary.com/monday-platform-dev/cde9c7ca84b78ec7dde46cc5c8588946
+    query = '''mutation 
+        {
+          create_column (
+            board_id:    %s, 
+            title:       "%s", 
+            description: "%s", 
+            column_type: %s
+        ) {
+            id
+            title
+            description
+          }
+        }''' % (board_id, title, description, column_type)
+    return query
+
+
+
 def mutate_item_query(board_id, group_id, item_name, column_values,
                       create_labels_if_missing):
     # Monday does not allow passing through non-JSON null values here,
