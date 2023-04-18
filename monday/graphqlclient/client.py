@@ -31,6 +31,9 @@ class GraphQLClient:
             files = [
                 ('variables[file]', (variables['file'], open(variables['file'], 'rb')))
             ]
+        else:
+            headers['Content-Type'] = 'application/json'
+            payload = json.dumps({'query': query, "variables": json.dumps(variables)}).encode('utf-8')
 
         try:
             response = requests.request("POST", self.endpoint, headers=headers, data=payload, files=files)
