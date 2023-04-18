@@ -125,6 +125,11 @@ Boards Resource (monday.boards)
 -  ``create_board(board_name, board_kind, workspace_id)`` - Create board
    with the given name and kind by (and optional) workspace id.
 
+-  ``create_column(board_id, column_title, column_description, column_type)`` - Create a new column
+   on a given board, with the given name, description, (and optional) column_type.
+   The column type defaults to text if not provided.
+
+
 Users Resource (monday.users)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
