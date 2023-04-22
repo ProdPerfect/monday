@@ -327,7 +327,8 @@ def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None
                 name
                 column_values {
                   id
-                  text
+                  title
+                    text
                   type
                   value
                 }
