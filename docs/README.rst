@@ -31,12 +31,13 @@ Getting started
 
    monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a thing')
 
-**Available methods:** #### Items Resource (monday.items) -
-``create_item(board_id, group_id, item_name, column_values=None, create_labels_if_missing=False)``
-- Create an item on a board in the given group with name item_name.
+**Available methods:**
 
--  ``create_subitem(parent_item_id, subitem_name, column_values=None, create_labels_if_missing=False)``
-   - Create a subitem underneath a given parent item. Monday API will
+Items Resource (monday.items)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-  ``create_item(board_id, group_id, item_name, column_values=None, create_labels_if_missing=False)`` - Create an item on a board in the given group with name item_name.
+
+-  ``create_subitem(parent_item_id, subitem_name, column_values=None, create_labels_if_missing=False)`` - Create a subitem underneath a given parent item. Monday API will
    return an error if the board you’re trying to add to does not have a
    subitems column/at least one subitem created.
 
@@ -123,6 +124,11 @@ Boards Resource (monday.boards)
 
 -  ``create_board(board_name, board_kind, workspace_id)`` - Create board
    with the given name and kind by (and optional) workspace id.
+
+-  ``create_column(board_id, column_title, column_description, column_type)`` - Create a new column
+   on a given board, with the given name, description, (and optional) column_type.
+   The column type defaults to text if not provided.
+
 
 Users Resource (monday.users)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

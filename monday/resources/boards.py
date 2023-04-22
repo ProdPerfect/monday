@@ -6,6 +6,7 @@ from monday.query_joins import (
     get_board_items_query,
     get_columns_by_board_query,
     create_board_by_workspace_query,
+    create_column_in_board,
 )
 from monday.resources.types import BoardKind, BoardState, BoardsOrderBy
 
@@ -33,3 +34,8 @@ class BoardResource(BaseResource):
     def create_board(self, board_name: str, board_kind: BoardKind, workspace_id: int = None):
         query = create_board_by_workspace_query(board_name, board_kind, workspace_id)
         return self.client.execute(query)
+
+    def create_column(self, board_id, title, description, column_type='text'):
+        query = create_column_in_board(board_id, title, description, column_type)
+        return self.client.execute(query)
+    # TODO check all possible column types

@@ -1,6 +1,6 @@
 from monday.tests.test_case_resource import BaseTestCase
 from monday.query_joins import get_groups_by_board_query, get_items_by_group_query, create_group_query, \
-    duplicate_group_query, archive_group_query, delete_group_query
+    duplicate_group_query, archive_group_query, delete_group_query, create_column_in_board
 
 
 class GroupTestCase(BaseTestCase):
@@ -45,3 +45,14 @@ class GroupTestCase(BaseTestCase):
         self.assertIn(str(self.board_id), query)
         self.assertIn(str(self.group_id), query)
 
+    def test_create_column_in_board(self):
+        query = create_column_in_board(
+            board_id=self.board_id,
+            title=self.column_id,
+            description=self.column_description,
+            column_type=self.column_type
+        )
+        self.assertIn(str(self.board_id), query)
+        self.assertIn(str(self.column_id), query)
+        self.assertIn(str(self.column_description), query)
+        self.assertIn(str(self.column_type), query)
