@@ -350,6 +350,10 @@ def get_boards_query(limit: int = None, page: int = None, ids: List[int] = None,
                 title
                 type
             }
+            workspace{
+                name
+                id
+            }
         }
     }''' % ', '.join(query_params)
 
@@ -376,6 +380,10 @@ def get_boards_by_id_query(board_ids):
                 title
                 type
                 settings_str
+            }
+            workspace{
+                name
+                id
             }
         }
     }''' % board_ids
