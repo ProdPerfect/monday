@@ -124,6 +124,13 @@ Boards Resource (monday.boards)
 -  ``create_board(board_name, board_kind, workspace_id)`` - Create board
    with the given name and kind by (and optional) workspace id.
 
+-  ``duplicate_board(board_id, duplicate_type, board_name, workspace_id, folder_id, keep_subscribers)`` - Duplicate a
+   board by its id. It requires a duplication type to be chosen (*duplicate_board_with_structure / duplicate_board_with_pulses / duplicate_board_with_pulses_and_updates*). Optionaly you can use:
+    - ``board_name`` - The duplicated board's name (*string*).
+    - ``workspace_id`` - The destination workspace (*int* Defaults to the original board's workspace).
+    - ``folder_id`` - The destination folder within the destination workspace. The folder_id is required if you are duplicating to another workspace. (*int* Defaults to originals board's folder).
+    - ``keep_subscribers`` - Ability to duplicate the subscribers to the new board (*Boolean* Defaults to false).
+
 Users Resource (monday.users)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
