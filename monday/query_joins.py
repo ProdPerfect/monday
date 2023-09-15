@@ -1,7 +1,9 @@
+from enum import Enum
 import json
-from monday.resources.types import DuplicateTypes
+from typing import List, Union, Optional
+from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateTypes
 
-from monday.utils import monday_json_stringify
+from monday.utils import monday_json_stringify, gather_params
 
 
 # Eventually I will organize this file better but you know what today is not that day.
@@ -90,6 +92,7 @@ def get_item_by_id_query(ids):
     query = '''query
         {
             items (ids: %s) {
+                id,
                 name,
                 group {
                     id
@@ -125,6 +128,30 @@ def update_item_query(board_id, item_id, column_id, value):
             }
         }''' % (board_id, item_id, column_id, monday_json_stringify(value))
 
+    return query
+
+
+def move_item_to_group_query(item_id, group_id):
+    query = '''
+    mutation
+    {
+        move_item_to_group (item_id: %s, group_id: %s)
+        {
+            id
+        }
+    }''' % (item_id, group_id)
+    return query
+
+
+def archive_item_query(item_id):
+    query = '''
+    mutation
+    {
+        archive_item (item_id: %s)
+        {
+            id
+        }
+    }''' % item_id
     return query
 
 
@@ -271,8 +298,8 @@ def delete_update_query(item_id):
 
 
 def get_updates_for_item_query(board, item, limit):
-    query = '''query 
-    {boards (ids: %s) 
+    query = '''query
+    {boards (ids: %s)
         {items (ids: %s) {
             updates (limit: %s) {
                 id,
@@ -289,7 +316,7 @@ def get_updates_for_item_query(board, item, limit):
                   name,
                   url,
                   file_extension,
-                  file_size                  
+                  file_size
                 },
                 replies {
                   id,
@@ -343,12 +370,17 @@ def get_tags_query(tags):
 
 
 # BOARD RESOURCE QUERIES
-def get_board_items_query(board_id):
+def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None, page: Optional[int] = None) -> str:
+
+    raw_params = locals().items()
+    item_params = gather_params(raw_params, exclusion_list=["board_id"])
+    joined_params = ', '.join(item_params)
+
     query = '''query
     {
         boards(ids: %s) {
             name
-            items {
+            items(%s) {
                 group {
                     id
                     title
@@ -363,12 +395,23 @@ def get_board_items_query(board_id):
                 }
             }
         }
-    }''' % board_id
+    }''' % (board_id, joined_params)
 
     return query
 
 
-def get_boards_query(**kwargs):
+def get_boards_query(limit: int = None, page: int = None, ids: List[int] = None, board_kind: BoardKind = None, state: BoardState = None, order_by: BoardsOrderBy = None):
+    parameters = locals().items()
+    query_params = []
+    for k, v in parameters:
+        if v is not None:
+            value = v
+            if isinstance(v, Enum):
+                value = v.value
+
+            query_params.append("%s: %s" % (k, value))
+
+
     query = '''query
     {
         boards (%s) {
@@ -389,7 +432,8 @@ def get_boards_query(**kwargs):
                 type
             }
         }
-    }''' % ', '.join(["%s: %s" % (arg, kwargs.get(arg)) for arg in kwargs])
+    }''' % ', '.join(query_params)
+
     return query
 
 
@@ -482,6 +526,18 @@ def create_board_by_workspace_query(board_name, board_kind, workspace_id = None)
         }
     }
     ''' % (board_name, board_kind, workspace_query)
+    return query
+
+
+def create_board_by_workspace_query(board_name: str, board_kind: BoardKind, workspace_id = None) -> str:
+    workspace_query = f'workspace_id: {workspace_id}' if workspace_id else ''
+    query = '''
+    mutation {
+        create_board (board_name:"%s", board_kind: %s, %s) {
+            id
+        }
+    }
+    ''' % (board_name, board_kind.value, workspace_query)
     return query
 
 

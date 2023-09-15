@@ -1,0 +1,102 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "rhymiz",
+      "name": "Lemi Boyce",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7029352?v=4",
+      "profile": "https://github.com/rhymiz",
+      "contributions": [
+        "code",
+        "bug",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "tonymorello",
+      "name": "Tony Morello",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7967400?v=4",
+      "profile": "https://github.com/tonymorello",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "chdastolfo",
+      "name": "chdastolfo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9096407?v=4",
+      "profile": "https://github.com/chdastolfo",
+      "contributions": [
+        "code",
+        "bug",
+        "doc",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "lucioseki",
+      "name": "Lucio Mitsuru Seki",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1480296?v=4",
+      "profile": "https://github.com/lucioseki",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "yogeshnile",
+      "name": "YOGESH NILE",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54445087?v=4",
+      "profile": "https://github.com/yogeshnile",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "spencersamuel7",
+      "name": "spencersamuel7",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20449820?v=4",
+      "profile": "https://github.com/spencersamuel7",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "albcl",
+      "name": "Alb. C",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17050266?v=4",
+      "profile": "https://github.com/albcl",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "pevner-p2",
+      "name": "pevner-p2",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45570949?v=4",
+      "profile": "https://github.com/pevner-p2",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "t-a-y-l-o-r",
+      "name": "Taylor Cochran",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32030464?v=4",
+      "profile": "https://github.com/t-a-y-l-o-r",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "monday",
+  "projectOwner": "ProdPerfect"
+}

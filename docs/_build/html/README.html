@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>monday &#8212; monday  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to monday’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="monday">
+<h1>monday<a class="headerlink" href="#monday" title="Permalink to this heading">¶</a></h1>
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section --><p><a class="reference external" href="#contributors-"><img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square" /></a> A monday.com Python Client Library</p>
+<p>For an overview of the Monday API, <a class="reference external" href="https://developer.monday.com/api-reference/docs">click
+here</a>.</p>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Python &gt;= 3.6</p></li>
+</ul>
+</section>
+<section id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">monday</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">monday</span></code> is very simple to use – take a look at the below example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">monday</span> <span class="kn">import</span> <span class="n">MondayClient</span>
+
+
+<span class="n">monday</span> <span class="o">=</span> <span class="n">MondayClient</span><span class="p">(</span><span class="s1">&#39;your token&#39;</span><span class="p">)</span>
+
+<span class="n">monday</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">create_item</span><span class="p">(</span><span class="n">board_id</span><span class="o">=</span><span class="s1">&#39;12345678&#39;</span><span class="p">,</span> <span class="n">group_id</span><span class="o">=</span><span class="s1">&#39;today&#39;</span><span class="p">,</span>  <span class="n">item_name</span><span class="o">=</span><span class="s1">&#39;Do a thing&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Available methods:</strong> #### Items Resource (monday.items) -
+<code class="docutils literal notranslate"><span class="pre">create_item(board_id,</span> <span class="pre">group_id,</span> <span class="pre">item_name,</span> <span class="pre">column_values=None,</span> <span class="pre">create_labels_if_missing=False)</span></code>
+- Create an item on a board in the given group with name item_name.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">create_subitem(parent_item_id,</span> <span class="pre">subitem_name,</span> <span class="pre">column_values=None,</span> <span class="pre">create_labels_if_missing=False)</span></code>
+- Create a subitem underneath a given parent item. Monday API will
+return an error if the board you’re trying to add to does not have a
+subitems column/at least one subitem created.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch_items_by_column_value(board_id,</span> <span class="pre">column_id,</span> <span class="pre">value)</span></code> - Fetch
+items on a board by column value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch_items_by_id(board_id,</span> <span class="pre">[ids])</span></code> - Fetch items from any board
+by ids, passed in as an array of integers.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">change_item_value(board_id,</span> <span class="pre">item_id,</span> <span class="pre">column_id,</span> <span class="pre">value)</span></code> - Change
+column values for item on a board. Check Monday’s API for which
+columns are supported.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">change_multiple_column_values(board_id,</span> <span class="pre">item_id,</span> <span class="pre">column_values,</span> <span class="pre">create_labels_if_missing=False)</span></code>
+- Change multiple column values for item on a board. Column values
+should be passed in as JSON. Check Monday’s API for which columns are
+supported.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">add_file_to_column(item_id,</span> <span class="pre">column_id,</span> <span class="pre">file)</span></code> - Upload a file to a
+file type column specified by column_id. Monday limits uploads to
+500MB in size.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">move_item_to_group(item_id,</span> <span class="pre">group_id)</span></code> - Move the item to a group
+within the same board.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">archive_item_by_id(item_id)</span></code> - Archive the item by item_id.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delete_item_by_id(item_id)</span></code> - Delete the item by item_id.</p></li>
+</ul>
+</section>
+<section id="updates-resource-monday-updates">
+<h2>Updates Resource (monday.updates)<a class="headerlink" href="#updates-resource-monday-updates" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">create_update(item_id,</span> <span class="pre">update_body)</span></code> - Create an update attached
+to a given item.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch_updates(limit,</span> <span class="pre">page=None)</span></code> - Fetch a certain number of
+updates, starting from the given page. Default is 1</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch_updates_for_item(board_id,</span> <span class="pre">item_id,</span> <span class="pre">limit)</span></code> - Fetch all
+updates for a certain item on a certain board up to a certain limit,
+set by you. Default is 100 updates</p></li>
+</ul>
+</section>
+<section id="tags-resource-monday-tags">
+<h2>Tags Resource (monday.tags)<a class="headerlink" href="#tags-resource-monday-tags" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch_tags(tag_ids=None)</span></code> - Fetch all tags associated with an
+account. Optionally takes a list containing tag ids (if you know
+them). Returns IDs, names, and colors.</p></li>
+</ul>
+</section>
+<section id="boards-resource-monday-boards">
+<h2>Boards Resource (monday.boards)<a class="headerlink" href="#boards-resource-monday-boards" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch_boards(**kwargs)</span></code> - Fetch boards associated with an account.
+Returns boards and their groups, tags, and columns. Accepts keyword
+arguments:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">limit</span></code> - The number of boards returned (<em>int</em>. Default is 25).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page</span></code> - The page number returned, should you implement
+pagination(<em>int</em>. Starts at 1).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ids</span></code> - A list of the unique board identifier(s) (<em>List[int]</em>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">board_kind</span></code> - The board’s kind (<em>BoardKind</em>. public / private /
+share).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">state</span></code> - The state of the board (<em>BoardState</em>. all / active /
+archived / deleted. Default is active).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">order_by</span></code> - The order in which to retrieve your boards
+(<em>BoardsOrderBy</em>. created_at / used_at).</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch_boards_by_id([board_ids])</span></code> - Since Monday does not allow
+querying boards by name, you can use <code class="docutils literal notranslate"><span class="pre">fetch_boards</span></code> to get a list
+of boards, and then <code class="docutils literal notranslate"><span class="pre">fetch_boards_by_id</span></code> to get more detailed info
+about the groups and columns on that board. Accepts a comma separated
+list of board ids.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch_columns_by_board_id([board_ids])</span></code> - Get all columns, as well
+as their ids, types, and settings. Accepts a comma separated list of
+board ids.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch_items_by_board_id([board_ids],</span> <span class="pre">**kwargs)</span></code> - Get all items on
+a board(s). Accepts a comma separated list of board ids.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">limit</span></code> - The number of rows returned (<em>int</em>. no default).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page</span></code> - The page number returned, should you implement
+pagination(<em>int</em>. no default).</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_board(board_name,</span> <span class="pre">board_kind,</span> <span class="pre">workspace_id)</span></code> - Create board
+with the given name and kind by (and optional) workspace id.</p></li>
+</ul>
+</section>
+<section id="users-resource-monday-users">
+<h2>Users Resource (monday.users)<a class="headerlink" href="#users-resource-monday-users" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch_users(**kwargs)</span></code> - Fetch user information associated with an
+account. See Monday API docs for a list of accepted keyword
+arguments.</p></li>
+</ul>
+</section>
+<section id="workspaces-resource-monday-workspaces">
+<h2>Workspaces Resource (monday.workspaces)<a class="headerlink" href="#workspaces-resource-monday-workspaces" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get_workspaces()</span></code> - Get all workspaces.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_workspace(name,</span> <span class="pre">kind,</span> <span class="pre">description)</span></code> - Create workspace with
+the given name, kind and description.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">add_users_to_workspace(workspace_id,</span> <span class="pre">[user_ids],</span> <span class="pre">kind)</span></code> - Add
+given users of the given kind to the given workspace.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delete_users_from_workspace(workspace_id,</span> <span class="pre">[user_ids])</span></code> - Delete
+given users from the given workspace.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">add_teams_to_workspace(workspace_id,</span> <span class="pre">[team_ids])</span></code> - Add given
+teams to the given workspace.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delete_teams_from_workspace(workspace_id,</span> <span class="pre">[team_ids])</span></code> - Delete
+given teams from the given workspace.</p></li>
+</ul>
+</section>
+<section id="groups-resource-monday-groups">
+<h2>Groups Resource (monday.groups)<a class="headerlink" href="#groups-resource-monday-groups" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get_groups_by_board([board_ids])</span></code> - Get all groups associated with
+a certain board or boards. Accepts a single id or a comma separated
+list of ids.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_items_by_group(board_id,</span> <span class="pre">group_id)</span></code> - Get all items that are
+members of a given group.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_group(board_id,</span> <span class="pre">group_name)</span></code> - Create a group on a given
+board.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">duplicate_group(board_id,</span> <span class="pre">group_id)</span></code> - Duplicate a group and all
+its items on a given board.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">archive_group(board_id,</span> <span class="pre">group_id)</span></code> - Archive a group on a given
+board.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delete_group(board_id,</span> <span class="pre">group_id)</span></code> - Delete a group on a given
+board.</p></li>
+</ul>
+</section>
+<section id="notifications-resource-monday-notifications">
+<h2>Notifications Resource (monday.notifications)<a class="headerlink" href="#notifications-resource-monday-notifications" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">create_notification(user_id,</span> <span class="pre">target_id,</span> <span class="pre">text,</span> <span class="pre">target_type)</span></code> - The
+create_notification mutation allows to trigger a notification within
+the platform (will also send out an email if the recipient’s email
+preferences are set up accordingly). ### Additional Resources and
+Code Samples</p></li>
+<li><p><a class="reference external" href="https://github.com/ProdPerfect/monday/wiki/Code-Examples#whole-board-formatting-example">Read and format all of the items on a
+board</a></p></li>
+</ul>
+<section id="contributors">
+<h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this heading">¶</a></h3>
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section --><!-- prettier-ignore-start --><!-- markdownlint-disable --><table><tbody><tr><td align="center"><p>Lemi Boyce💻 🐛 🚧</p>
+</td><td align="center"><p>Tony Morello💻</p>
+</td><td align="center"><p>chdastolfo💻 🐛 📖 🚧</p>
+</td><td align="center"><p>Lucio Mitsuru Seki💻</p>
+</td><td align="center"><p>YOGESH NILE💻</p>
+</td><td align="center"><p>spencersamuel7💻</p>
+</td><td align="center"><p>Alb. C💻</p>
+</td></tr><tr><td align="center"><p>pevner-p2💻</p>
+</td><td align="center"><p>Taylor Cochran💻</p>
+</td></tr></tbody></table><!-- markdownlint-restore --><!-- prettier-ignore-end --><!-- ALL-CONTRIBUTORS-LIST:END --><!-- prettier-ignore-start --><!-- markdownlint-disable --><!-- markdownlint-restore --><!-- prettier-ignore-end --><!-- ALL-CONTRIBUTORS-LIST:END --><section id="bug-reports">
+<h4>Bug Reports<a class="headerlink" href="#bug-reports" title="Permalink to this heading">¶</a></h4>
+<p>TBD</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">monday</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">monday</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#updates-resource-monday-updates">Updates Resource (monday.updates)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tags-resource-monday-tags">Tags Resource (monday.tags)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#boards-resource-monday-boards">Boards Resource (monday.boards)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#users-resource-monday-users">Users Resource (monday.users)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#workspaces-resource-monday-workspaces">Workspaces Resource (monday.workspaces)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#groups-resource-monday-groups">Groups Resource (monday.groups)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#notifications-resource-monday-notifications">Notifications Resource (monday.notifications)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#contributors">Contributors</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bug-reports">Bug Reports</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to monday’s documentation!</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Christina D'Astolfo, Lemi Boyce.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/README.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
