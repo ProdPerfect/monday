@@ -381,6 +381,26 @@ def get_boards_by_id_query(board_ids):
     }''' % board_ids
 
 
+def get_columns_by_board_query(board_ids):
+    return '''query
+        {
+            boards(ids: %s) {
+                id
+                name
+                groups {
+                    id
+                    title
+                }
+                columns {
+                    title
+                    id
+                    type
+                    settings_str
+                 }
+            }
+        }''' % board_ids
+
+
 def duplicate_board_query(
     board_id: int,
     duplicate_type: DuplicateTypes,
