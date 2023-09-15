@@ -1,7 +1,7 @@
 from enum import Enum
 import json
 from typing import List, Union, Optional
-from monday.resources.types import BoardKind, BoardState, BoardsOrderBy
+from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateTypes
 
 from monday.utils import monday_json_stringify, gather_params
 
@@ -401,7 +401,47 @@ def get_columns_by_board_query(board_ids):
         }''' % board_ids
 
 
-def create_board_by_workspace_query(board_name: str, board_kind: BoardKind, workspace_id = None) -> str:
+def duplicate_board_query(
+    board_id: int,
+    duplicate_type: DuplicateTypes,
+    board_name: str = None,
+    workspace_id: int = None,
+    folder_id: int = None,
+    keep_subscribers: bool = None,
+) -> str:
+    board_name = board_name if board_name else ""
+    workspace_id = workspace_id if workspace_id else None
+    folder_id = folder_id if folder_id else None
+    keep_subscribers = keep_subscribers if keep_subscribers else False
+
+    params = """board_id: %s, duplicate_type: %s, board_name: \"%s\"""" % (
+        board_id,
+        duplicate_type.value,
+        board_name,
+    )
+
+    if workspace_id:
+        params += """,  workspace_id: %s"""
+
+    query = """
+    mutation {
+        duplicate_board(%s) {
+            board {
+                id
+                groups{
+                    id
+                }
+            }
+        }
+    }
+    """ % (
+        params
+    )
+
+    return query
+
+
+def create_board_by_workspace_query(board_name, board_kind, workspace_id = None):
     workspace_query = f'workspace_id: {workspace_id}' if workspace_id else ''
     query = '''
     mutation {
@@ -409,7 +449,7 @@ def create_board_by_workspace_query(board_name: str, board_kind: BoardKind, work
             id
         }
     }
-    ''' % (board_name, board_kind.value, workspace_query)
+    ''' % (board_name, board_kind, workspace_query)
     return query
 
 

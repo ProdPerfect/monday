@@ -23,3 +23,11 @@ class BoardsOrderBy(Enum):
 
     CREATED_AT = "created_at"
     USED_AT = "used_at"
+
+
+class DuplicateTypes(Enum):
+    """Board duplication types"""
+
+    WITH_STRUCTURE = "duplicate_board_with_structure"
+    WITH_PULSES = "duplicate_board_with_pulses"
+    WITH_PULSES_AND_UPDATES = "duplicate_board_with_pulses_and_updates"

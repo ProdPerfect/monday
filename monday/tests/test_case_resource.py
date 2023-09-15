@@ -1,6 +1,6 @@
 import unittest
 
-from monday.resources.types import BoardKind, BoardState, BoardsOrderBy
+from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateTypes
 
 
 class BaseTestCase(unittest.TestCase):
@@ -11,9 +11,11 @@ class BaseTestCase(unittest.TestCase):
         self.item_id = 24
         self.board_name = "my_board"
         self.board_id = 12
+        self.duplicate_type = DuplicateTypes.WITH_PULSES
         self.board_kind = BoardKind.PUBLIC
         self.board_state = BoardState.ACTIVE
         self.boards_order_by = BoardsOrderBy.USED_AT
+        self.duplicate_type = DuplicateTypes.WITH_PULSES
         self.group_id = 7
         self.column_id = "file_column"
         self.user_ids = [1287123, 1230919]
@@ -28,4 +30,5 @@ class BaseTestCase(unittest.TestCase):
         self.team_ids = [105939, 105940, 105941]
         self.notification_text = "This is an awesome notification."
         self.notification_target_type = "Project"
+        self.folder_id = "678549"
     
