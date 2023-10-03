@@ -8,6 +8,7 @@ class GraphQLClient:
         self.endpoint = endpoint
         self.token = None
         self.headername = None
+        self.headers = {}
 
     def execute(self, query, variables=None):
         return self._send(query, variables)
@@ -16,19 +17,27 @@ class GraphQLClient:
         self.token = token
         self.headername = headername
 
+    def inject_headers(self, headers):
+        self.headers = headers
+
     def _send(self, query, variables):
         payload = {'query': query}
-        headers = {}
+        headers = self.headers
         files = None
-
+        
         if self.token is not None:
             headers[self.headername] = '{}'.format(self.token)
 
         if variables is None:
-            headers['Content-Type'] = 'application/json'
+            if 'Content-Type' not in headers:
+                headers['Content-Type'] = 'application/json'
+            
             payload = json.dumps({'query': query}).encode('utf-8')
+        
         elif variables.get('file', None) is not None:
-            headers['content'] = 'multipart/form-data'
+            if 'content' not in headers:
+                headers['content'] = 'multipart/form-data'
+                
             files = [
                 ('variables[file]', (variables['file'], open(variables['file'], 'rb')))
             ]

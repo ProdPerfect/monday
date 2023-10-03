@@ -3,8 +3,8 @@ from monday.query_joins import create_update_query, delete_update_query, get_upd
 
 
 class UpdateResource(BaseResource):
-    def __init__(self, token):
-        super().__init__(token)
+    def __init__(self, token, headers):
+        super().__init__(token, headers)
 
     def create_update(self, item_id, update_value):
         query = create_update_query(item_id, update_value)

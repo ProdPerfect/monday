@@ -6,8 +6,8 @@ from monday.query_joins import (
 
 
 class ColumnsResource(BaseResource):
-    def __init__(self, token):
-        super().__init__(token)
+    def __init__(self, token, headers):
+        super().__init__(token, headers)
 
     def create_column(self, board_id):
         query = get_columns_by_board_query(board_id)

@@ -1,10 +1,8 @@
+from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateTypes
+from monday.utils import monday_json_stringify, gather_params
+from typing import List, Union, Optional
 from enum import Enum
 import json
-from typing import List, Union, Optional
-from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateTypes
-
-from monday.utils import monday_json_stringify, gather_params
-
 
 # Eventually I will organize this file better but you know what today is not that day.
 
@@ -169,7 +167,7 @@ def delete_item_query(item_id):
 
 # COLUMNS RESOURCE QUERIES
 def create_column(
-    board_id: int, column_title: str, column_type: ColumnTypes = None, defaults: Dict[str, Any] = None, description: str = None
+    board_id: int, column_title: str, column_type: None, defaults: dict[str, any] = None, description: str = None
 ):
     """C```reate a new column by board ID
 

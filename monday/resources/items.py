@@ -5,8 +5,8 @@ from monday.query_joins import mutate_item_query, get_item_query, update_item_qu
 
 
 class ItemResource(BaseResource):
-    def __init__(self, token):
-        super().__init__(token)
+    def __init__(self, token, headers):
+        super().__init__(token, headers)
 
     def create_item(self, board_id, group_id, item_name, column_values=None,
                     create_labels_if_missing=False):
