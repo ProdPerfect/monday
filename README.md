@@ -12,7 +12,7 @@ For an overview of the Monday API, [click here](https://developer.monday.com/api
 - Python >= 3.6
 
 #### Getting started
-`pip install git+https://github.com/willnaoosmith/monday.git`
+`pip install monday`
 
 `monday` is very simple to use -- take a look at the below example:
 ```python
