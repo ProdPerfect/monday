@@ -3,7 +3,6 @@ from monday.query_joins import mutate_item_query, get_item_query, update_item_qu
     update_multiple_column_values_query, mutate_subitem_query, add_file_to_column_query, delete_item_query, \
     archive_item_query, move_item_to_group_query
 
-
 class ItemResource(BaseResource):
     def __init__(self, token, headers):
         super().__init__(token, headers)

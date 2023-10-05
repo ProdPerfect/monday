@@ -18,6 +18,6 @@ class UpdateResource(BaseResource):
         query = get_update_query(limit, page)
         return self.client.execute(query)
 
-    def fetch_updates_for_item(self, board_id, item_id, limit=100):
-        query = get_updates_for_item_query(board=board_id, item=item_id, limit=limit)
+    def fetch_updates_for_item(self, item_id, limit=100):
+        query = get_updates_for_item_query(item=item_id, limit=limit)
         return self.client.execute(query)

@@ -60,31 +60,32 @@ def mutate_subitem_query(parent_item_id, subitem_name, column_values,
 def get_item_query(board_id, column_id, value):
     query = '''query
         {
-            items_by_column_values(
-                board_id: %s,
-                column_id: %s,
-                column_value: "%s"
+            items_page_by_column_values(
+                board_id: %s,                
+                columns: [{column_id: "%s", column_values: ["%s"]}]
             ) {
-                id
-                name
-                updates {
+                cursor
+                items {
                     id
-                    body
-                }
-                group {
-                    id
-                    title
-                }
-                column_values {
-                    id
-                    text
-                    value
+                    name
+                    updates {
+                        id
+                        body
+                    }
+                    group {
+                        id
+                        title
+                    }
+                    column_values {
+                        id
+                        text
+                        value
+                    }                
                 }
             }
         }''' % (board_id, column_id, value)
-
+    
     return query
-
 
 def get_item_by_id_query(ids):
     query = '''query
@@ -295,10 +296,9 @@ def delete_update_query(item_id):
     return query
 
 
-def get_updates_for_item_query(board, item, limit):
-    query = '''query
-    {boards (ids: %s)
-        {items (ids: %s) {
+def get_updates_for_item_query(item, limit):
+    query = '''query{                
+        items(ids: %s){
             updates (limit: %s) {
                 id,
                 body,
@@ -317,20 +317,19 @@ def get_updates_for_item_query(board, item, limit):
                   file_size
                 },
                 replies {
-                  id,
-                  body,
-                  creator{
                     id,
-                    name,
-                    email
-                  },
-                  created_at,
-                  updated_at
+                    body,
+                    creator{
+                        id,
+                        name,
+                        email
+                    },
+                    created_at,
+                    updated_at
                 }
-                }
-            }
+            }         
         }
-    }''' % (board, item, limit)
+    }''' % (item, limit)
 
     return query
 
@@ -371,25 +370,26 @@ def get_tags_query(tags):
 def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None, page: Optional[int] = None) -> str:
 
     raw_params = locals().items()
-    item_params = gather_params(raw_params, exclusion_list=["board_id"])
+    item_params = gather_params(raw_params, exclusion_list=["board_id", "item_ids"])
     joined_params = ', '.join(item_params)
 
-    query = '''query
-    {
-        boards(ids: %s) {
+    query = '''query{
+        boards(ids: %s){
             name
-            items(%s) {
-                group {
+            items_page (){
+                items(%s) {
+                    group {
+                        id
+                        title
+                    }
                     id
-                    title
-                }
-                id
-                name
-                column_values {
-                  id
-                  text
-                  type
-                  value
+                    name
+                    column_values {
+                        id
+                        text
+                        type
+                        value
+                    }
                 }
             }
         }
