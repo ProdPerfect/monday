@@ -1,15 +1,14 @@
 from enum import Enum
 
 
-class DuplicateTypes(Enum):
+class DuplicateType(Enum):
     """Board duplication types"""
-
     WITH_STRUCTURE = "duplicate_board_with_structure"
     WITH_PULSES = "duplicate_board_with_pulses"
     WITH_PULSES_AND_UPDATES = "duplicate_board_with_pulses_and_updates"
 
 
-class ColumnTypes(Enum):
+class ColumnType(Enum):
     AUTO_NUMBER = "auto_number"  # Number items according to their order in the group/board
     CHECKBOX = "checkbox"  # Check off items and see what's done at a glance
     COUNTRY = "country"  # Choose a country

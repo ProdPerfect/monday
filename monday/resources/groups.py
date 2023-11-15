@@ -1,12 +1,9 @@
-from monday.resources.base import BaseResource
 from monday.query_joins import get_groups_by_board_query, get_items_by_group_query, create_group_query, \
     duplicate_group_query, archive_group_query, delete_group_query
+from monday.resources.base import BaseResource
 
 
 class GroupResource(BaseResource):
-    def __init__(self, token, headers):
-        super().__init__(token, headers)
-
     def get_groups_by_board(self, board_ids):
         query = get_groups_by_board_query(board_ids=board_ids)
         return self.client.execute(query)

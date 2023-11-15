@@ -1,6 +1,6 @@
-class MondayError(RuntimeError):
+class MondayError(Exception):
     pass
 
 
-class MondayQueryError(Exception):
+class MondayQueryError(MondayError):
     pass

@@ -1,11 +1,8 @@
-from monday.resources.base import BaseResource
 from monday.query_joins import create_update_query, delete_update_query, get_update_query, get_updates_for_item_query
+from monday.resources.base import BaseResource
 
 
 class UpdateResource(BaseResource):
-    def __init__(self, token, headers):
-        super().__init__(token, headers)
-
     def create_update(self, item_id, update_value):
         query = create_update_query(item_id, update_value)
         return self.client.execute(query)

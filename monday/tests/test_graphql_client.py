@@ -15,4 +15,4 @@ class GraphQlClientTestCase(unittest.TestCase):
         client = self.client
         client.inject_token(token=self.token)
         self.assertEqual(client.token, self.token)
-        self.assertEqual(client.headername, 'Authorization')
+        self.assertEqual(client.token_header_name, 'Authorization')

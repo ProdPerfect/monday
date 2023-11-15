@@ -22,42 +22,39 @@ class UpdateTestCase(BaseTestCase):
         self.assertIn("5", query)
 
     def test_get_updates_for_item_query(self):
-        query = get_updates_for_item_query(board=self.board_id, item=self.item_id, limit=25)
+        query = get_updates_for_item_query(item=self.item_id, limit=25)
         self.assertIn(str(self.item_id), query)
-        self.assertIn(str(self.board_id), query)
         self.assertIn("25", query)
-        self.assertEqual('''query 
-            {boards (ids: 12) 
-                {items (ids: 24) {
-                    updates (limit: 25) {
+        self.assertEqual('''query{ 
+            items (ids: 24) {
+                updates (limit: 25) {
+                    id,
+                    body,
+                    created_at,
+                    updated_at,
+                    creator {
+                      id,
+                      name,
+                      email
+                    },
+                    assets {
+                      id,
+                      name,
+                      url,
+                      file_extension,
+                      file_size                  
+                    },
+                    replies {
+                      id,
+                      body,
+                      creator{
                         id,
-                        body,
-                        created_at,
-                        updated_at,
-                        creator {
-                          id,
-                          name,
-                          email
-                        },
-                        assets {
-                          id,
-                          name,
-                          url,
-                          file_extension,
-                          file_size                  
-                        },
-                        replies {
-                          id,
-                          body,
-                          creator{
-                            id,
-                            name,
-                            email
-                          },
-                          created_at,
-                          updated_at
-                        }
-                        }
+                        name,
+                        email
+                      },
+                      created_at,
+                      updated_at
                     }
                 }
-            }'''.replace(" ", ""), query.replace(" ", ""))
+            }
+        }'''.replace(" ", ""), query.replace(" ", ""))

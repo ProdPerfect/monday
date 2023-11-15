@@ -1,6 +1,6 @@
 import unittest
 
-from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateTypes
+from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateType
 
 
 class BaseTestCase(unittest.TestCase):
@@ -14,7 +14,7 @@ class BaseTestCase(unittest.TestCase):
         self.board_kind = BoardKind.PUBLIC
         self.board_state = BoardState.ACTIVE
         self.boards_order_by = BoardsOrderBy.USED_AT
-        self.duplicate_type = DuplicateTypes.WITH_PULSES
+        self.duplicate_type = DuplicateType.WITH_PULSES
         self.group_id = 7
         self.column_id = "file_column"
         self.user_ids = [1287123, 1230919]
