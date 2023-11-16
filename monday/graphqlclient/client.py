@@ -28,7 +28,7 @@ class GraphQLClient:
         files = None
         
         if self.token is not None:
-            headers[self.token_header_name] = '{}'.format(self.token)
+            headers[self.token_header_name] = self.token
 
         if variables is None:
             headers.setdefault('Content-Type', 'application/json')
@@ -45,12 +45,12 @@ class GraphQLClient:
         try:
             response = requests.request("POST", self.endpoint, headers=headers, data=payload, files=files)
             response.raise_for_status()
-            self._catch_error(response)
-            return response.json()
-        except (requests.HTTPError, MondayQueryError) as e:
-            print(e)
+            response_data = response.json()
+            self._throw_on_error(response_data)
+            return response_data
+        except (requests.HTTPError, json.JSONDecodeError, MondayQueryError) as e:
             raise e
 
-    def _catch_error(self, response):
-        if 'errors' in response.json():
-            raise MondayQueryError(response.json()['errors'][0]['message'])
+    def _throw_on_error(self, response_data):
+        if 'errors' in response_data:
+            raise MondayQueryError(response_data['errors'][0]['message'], response_data['errors'])

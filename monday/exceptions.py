@@ -3,4 +3,6 @@ class MondayError(Exception):
 
 
 class MondayQueryError(MondayError):
-    pass
+    def __init__(self, message, original_errors=None):
+        super().__init__(message)
+        self.original_errors = original_errors or []
