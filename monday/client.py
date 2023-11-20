@@ -10,7 +10,9 @@ from .__version__ import __version__
 from .resources import CustomResource, ItemResource, ColumnsResource, UpdateResource, TagResource, BoardResource, \
     UserResource, GroupResource, ComplexityResource, WorkspaceResource, NotificationResource, MeResource
 
-_DEFAULT_HEADERS = {}
+_DEFAULT_HEADERS = {
+    "API-Version": "2023-10"
+}
 
 
 class MondayClient:

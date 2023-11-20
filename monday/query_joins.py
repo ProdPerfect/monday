@@ -170,7 +170,7 @@ def delete_item_query(item_id):
 
 # COLUMNS RESOURCE QUERIES
 def create_column(
-        board_id: int, column_title: str, column_type: Optional[ColumnType], defaults: Mapping[str, any] = None,
+        board_id: int, column_title: str, column_type: Optional[ColumnType] = None, defaults: Mapping[str, any] = None,
         description: str = ""
 ):
     defaults = defaults or {}
@@ -224,7 +224,7 @@ def get_columns_by_board_query(board_ids):
         }''' % board_ids
 
 
-def update_multiple_column_values_query(board_id, item_id, column_values, create_labels_if_missing):
+def update_multiple_column_values_query(board_id, item_id, column_values, create_labels_if_missing=False):
     query = '''mutation
         {
             change_multiple_column_values (
