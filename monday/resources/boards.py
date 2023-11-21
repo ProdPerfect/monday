@@ -7,8 +7,9 @@ from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, Duplica
 
 
 class BoardResource(BaseResource):
-    def fetch_boards(self, limit: int = None, page: int = None, ids: List[int] = None, board_kind: BoardKind = None,
-                     state: BoardState = None, order_by: BoardsOrderBy = None):
+    def fetch_boards(self, limit: Optional[int] = None, page: Optional[int] = None, ids: Optional[List[int]] = None,
+                     board_kind: Optional[BoardKind] = None, state: Optional[BoardState] = None,
+                     order_by: Optional[BoardsOrderBy] = None):
         query = get_boards_query(limit, page, ids, board_kind, state, order_by)
         return self.client.execute(query)
 
@@ -24,7 +25,7 @@ class BoardResource(BaseResource):
         query = get_columns_by_board_query(board_ids)
         return self.client.execute(query)
 
-    def create_board(self, board_name: str, board_kind: BoardKind, workspace_id: int = None):
+    def create_board(self, board_name: str, board_kind: BoardKind, workspace_id: Optional[int] = None):
         query = create_board_by_workspace_query(board_name, board_kind, workspace_id)
         return self.client.execute(query)
 
