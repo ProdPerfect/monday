@@ -1,13 +1,9 @@
+from monday.query_joins import get_workspaces_query, create_workspace_query, add_users_to_workspace_query, \
+    add_teams_to_workspace_query, delete_teams_from_workspace_query, delete_users_from_workspace_query
 from monday.resources.base import BaseResource
-from monday.query_joins import (get_workspaces_query, create_workspace_query,
-                                add_users_to_workspace_query, delete_users_from_workspace_query,
-                                add_teams_to_workspace_query, delete_teams_from_workspace_query)
 
 
 class WorkspaceResource(BaseResource):
-    def __init__(self, token):
-        super().__init__(token)
-
     def get_workspaces(self):
         query = get_workspaces_query()
         return self.client.execute(query)

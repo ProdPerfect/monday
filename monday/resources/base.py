@@ -7,12 +7,13 @@ _URLS = {
 
 
 class BaseResource:
-    def __init__(self, api_key):
-        self._api_key = api_key
+    def __init__(self, token, headers):
+        self._token = token
         self.client = GraphQLClient(_URLS['prod'])
         self.file_upload_client = GraphQLClient(_URLS['file'])
-        self.client.inject_token(api_key)
-        self.file_upload_client.inject_token(api_key)
+        self.client.inject_token(token)
+        self.client.inject_headers(headers)
+        self.file_upload_client.inject_token(token)
 
     def _query(self, query):
         result = self.client.execute(query)

@@ -1,13 +1,10 @@
-from monday.resources.base import BaseResource
 from monday.query_joins import mutate_item_query, get_item_query, update_item_query, get_item_by_id_query, \
     update_multiple_column_values_query, mutate_subitem_query, add_file_to_column_query, delete_item_query, \
     archive_item_query, move_item_to_group_query
+from monday.resources.base import BaseResource
 
 
 class ItemResource(BaseResource):
-    def __init__(self, token):
-        super().__init__(token)
-
     def create_item(self, board_id, group_id, item_name, column_values=None,
                     create_labels_if_missing=False):
         query = mutate_item_query(board_id, group_id, item_name, column_values,
