@@ -357,13 +357,13 @@ def get_tags_query(tags):
 def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None, page: Optional[int] = None) -> str:
     raw_params = locals().items()
     item_params = gather_params(raw_params, exclusion_list=["board_id", "item_ids"])
-    joined_params = ', '.join(item_params)
+    joined_params = f"({', '.join(item_params)})" if item_params else ""
 
     query = '''query{
         boards(ids: %s){
             name
-            items_page (){
-                items(%s) {
+            items_page {
+                items %s {
                     group {
                         id
                         title
@@ -393,12 +393,12 @@ def get_boards_query(limit: int = None, page: int = None, ids: List[int] = None,
             value = v
             if isinstance(v, Enum):
                 value = v.value
-
             query_params.append("%s: %s" % (k, value))
+    joined_params = f"({', '.join(query_params)})" if query_params else ""
 
     query = '''query
     {
-        boards (%s) {
+        boards %s {
             id
             name
             permissions
@@ -416,7 +416,7 @@ def get_boards_query(limit: int = None, page: int = None, ids: List[int] = None,
                 type
             }
         }
-    }''' % ', '.join(query_params)
+    }''' % joined_params
 
     return query
 
@@ -486,9 +486,10 @@ def create_board_by_workspace_query(board_name: str, board_kind: BoardKind, work
 
 # USER RESOURCE QUERIES
 def get_users_query(**kwargs):
+    joined_params = f"({', '.join(['%s: %s' % (arg, kwargs.get(arg)) for arg in kwargs])})" if kwargs else ""
     query = '''query
     {
-        users (%s) {
+        users %s {
             id
             name
             email
@@ -498,7 +499,7 @@ def get_users_query(**kwargs):
               name
             }
         }
-    }''' % ', '.join(["%s: %s" % (arg, kwargs.get(arg)) for arg in kwargs])
+    }''' % joined_params
     return query
 
 
