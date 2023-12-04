@@ -605,12 +605,12 @@ def get_complexity_query():
 def get_workspaces_query():
     query = '''
     query {
-            workspaces {
-                id
-                name
-                kind
-                description
-            }
+        workspaces {
+            id
+            name
+            kind
+            description
+        }
     }
     '''
     return query
