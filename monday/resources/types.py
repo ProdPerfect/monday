@@ -63,3 +63,31 @@ class BoardsOrderBy(Enum):
 
     CREATED_AT = "created_at"
     USED_AT = "used_at"
+
+
+class ItemsOrderByDirection(Enum):
+    """Direction to sort items in"""
+
+    ASC = "asc"
+    DESC = "desc"
+
+
+class ItemsQueryRuleOperator(Enum):
+    """Condition for value comparison"""
+
+    ANY_OF = 'any_of'
+    NOT_ANY_OF = 'not_any_of'
+    IS_EMPTY = 'is_empty'
+    IS_NOT_EMPTY = 'is_not_empty'
+    GREATER_THAN = 'greater_than'
+    GREATER_THAN_OR_EQUALS = 'greater_than_or_equals'
+    LOWER_THAN = 'lower_than'
+    LOWER_THAN_OR_EQUAL = 'lower_than_or_equal'
+    BETWEEN = 'between'
+    NOT_CONTAINS_TEXT = 'not_contains_text'
+    CONTAINS_TEXT = 'contains_text'
+    CONTAINS_TERMS = 'contains_terms'
+    STARTS_WITH = 'starts_with'
+    ENDS_WITH = 'ends_with'
+    WITHIN_THE_NEXT = 'within_the_next'
+    WITHIN_THE_LAST = 'within_the_last'

@@ -1,6 +1,6 @@
 import json
 from enum import Enum
-from typing import List, Union, Optional, Mapping
+from typing import List, Union, Optional, Mapping, Any
 
 from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateType, ColumnType
 from monday.utils import monday_json_stringify, gather_params
@@ -354,16 +354,17 @@ def get_tags_query(tags):
 
 
 # BOARD RESOURCE QUERIES
-def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None, page: Optional[int] = None) -> str:
+def get_board_items_query(board_id: Union[str, int], query_params: Optional[Mapping[str, Any]] = None,
+                          limit: Optional[int] = None, cursor: Optional[str] = None) -> str:
     raw_params = locals().items()
-    item_params = gather_params(raw_params, exclusion_list=["board_id", "item_ids"])
-    joined_params = f"({', '.join(item_params)})" if item_params else ""
+    item_params = gather_params(raw_params, excluded_params=["board_id"])
+    wrapped_params = f"({item_params})" if item_params else ""
 
     query = '''query{
         boards(ids: %s){
             name
-            items_page {
-                items %s {
+            items_page %s {
+                items {
                     group {
                         id
                         title
@@ -379,7 +380,7 @@ def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None
                 }
             }
         }
-    }''' % (board_id, joined_params)
+    }''' % (board_id, wrapped_params)
 
     return query
 
