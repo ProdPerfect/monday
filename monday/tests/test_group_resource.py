@@ -21,6 +21,13 @@ class GroupTestCase(BaseTestCase):
         self.assertIn(str(self.board_id), query)
         self.assertIn(str(self.group_id), query)
 
+    def test_get_items_by_group_query_with_limit_and_cursor(self):
+        limit = 25
+        cursor = 'MSw5NzI4MDA5MDAsaV9YcmxJb0p1VEdY...'
+        query = get_items_by_group_query(board_id=self.board_id, group_id=self.group_id, limit=limit, cursor=cursor)
+        items_page_line = f'items_page (limit: {limit}, cursor: "{cursor}")'
+        self.assertIn(items_page_line, query)
+
     def test_duplicate_group_query(self):
         query = duplicate_group_query(board_id=self.board_id, group_id=self.group_id)
         self.assertIn(str(self.board_id), query)

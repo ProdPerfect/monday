@@ -357,8 +357,8 @@ def get_tags_query(tags):
 def get_board_items_query(board_id: Union[str, int], query_params: Optional[Mapping[str, Any]] = None,
                           limit: Optional[int] = None, cursor: Optional[str] = None) -> str:
     raw_params = locals().items()
-    item_params = gather_params(raw_params, excluded_params=["board_id"])
-    wrapped_params = f"({item_params})" if item_params else ""
+    items_page_params = gather_params(raw_params, excluded_params=["board_id"])
+    wrapped_params = f"({items_page_params})" if items_page_params else ""
 
     query = '''query{
         boards(ids: %s){
@@ -521,14 +521,19 @@ def get_groups_by_board_query(board_ids):
     return query
 
 
-def get_items_by_group_query(board_id, group_id):
+def get_items_by_group_query(board_id: Union[int, str], group_id: Union[int,str],
+                             limit: Optional[int] = None, cursor: Optional[str] = None):
+    raw_params = locals().items()
+    items_page_params = gather_params(raw_params, excluded_params=["board_id", "group_id"])
+    wrapped_params = f"({items_page_params})" if items_page_params else ""
+
     query = '''query
     {
         boards(ids: %s) {
-            groups(ids: "%s") {
+            groups(ids: %s) {
                 id
                 title
-                items_page {
+                items_page %s {
                     items {
                         id
                         name
@@ -536,7 +541,7 @@ def get_items_by_group_query(board_id, group_id):
                 }
             }
         }
-    }''' % (board_id, group_id)
+    }''' % (board_id, group_id, wrapped_params)
     return query
 
 
