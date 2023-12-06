@@ -42,7 +42,7 @@ class BoardTestCase(BaseTestCase):
         items_line = 'items'
         self.assertIn(items_line, query)
 
-    def test_get_board_items_query_with_limit_and_pages(self):
+    def test_get_board_items_query_with_limit_and_cursor(self):
         limit = 100
         cursor = 'MSw0NTc5ODYzMTkyLFRWX2ljOWt2MVpnT...'
         query = get_board_items_query(board_id=self.board_id, limit=limit, cursor=cursor)
