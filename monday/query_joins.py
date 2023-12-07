@@ -58,13 +58,15 @@ def mutate_subitem_query(parent_item_id, subitem_name, column_values,
             str(create_labels_if_missing).lower())
 
 
-def get_item_query(board_id, column_id, value):
+def get_item_query(board_id, column_id, value, limit=None, cursor=None):
+    columns = [{"column_id": str(column_id), "column_values": [str(value)]}] if not cursor else None
+
+    raw_params = locals().items()
+    items_page_params = gather_params(raw_params, excluded_params=["column_id", "value"])
+
     query = '''query
         {
-            items_page_by_column_values(
-                board_id: %s,                
-                columns: [{column_id: "%s", column_values: ["%s"]}]
-            ) {
+            items_page_by_column_values (%s) {
                 cursor
                 items {
                     id
@@ -84,7 +86,7 @@ def get_item_query(board_id, column_id, value):
                     }                
                 }
             }
-        }''' % (board_id, column_id, value)
+        }''' % items_page_params
 
     return query
 
@@ -364,6 +366,7 @@ def get_board_items_query(board_id: Union[str, int], query_params: Optional[Mapp
         boards(ids: %s){
             name
             items_page %s {
+                cursor
                 items {
                     group {
                         id
@@ -534,6 +537,7 @@ def get_items_by_group_query(board_id: Union[int, str], group_id: Union[int,str]
                 id
                 title
                 items_page %s {
+                    cursor
                     items {
                         id
                         name
