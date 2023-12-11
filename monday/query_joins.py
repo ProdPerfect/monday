@@ -118,7 +118,7 @@ def update_item_query(board_id, item_id, column_id, value):
             change_column_value(
                 board_id: %s,
                 item_id: %s,
-                column_id: %s,
+                column_id: "%s",
                 value: %s
             ) {
                 id
@@ -138,7 +138,7 @@ def move_item_to_group_query(item_id, group_id):
     query = '''
     mutation
     {
-        move_item_to_group (item_id: %s, group_id: %s)
+        move_item_to_group (item_id: %s, group_id: "%s")
         {
             id
         }
@@ -252,7 +252,7 @@ def add_file_to_column_query(item_id, column_id):
         add_file_to_column (
             file: $file,
             item_id: %s,
-            column_id: %s
+            column_id: "%s"
         ) {
             id
         }
@@ -524,7 +524,7 @@ def get_groups_by_board_query(board_ids):
     return query
 
 
-def get_items_by_group_query(board_id: Union[int, str], group_id: Union[int,str],
+def get_items_by_group_query(board_id: Union[int, str], group_id: str,
                              limit: Optional[int] = None, cursor: Optional[str] = None):
     raw_params = locals().items()
     items_page_params = gather_params(raw_params, excluded_params=["board_id", "group_id"])
@@ -533,7 +533,7 @@ def get_items_by_group_query(board_id: Union[int, str], group_id: Union[int,str]
     query = '''query
     {
         boards(ids: %s) {
-            groups(ids: %s) {
+            groups(ids: "%s") {
                 id
                 title
                 items_page %s {
