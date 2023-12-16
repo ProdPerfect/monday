@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Union, Any, Mapping
 
 from monday.query_joins import get_boards_query, get_boards_by_id_query, get_board_items_query, \
     get_columns_by_board_query, create_board_by_workspace_query, duplicate_board_query
@@ -13,15 +13,16 @@ class BoardResource(BaseResource):
         query = get_boards_query(limit, page, ids, board_kind, state, order_by)
         return self.client.execute(query)
 
-    def fetch_boards_by_id(self, board_ids):
+    def fetch_boards_by_id(self, board_ids: Union[int, str]):
         query = get_boards_by_id_query(board_ids)
         return self.client.execute(query)
 
-    def fetch_items_by_board_id(self, board_ids, limit: Optional[int] = None, page: Optional[int] = None):
-        query = get_board_items_query(board_ids, limit=limit, page=page)
+    def fetch_items_by_board_id(self, board_ids: Union[int, str], query_params: Optional[Mapping[str, Any]] = None,
+                                limit: Optional[int] = None, cursor: Optional[str] = None):
+        query = get_board_items_query(board_ids, query_params=query_params, limit=limit, cursor=cursor)
         return self.client.execute(query)
 
-    def fetch_columns_by_board_id(self, board_ids):
+    def fetch_columns_by_board_id(self, board_ids: Union[int, str]):
         query = get_columns_by_board_query(board_ids)
         return self.client.execute(query)
 

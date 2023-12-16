@@ -8,8 +8,8 @@ class GroupResource(BaseResource):
         query = get_groups_by_board_query(board_ids=board_ids)
         return self.client.execute(query)
 
-    def get_items_by_group(self, board_id, group_id):
-        query = get_items_by_group_query(board_id=board_id, group_id=group_id)
+    def get_items_by_group(self, board_id, group_id, limit=None, cursor=None):
+        query = get_items_by_group_query(board_id=board_id, group_id=group_id, limit=limit, cursor=cursor)
         return self.client.execute(query)
 
     def create_group(self, board_id, group_name):

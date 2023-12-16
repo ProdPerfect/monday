@@ -1,5 +1,6 @@
 from monday.query_joins import duplicate_board_query, create_board_by_workspace_query, get_boards_query, \
     get_boards_by_id_query, get_board_items_query, get_columns_by_board_query
+from monday.resources.types import ItemsQueryRuleOperator
 from monday.tests.test_case_resource import BaseTestCase
 
 
@@ -41,12 +42,28 @@ class BoardTestCase(BaseTestCase):
         items_line = 'items'
         self.assertIn(items_line, query)
 
-    def test_get_board_items_query_with_limit_and_pages(self):
+    def test_get_board_items_query_with_limit_and_cursor(self):
         limit = 100
-        page = 1
-        query = get_board_items_query(board_id=self.board_id, limit=limit, page=page)
-        items_line = f'items (limit: {limit}, page: {page})'
-        self.assertIn(items_line, query)
+        cursor = 'MSw0NTc5ODYzMTkyLFRWX2ljOWt2MVpnT...'
+        query = get_board_items_query(board_id=self.board_id, limit=limit, cursor=cursor)
+        items_page_line = f'items_page (limit: {limit}, cursor: "{cursor}")'
+        self.assertIn(items_page_line, query)
+
+    def test_get_board_items_query_with_query_params(self):
+        query_params = {
+            'rules': {
+                'column_id': 'timeline',
+                'compare_value': ['2023-06-30', '2023-07-01'],
+                'compare_attribute': 'START_DATE',
+                'operator': ItemsQueryRuleOperator.BETWEEN
+            }}
+        query = get_board_items_query(board_id=self.board_id, query_params=query_params)
+        items_page_line = ('items_page (query_params: {rules: {'
+                           'column_id: "timeline", '
+                           'compare_value: ["2023-06-30", "2023-07-01"], '
+                           'compare_attribute: "START_DATE", '
+                           'operator: between}')
+        self.assertIn(items_page_line, query)
 
     def test_get_columns_by_board_query(self):
         query = get_columns_by_board_query(board_ids=self.board_id)

@@ -25,6 +25,15 @@ class ItemTestCase(BaseTestCase):
         self.assertIn(self.column_id, query)
         self.assertIn("foo", query)
 
+    def test_get_item_query_with_limit_and_cursor(self):
+        limit = 10
+        cursor = "MSw0NTc5ODYzMTkyLFRWX2ljOW..."
+        query = get_item_query(board_id=self.board_id, column_id=None, value="foo", limit=limit, cursor=cursor)
+        items_page_line = f'items_page_by_column_values (board_id: {self.board_id}, limit: {limit}, cursor: "{cursor}")'
+        self.assertIn(items_page_line, query)
+        self.assertNotIn(self.column_id, query)
+        self.assertNotIn("foo", query)
+
     def test_update_item_query(self):
         query = update_item_query(
             board_id=self.board_id, item_id=self.item_id, column_id=self.column_id, value="foo")

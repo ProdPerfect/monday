@@ -1,6 +1,6 @@
 import json
 from enum import Enum
-from typing import List, Union, Optional, Mapping
+from typing import List, Union, Optional, Mapping, Any
 
 from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateType, ColumnType
 from monday.utils import monday_json_stringify, gather_params
@@ -58,13 +58,15 @@ def mutate_subitem_query(parent_item_id, subitem_name, column_values,
             str(create_labels_if_missing).lower())
 
 
-def get_item_query(board_id, column_id, value):
+def get_item_query(board_id, column_id, value, limit=None, cursor=None):
+    columns = [{"column_id": str(column_id), "column_values": [str(value)]}] if not cursor else None
+
+    raw_params = locals().items()
+    items_page_params = gather_params(raw_params, excluded_params=["column_id", "value"])
+
     query = '''query
         {
-            items_page_by_column_values(
-                board_id: %s,                
-                columns: [{column_id: "%s", column_values: ["%s"]}]
-            ) {
+            items_page_by_column_values (%s) {
                 cursor
                 items {
                     id
@@ -84,7 +86,7 @@ def get_item_query(board_id, column_id, value):
                     }                
                 }
             }
-        }''' % (board_id, column_id, value)
+        }''' % items_page_params
 
     return query
 
@@ -116,7 +118,7 @@ def update_item_query(board_id, item_id, column_id, value):
             change_column_value(
                 board_id: %s,
                 item_id: %s,
-                column_id: %s,
+                column_id: "%s",
                 value: %s
             ) {
                 id
@@ -136,7 +138,7 @@ def move_item_to_group_query(item_id, group_id):
     query = '''
     mutation
     {
-        move_item_to_group (item_id: %s, group_id: %s)
+        move_item_to_group (item_id: %s, group_id: "%s")
         {
             id
         }
@@ -250,7 +252,7 @@ def add_file_to_column_query(item_id, column_id):
         add_file_to_column (
             file: $file,
             item_id: %s,
-            column_id: %s
+            column_id: "%s"
         ) {
             id
         }
@@ -354,16 +356,18 @@ def get_tags_query(tags):
 
 
 # BOARD RESOURCE QUERIES
-def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None, page: Optional[int] = None) -> str:
+def get_board_items_query(board_id: Union[str, int], query_params: Optional[Mapping[str, Any]] = None,
+                          limit: Optional[int] = None, cursor: Optional[str] = None) -> str:
     raw_params = locals().items()
-    item_params = gather_params(raw_params, exclusion_list=["board_id", "item_ids"])
-    joined_params = f"({', '.join(item_params)})" if item_params else ""
+    items_page_params = gather_params(raw_params, excluded_params=["board_id"])
+    wrapped_params = f"({items_page_params})" if items_page_params else ""
 
     query = '''query{
         boards(ids: %s){
             name
-            items_page {
-                items %s {
+            items_page %s {
+                cursor
+                items {
                     group {
                         id
                         title
@@ -379,7 +383,7 @@ def get_board_items_query(board_id: Union[str, int], limit: Optional[int] = None
                 }
             }
         }
-    }''' % (board_id, joined_params)
+    }''' % (board_id, wrapped_params)
 
     return query
 
@@ -520,14 +524,20 @@ def get_groups_by_board_query(board_ids):
     return query
 
 
-def get_items_by_group_query(board_id, group_id):
+def get_items_by_group_query(board_id: Union[int, str], group_id: str,
+                             limit: Optional[int] = None, cursor: Optional[str] = None):
+    raw_params = locals().items()
+    items_page_params = gather_params(raw_params, excluded_params=["board_id", "group_id"])
+    wrapped_params = f"({items_page_params})" if items_page_params else ""
+
     query = '''query
     {
         boards(ids: %s) {
             groups(ids: "%s") {
                 id
                 title
-                items_page {
+                items_page %s {
+                    cursor
                     items {
                         id
                         name
@@ -535,7 +545,7 @@ def get_items_by_group_query(board_id, group_id):
                 }
             }
         }
-    }''' % (board_id, group_id)
+    }''' % (board_id, group_id, wrapped_params)
     return query
 
 

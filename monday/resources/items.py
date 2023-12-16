@@ -17,8 +17,8 @@ class ItemResource(BaseResource):
                                      create_labels_if_missing)
         return self.client.execute(query)
 
-    def fetch_items_by_column_value(self, board_id, column_id, value):
-        query = get_item_query(board_id, column_id, value)
+    def fetch_items_by_column_value(self, board_id, column_id, value, limit=None, cursor=None):
+        query = get_item_query(board_id, column_id, value, limit, cursor)
         return self.client.execute(query)
 
     def fetch_items_by_id(self, ids):
