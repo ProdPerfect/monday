@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 from setuptools import setup
 
-from monday import __author__, __email__, __version__
+__version__ = '2.0.0rc3'
+__author__ = 'Christina D\'Astolfo'
+__email__ = 'chdastolfo@gmail.com, lemi@prodperfect.com, pevner@prodperfect.com'
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -19,6 +21,9 @@ setup(name='monday',
       zip_safe=False,
       license='BSD',
       python_requires='>=3.6',
+      install_requires=[
+          'requests'
+      ],
       classifiers=[
           "Programming Language :: Python :: 3",
           "Programming Language :: Python :: 3.6",
