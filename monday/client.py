@@ -6,7 +6,7 @@ monday.client
 :license: Apache2, see LICENSE for more details.
 """
 
-from .__version__ import __version__
+from ..setup import __version__
 from .resources import CustomResource, ItemResource, ColumnsResource, UpdateResource, TagResource, BoardResource, \
     UserResource, GroupResource, ComplexityResource, WorkspaceResource, NotificationResource, MeResource
 
