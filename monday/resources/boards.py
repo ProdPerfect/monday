@@ -9,8 +9,8 @@ from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, Duplica
 class BoardResource(BaseResource):
     def fetch_boards(self, limit: Optional[int] = None, page: Optional[int] = None, ids: Optional[List[int]] = None,
                      board_kind: Optional[BoardKind] = None, state: Optional[BoardState] = None,
-                     order_by: Optional[BoardsOrderBy] = None):
-        query = get_boards_query(limit, page, ids, board_kind, state, order_by)
+                     order_by: Optional[BoardsOrderBy] = None, workspace_ids: Optional[List[int]] = None):
+        query = get_boards_query(limit, page, ids, board_kind, state, order_by, workspace_ids)
         return self.client.execute(query)
 
     def fetch_boards_by_id(self, board_ids: Union[int, str]):
