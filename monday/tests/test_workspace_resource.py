@@ -12,13 +12,11 @@ class WorkspaceTestCase(BaseTestCase):
         query = get_workspaces_query()
         self.assertEqual('''
         query {
-            boards {
-                workspace {
-                    id
-                    name
-                    kind
-                    description
-                }
+            workspaces {
+                id
+                name
+                kind
+                description
             }
         }
         '''.replace(" ", ""), query.replace(" ", ""))

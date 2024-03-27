@@ -615,18 +615,15 @@ def get_complexity_query():
 def get_workspaces_query():
     query = '''
     query {
-        boards {
-            workspace {
-                id
-                name
-                kind
-                description
-            }
+        workspaces {
+            id
+            name
+            kind
+            description
         }
     }
     '''
     return query
-
 
 def create_workspace_query(name, kind, description=""):
     query = '''
