@@ -33,5 +33,5 @@ class BoardResource(BaseResource):
     def duplicate_board(self, board_id: int, duplicate_type: DuplicateType, board_name: Optional[str] = None,
                         folder_id: Optional[int] = None, keep_subscribers: Optional[bool] = None,
                         workspace_id: Optional[int] = None):
-        query = duplicate_board_query(board_id, duplicate_type, board_name, workspace_id, folder_id, keep_subscribers)
+        query = duplicate_board_query(board_id, duplicate_type, board_name, folder_id, keep_subscribers, workspace_id)
         return self.client.execute(query)
