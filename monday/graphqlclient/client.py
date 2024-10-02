@@ -6,10 +6,12 @@ from monday.exceptions import MondayQueryError
 
 TOKEN_HEADER = 'Authorization'
 
+DEFAULT_TIMEOUT = 60
 
 class GraphQLClient:
-    def __init__(self, endpoint):
+    def __init__(self, endpoint, timeout=DEFAULT_TIMEOUT):
         self.endpoint = endpoint
+        self.timeout = timeout
         self.token = None
         self.headers = {}
 
@@ -43,7 +45,7 @@ class GraphQLClient:
             ]
 
         try:
-            response = requests.request("POST", self.endpoint, headers=headers, data=payload, files=files)
+            response = requests.request("POST", self.endpoint, headers=headers, data=payload, files=files, timeout=self.timeout)
             response.raise_for_status()
             response_data = response.json()
             self._throw_on_error(response_data)
