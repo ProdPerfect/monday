@@ -18,8 +18,11 @@ class BoardResource(BaseResource):
         return self.client.execute(query)
 
     def fetch_items_by_board_id(self, board_ids: Union[int, str], query_params: Optional[Mapping[str, Any]] = None,
+                                display_mirror_values: Optional[bool] = False,
                                 limit: Optional[int] = None, cursor: Optional[str] = None):
-        query = get_board_items_query(board_ids, query_params=query_params, limit=limit, cursor=cursor)
+        query = get_board_items_query(board_ids, query_params=query_params, 
+                                      display_mirror_values=display_mirror_values, 
+                                      limit=limit, cursor=cursor)
         return self.client.execute(query)
 
     def fetch_columns_by_board_id(self, board_ids: Union[int, str]):
