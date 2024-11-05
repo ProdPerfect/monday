@@ -8,6 +8,13 @@ from monday.utils import monday_json_stringify, gather_params
 
 # Eventually I will organize this file better but you know what today is not that day.
 
+MIRROR_VALUE_PARAMS = """... on BoardRelationValue {
+                          display_value
+                        }
+                        ... on MirrorValue {
+                          display_value
+                        }"""
+
 # ITEM RESOURCE QUERIES
 def mutate_item_query(board_id, group_id, item_name, column_values, create_labels_if_missing):
     # Monday does not allow passing through non-JSON null values here,
@@ -58,12 +65,15 @@ def mutate_subitem_query(parent_item_id, subitem_name, column_values,
             str(create_labels_if_missing).lower())
 
 
-def get_item_query(board_id, column_id, value, limit=None, cursor=None):
+def get_item_query(board_id, column_id, value, display_mirror_values=False, limit=None, cursor=None):
     columns = [{"column_id": str(column_id), "column_values": [str(value)]}] if not cursor else None
 
     raw_params = locals().items()
     items_page_params = gather_params(raw_params, excluded_params=["column_id", "value"])
-
+    if display_mirror_values:
+        mirror_value_params = MIRROR_VALUE_PARAMS
+    else:
+        mirror_value_params = ''
     query = '''query
         {
             items_page_by_column_values (%s) {
@@ -83,15 +93,21 @@ def get_item_query(board_id, column_id, value, limit=None, cursor=None):
                         id
                         text
                         value
+                        %s
                     }                
                 }
             }
-        }''' % items_page_params
+        }''' % (items_page_params, mirror_value_params)
 
     return query
 
 
-def get_item_by_id_query(ids):
+def get_item_by_id_query(ids, display_mirror_values=False):
+    
+    if display_mirror_values:
+        mirror_value_params = MIRROR_VALUE_PARAMS
+    else:
+        mirror_value_params = ''
     query = '''query
         {
             items (ids: %s) {
@@ -105,9 +121,10 @@ def get_item_by_id_query(ids):
                     id,
                     text,
                     value
+                    %s
                 }
             }
-        }''' % ids
+        }''' % (ids, mirror_value_params)
 
     return query
 
@@ -357,11 +374,14 @@ def get_tags_query(tags):
 
 # BOARD RESOURCE QUERIES
 def get_board_items_query(board_id: Union[str, int], query_params: Optional[Mapping[str, Any]] = None,
+                          display_mirror_values: Optional[bool] = False,
                           limit: Optional[int] = None, cursor: Optional[str] = None) -> str:
     raw_params = locals().items()
     items_page_params = gather_params(raw_params, excluded_params=["board_id"])
     wrapped_params = f"({items_page_params})" if items_page_params else ""
-
+    if display_mirror_values:
+        mirror_value_params = MIRROR_VALUE_PARAMS
+                              
     query = '''query{
         boards(ids: %s){
             name
@@ -379,11 +399,12 @@ def get_board_items_query(board_id: Union[str, int], query_params: Optional[Mapp
                         text
                         type
                         value
+                        %s
                     }
                 }
             }
         }
-    }''' % (board_id, wrapped_params)
+    }''' % (board_id, wrapped_params, mirror_value_params)
 
     return query
 
