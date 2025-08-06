@@ -41,7 +41,7 @@ Getting started
    subitems column/at least one subitem created.
 
 -  ``fetch_items_by_column_value(board_id, column_id, value)`` - Fetch
-   items on a board by column value.
+   items on a board by column value. The value argument accepts a list.
 
 -  ``fetch_items_by_id(board_id, [ids])`` - Fetch items from any board
    by ids, passed in as an array of integers.

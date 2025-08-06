@@ -59,7 +59,10 @@ def mutate_subitem_query(parent_item_id, subitem_name, column_values,
 
 
 def get_item_query(board_id, column_id, value, limit=None, cursor=None):
-    columns = [{"column_id": str(column_id), "column_values": [str(value)]}] if not cursor else None
+    if not isinstance(value, list):
+        value = [value]
+
+    columns = [{"column_id": str(column_id), "column_values": [str(v) for v in value]}] if not cursor else None
 
     raw_params = locals().items()
     items_page_params = gather_params(raw_params, excluded_params=["column_id", "value"])
@@ -83,7 +86,7 @@ def get_item_query(board_id, column_id, value, limit=None, cursor=None):
                         id
                         text
                         value
-                    }                
+                    }
                 }
             }
         }''' % items_page_params
@@ -286,7 +289,7 @@ def delete_update_query(item_id):
 
 
 def get_updates_for_item_query(item, limit):
-    query = '''query{                
+    query = '''query{
         items(ids: %s){
             updates (limit: %s) {
                 id,
@@ -706,34 +709,34 @@ def get_me_query():
         account {
             id
         },
-        birthday,   
-        country_code,   
-        created_at, 
-        join_date,  
-        email,  
+        birthday,
+        country_code,
+        created_at,
+        join_date,
+        email,
         enabled,
-        id, 
-        is_admin,   
-        is_guest,   
-        is_pending, 
-        is_view_only,   
-        location,   
-        mobile_phone,   
-        name,   
-        phone,  
-        photo_original, 
+        id,
+        is_admin,
+        is_guest,
+        is_pending,
+        is_view_only,
+        location,
+        mobile_phone,
+        name,
+        phone,
+        photo_original,
         photo_small,
         photo_thumb,
-        photo_thumb_small,  
-        photo_tiny, 
+        photo_thumb_small,
+        photo_tiny,
         teams {
             id,
             name
-        },  
-        time_zone_identifier,   
-        title,  
+        },
+        time_zone_identifier,
+        title,
         url,
-        utc_hours_diff, 
+        utc_hours_diff,
         }
     }"""
     return query
