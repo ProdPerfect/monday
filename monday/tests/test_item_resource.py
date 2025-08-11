@@ -25,6 +25,15 @@ class ItemTestCase(BaseTestCase):
         self.assertIn(self.column_id, query)
         self.assertIn("foo", query)
 
+    def test_get_item_query_as_list(self):
+        query = get_item_query(
+            board_id=self.board_id, column_id=self.column_id, value=["foo", "bar"]
+        )
+        self.assertIn(str(self.board_id), query)
+        self.assertIn(self.column_id, query)
+        self.assertIn('"foo"', query)
+        self.assertIn('"bar"', query)
+
     def test_get_item_query_with_limit_and_cursor(self):
         limit = 10
         cursor = "MSw0NTc5ODYzMTkyLFRWX2ljOW..."
@@ -78,7 +87,7 @@ class ItemTestCase(BaseTestCase):
                 id
             }
         }'''.replace(" ", ""), query.replace(" ", ""))
-        
+
     def test_archive_item_by_id(self):
         query = archive_item_query(item_id=self.item_id)
         self.assertIn(str(self.item_id), query)

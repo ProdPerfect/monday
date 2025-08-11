@@ -31,7 +31,7 @@ Getting started
 
    monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a thing')
 
-**Available methods:** 
+**Available methods:**
 
 Items Resource (monday.items)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -46,7 +46,7 @@ Items Resource (monday.items)
    subitems column/at least one subitem created.
 
 -  ``fetch_items_by_column_value(board_id, column_id, value)`` - Fetch
-   items on a board by column value.
+   items on a board by column value. The value argument accepts a list.
 
 -  ``fetch_items_by_id(board_id, [ids])`` - Fetch items from any board
    by ids, passed in as an array of integers.
