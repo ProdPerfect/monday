@@ -25,7 +25,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pipenv
-        pipenv install --dev
+        pipenv install --dev --deploy --system
         pip install requests
 
     - name: Run Tests
