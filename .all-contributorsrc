@@ -100,6 +100,18 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Diosbejgli",
+      "name": "Andras Toth",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34376065?v=4",
+      "profile": "https://github.com/Diosbejgli",
+      "contributions": [
+        "code",
+        "bug",
+        "doc",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7,
