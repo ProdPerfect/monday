@@ -13,7 +13,7 @@ here <https://developer.monday.com/api-reference/docs>`__.
 Requirements
 ^^^^^^^^^^^^
 
--  Python >= 3.6
+-  Python >= 3.11
 
 Getting started
 ^^^^^^^^^^^^^^^
@@ -31,11 +31,11 @@ Getting started
 
    monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a thing')
 
-**Available methods:**
+Available methods
+^^^^^^^^^^^^^^^^^
 
 Items Resource (monday.items)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 
 -  ``create_item(board_id, group_id, item_name, column_values=None, create_labels_if_missing=False)``
    - Create an item on a board in the given group with name item_name.
