@@ -12,13 +12,11 @@ class WorkspaceTestCase(BaseTestCase):
         query = get_workspaces_query()
         self.assertEqual('''
         query {
-            boards {
-                workspace {
-                    id
-                    name
-                    kind
-                    description
-                }
+            workspaces {
+                id
+                name
+                kind
+                description
             }
         }
         '''.replace(" ", ""), query.replace(" ", ""))
@@ -33,7 +31,7 @@ class WorkspaceTestCase(BaseTestCase):
         self.assertIn(str(self.workspace_id), query)
         self.assertIn(str(self.user_ids), query)
         self.assertIn(str(self.workspace_user_kind), query)
-    
+
     def test_delete_users_from_workspace_query(self):
         query = delete_users_from_workspace_query(self.workspace_id, self.user_ids)
         self.assertIn(str(self.workspace_id), query)
@@ -43,11 +41,8 @@ class WorkspaceTestCase(BaseTestCase):
         query = add_teams_to_workspace_query(self.workspace_id, self.team_ids)
         self.assertIn(str(self.workspace_id), query)
         self.assertIn(str(self.team_ids), query)
-    
+
     def test_delete_teams_from_workspace_query(self):
         query = delete_teams_from_workspace_query(self.workspace_id, self.team_ids)
         self.assertIn(str(self.workspace_id), query)
         self.assertIn(str(self.team_ids), query)
-    
-
-        

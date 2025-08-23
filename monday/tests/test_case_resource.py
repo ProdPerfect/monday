@@ -29,4 +29,3 @@ class BaseTestCase(unittest.TestCase):
         self.team_ids = [105939, 105940, 105941]
         self.notification_text = "This is an awesome notification."
         self.notification_target_type = "Project"
-    
