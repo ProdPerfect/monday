@@ -11,17 +11,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
+
       - name: Install dependencies
         run: |
           pip install sphinx sphinx_rtd_theme myst_parser
-      - name: Sphinx build
+
+      - name: Build Sphinx HTML
         run: |
-          sphinx-build docs docs/_build
+          sphinx-build -b html docs docs/_build/html
+
+      - name: Upload built docs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-docs
+          path: docs/_build/html
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_build/html/
+          publish_dir: docs/_build/html
           force_orphan: true

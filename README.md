@@ -4,9 +4,7 @@
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 A monday.com Python Client Library
 
-
 For an overview of the Monday API, [click here](https://developer.monday.com/api-reference/docs).
-
 
 #### Requirements
 - Python >= 3.11
@@ -18,15 +16,13 @@ For an overview of the Monday API, [click here](https://developer.monday.com/api
 ```python
 from monday import MondayClient
 
-
 monday = MondayClient('your token')
 
-monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a thing')
-
+monday.items.create_item(board_id='12345678', group_id='today', item_name='Do a thing')
 ```
 ### Additional Resources and Code Samples
 
-- Read our [docs](https://monday.readthedocs.io/en/latest/) for a full list of available resources and methods for interacting with those resources.
+- Read our [docs](https://prodperfect.github.io/monday/) for a full list of available resources and methods for interacting with those resources.
 
 ## Contributors
 
@@ -53,14 +49,6 @@ monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ### Bug Reports
