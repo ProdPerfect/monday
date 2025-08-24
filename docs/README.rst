@@ -192,8 +192,10 @@ Notifications Resource (monday.notifications)
 -  ``create_notification(user_id, target_id, text, target_type)`` - The
    create_notification mutation allows to trigger a notification within
    the platform (will also send out an email if the recipient’s email
-   preferences are set up accordingly). ### Additional Resources and
-   Code Samples
+   preferences are set up accordingly).
+
+Additional Resources and Code Samples
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  `Read and format all of the items on a
    board <https://github.com/ProdPerfect/monday/wiki/Code-Examples#whole-board-formatting-example>`__
