@@ -1,9 +1,11 @@
 from typing import List, Optional, Union, Any, Mapping
 
 from monday.query_joins import get_boards_query, get_boards_by_id_query, get_board_items_query, \
-    get_columns_by_board_query, create_board_by_workspace_query, duplicate_board_query
+    get_next_items_query, get_columns_by_board_query, create_board_by_workspace_query, \
+    duplicate_board_query
 from monday.resources.base import BaseResource
 from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateType
+from monday.graphqlclient.client import DEFAULT_PAGE_LIMIT_ITEMS
 
 
 class BoardResource(BaseResource):
@@ -18,9 +20,35 @@ class BoardResource(BaseResource):
         return self.client.execute(query)
 
     def fetch_items_by_board_id(self, board_ids: Union[int, str], query_params: Optional[Mapping[str, Any]] = None,
-                                limit: Optional[int] = None, cursor: Optional[str] = None):
+                                limit: Optional[int] = DEFAULT_PAGE_LIMIT_ITEMS, cursor: Optional[str] = None):
         query = get_board_items_query(board_ids, query_params=query_params, limit=limit, cursor=cursor)
         return self.client.execute(query)
+
+    def fetch_next_items_by_cursor(self, cursor: str, limit: Optional[int] = None):
+        query = get_next_items_query(limit=limit, cursor=cursor)
+        return self.client.execute(query)
+
+    def fetch_all_items_by_board_id(self, board_ids: Union[int, str], query_params: Optional[Mapping[str, Any]] = None,
+                                    limit: Optional[int] = DEFAULT_PAGE_LIMIT_ITEMS) -> List[dict]:
+        items: List[dict] = []
+        cursor: Optional[str] = None
+
+        while True:
+            if cursor:
+                response = self.fetch_next_items_by_cursor(cursor=cursor, limit=limit)
+                items_page = response["data"]["next_items_page"]
+            else:
+                response = self.fetch_items_by_board_id(board_ids, query_params=query_params,
+                                                        limit=limit, cursor=cursor)
+                items_page = response["data"]["boards"][0]["items_page"]
+
+            items.extend(items_page.get("items", []))
+            cursor = items_page.get("cursor")
+
+            if not cursor:
+                break
+
+        return items
 
     def fetch_columns_by_board_id(self, board_ids: Union[int, str]):
         query = get_columns_by_board_query(board_ids)

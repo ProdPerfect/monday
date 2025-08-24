@@ -3,6 +3,8 @@
 .DS_Store
 dist/
 build/
+_build/
+docs/_build/
 .mypy_cache/
 .ropeproject/
 .vscode/

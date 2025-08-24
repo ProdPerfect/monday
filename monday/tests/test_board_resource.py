@@ -1,5 +1,5 @@
 from monday.query_joins import duplicate_board_query, create_board_by_workspace_query, get_boards_query, \
-    get_boards_by_id_query, get_board_items_query, get_columns_by_board_query
+    get_boards_by_id_query, get_board_items_query, get_next_items_query, get_columns_by_board_query
 from monday.resources.types import ItemsQueryRuleOperator
 from monday.tests.test_case_resource import BaseTestCase
 
@@ -41,6 +41,13 @@ class BoardTestCase(BaseTestCase):
         self.assertIn(str(self.board_id), query)
         items_line = 'items'
         self.assertIn(items_line, query)
+
+    def test_get_next_items_query(self):
+        limit = 100
+        cursor = 'MSw0NTc5ODYzMTkyLFRWX2ljOWt2MVpnT...'
+        query = get_next_items_query(limit=limit, cursor=cursor)
+        items_page_line = f'next_items_page (limit: {limit}, cursor: "{cursor}")'
+        self.assertIn(items_page_line, query)
 
     def test_get_board_items_query_with_limit_and_cursor(self):
         limit = 100

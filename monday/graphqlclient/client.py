@@ -1,5 +1,4 @@
 import json
-
 import requests
 
 from monday.exceptions import MondayQueryError
@@ -7,6 +6,9 @@ from monday.exceptions import MondayQueryError
 TOKEN_HEADER = 'Authorization'
 
 DEFAULT_TIMEOUT = 60
+
+DEFAULT_PAGE_LIMIT_ITEMS = 500
+
 
 class GraphQLClient:
     def __init__(self, endpoint, timeout=DEFAULT_TIMEOUT):
