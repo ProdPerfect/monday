@@ -26,10 +26,9 @@ Getting started
 
    from monday import MondayClient
 
-
    monday = MondayClient('your token')
 
-   monday.items.create_item(board_id='12345678', group_id='today',  item_name='Do a thing')
+   monday.items.create_item(board_id='12345678', group_id='today', item_name='Do a thing')
 
 Available methods
 ^^^^^^^^^^^^^^^^^
@@ -119,12 +118,21 @@ Boards Resource (monday.boards)
    as their ids, types, and settings. Accepts a comma separated list of
    board ids.
 
--  ``fetch_items_by_board_id([board_ids], **kwargs)`` - Get all items on
-   a board(s). Accepts a comma separated list of board ids.
+-  ``fetch_items_by_board_id([board_ids], **kwargs)`` - Get items on
+   a board(s) with manual pagination. Accepts a comma separated list of
+   board ids.
 
-   -  ``limit`` - The number of rows returned (*int*. no default).
+   -  ``limit`` - The number of rows returned (*int*. default 500).
    -  ``page`` - The page number returned, should you implement
-      pagination(*int*. no default).
+      pagination (*int*. no default).
+   -  ``cursor`` - Token that can be used for pagination to ask for
+      next page.
+
+- ``fetch_all_items_by_board_id([board_ids], **kwargs)`` - Get all items on
+  a board(s) without manual pagination. Accepts a comma separated list of
+  board ids.
+
+  -  ``limit`` - The number of rows returned (*int*. default 500).
 
 -  ``create_board(board_name, board_kind, workspace_id)`` - Create board
    with the given name and kind by (and optional) workspace id.

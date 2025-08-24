@@ -49,10 +49,9 @@ here</a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">monday</span></code> is very simple to use – take a look at the below example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">monday</span><span class="w"> </span><span class="kn">import</span> <span class="n">MondayClient</span>
 
-
 <span class="n">monday</span> <span class="o">=</span> <span class="n">MondayClient</span><span class="p">(</span><span class="s1">&#39;your token&#39;</span><span class="p">)</span>
 
-<span class="n">monday</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">create_item</span><span class="p">(</span><span class="n">board_id</span><span class="o">=</span><span class="s1">&#39;12345678&#39;</span><span class="p">,</span> <span class="n">group_id</span><span class="o">=</span><span class="s1">&#39;today&#39;</span><span class="p">,</span>  <span class="n">item_name</span><span class="o">=</span><span class="s1">&#39;Do a thing&#39;</span><span class="p">)</span>
+<span class="n">monday</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">create_item</span><span class="p">(</span><span class="n">board_id</span><span class="o">=</span><span class="s1">&#39;12345678&#39;</span><span class="p">,</span> <span class="n">group_id</span><span class="o">=</span><span class="s1">&#39;today&#39;</span><span class="p">,</span> <span class="n">item_name</span><span class="o">=</span><span class="s1">&#39;Do a thing&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -135,12 +134,22 @@ list of board ids.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">fetch_columns_by_board_id([board_ids])</span></code> - Get all columns, as well
 as their ids, types, and settings. Accepts a comma separated list of
 board ids.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fetch_items_by_board_id([board_ids],</span> <span class="pre">**kwargs)</span></code> - Get all items on
-a board(s). Accepts a comma separated list of board ids.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch_items_by_board_id([board_ids],</span> <span class="pre">**kwargs)</span></code> - Get items on
+a board(s) with manual pagination. Accepts a comma separated list of
+board ids.</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">limit</span></code> - The number of rows returned (<em>int</em>. no default).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">limit</span></code> - The number of rows returned (<em>int</em>. default 500).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">page</span></code> - The page number returned, should you implement
-pagination(<em>int</em>. no default).</p></li>
+pagination (<em>int</em>. no default).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cursor</span></code> - Token that can be used for pagination to ask for
+next page.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch_all_items_by_board_id([board_ids],</span> <span class="pre">**kwargs)</span></code> - Get all items on
+a board(s) without manual pagination. Accepts a comma separated list of
+board ids.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">limit</span></code> - The number of rows returned (<em>int</em>. default 500).</p></li>
 </ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">create_board(board_name,</span> <span class="pre">board_kind,</span> <span class="pre">workspace_id)</span></code> - Create board

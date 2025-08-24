@@ -290,7 +290,7 @@ def delete_update_query(item_id):
 
 def get_updates_for_item_query(item, limit):
     query = '''query{
-        items(ids: %s){
+        items(ids: %s) {
             updates (limit: %s) {
                 id,
                 body,
@@ -365,8 +365,8 @@ def get_board_items_query(board_id: Union[str, int], query_params: Optional[Mapp
     items_page_params = gather_params(raw_params, excluded_params=["board_id"])
     wrapped_params = f"({items_page_params})" if items_page_params else ""
 
-    query = '''query{
-        boards(ids: %s){
+    query = '''query {
+        boards(ids: %s) {
             name
             items_page %s {
                 cursor
@@ -387,6 +387,30 @@ def get_board_items_query(board_id: Union[str, int], query_params: Optional[Mapp
             }
         }
     }''' % (board_id, wrapped_params)
+
+    return query
+
+
+def get_next_items_query(limit: Optional[int] = None, cursor: Optional[str] = None) -> str:
+    query = '''query {
+        next_items_page (limit: %s, cursor: "%s") {
+            cursor
+            items {
+                group {
+                    id
+                    title
+                }
+                id
+                name
+                column_values {
+                    id
+                    text
+                    type
+                    value
+                }
+            }
+        }
+    }''' % (limit, cursor)
 
     return query
 
