@@ -53,34 +53,26 @@ class ColumnType(Enum):
     WEEK = "week"  # Select the week on which each item should be completed
     WORLD_CLOCK = "world_clock"  # Keep track of the time anywhere in the world
 
-    @classmethod
-    def is_defaults_have_recommended_keys(cls, defaults: Mapping[str, any] = None):
-        mirror_recommended_default_keys = (
-            "relation_column",
-            "displayed_linked_columns",
-        )
-
-        board_relation_recommended_default_keys = (
-            "boardId",
-            "boardIds",
-        )
-
-        if (cls == "mirror") & (mirror_recommended_default_keys not in defaults):
-            warn(
-                f"Defaults for mirror column type missing recommended keys: {[x for x in mirror_recommended_default_keys if x not in defaults]}. Column will appear blank.",
-                UserWarning,
-            )
-        elif (cls == "board_relation") & (
-            board_relation_recommended_default_keys not in defaults
-        ):
-            warn(
-                f"Defaults for board_relation column type missing recommended keys: {[x for x in board_relation_recommended_default_keys if x not in defaults]}. Items from the related board(s) will not be linkable.",
-                UserWarning,
-            )
-        else:
-            pass
-
-        return None
+    def is_defaults_have_recommended_keys(self, defaults: Mapping[str, any] = None):
+        defaults = defaults or {}
+        if self == ColumnType.MIRROR:
+            mirror_keys = ("relation_column", "displayed_linked_columns")
+            missing_keys = [key for key in mirror_keys if key not in defaults]
+            if missing_keys:
+                warn(
+                    "Defaults for mirror column type missing recommended "
+                    f"keys: {missing_keys}. Column will appear blank.",
+                    UserWarning,
+                )
+        elif self == ColumnType.BOARD_RELATION:
+            relation_keys = ("boardId", "boardIds")
+            if not any(key in defaults for key in relation_keys):
+                warn(
+                    "Defaults for board_relation column type missing "
+                    "recommended keys: 'boardId' or 'boardIds'. "
+                    "Items from the related board(s) will not be linkable.",
+                    UserWarning,
+                )
 
 
 class BoardKind(Enum):
