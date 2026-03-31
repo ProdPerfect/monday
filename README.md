@@ -1,6 +1,6 @@
 # monday
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-12-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 A monday.com Python Client Library
 
@@ -45,6 +45,7 @@ monday.items.create_item(board_id='12345678', group_id='today', item_name='Do a 
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/t-a-y-l-o-r"><img src="https://avatars.githubusercontent.com/u/32030464?v=4?s=100" width="100px;" alt="Taylor Cochran"/><br /><sub><b>Taylor Cochran</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=t-a-y-l-o-r" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/willnaoosmith"><img src="https://avatars.githubusercontent.com/u/55159911?v=4?s=100" width="100px;" alt="William Brochensque Júnior"/><br /><sub><b>William Brochensque Júnior</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=willnaoosmith" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Diosbejgli"><img src="https://avatars.githubusercontent.com/u/34376065?v=4?s=100" width="100px;" alt="Andras Toth"/><br /><sub><b>Andras Toth</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=Diosbejgli" title="Code">💻</a> <a href="https://github.com/ProdPerfect/monday/issues?q=author%3ADiosbejgli" title="Bug reports">🐛</a> <a href="https://github.com/ProdPerfect/monday/commits?author=Diosbejgli" title="Documentation">📖</a> <a href="#maintenance-Diosbejgli" title="Maintenance">🚧</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/lewandowskimicha%C5%82/"><img src="https://avatars.githubusercontent.com/u/64804900?v=4?s=100" width="100px;" alt="Michał"/><br /><sub><b>Michał</b></sub></a><br /><a href="https://github.com/ProdPerfect/monday/commits?author=Lewandowski-commits" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
