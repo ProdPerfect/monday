@@ -11,7 +11,7 @@ from .resources import CustomResource, ItemResource, ColumnsResource, UpdateReso
     UserResource, GroupResource, ComplexityResource, WorkspaceResource, NotificationResource, MeResource
 
 _DEFAULT_HEADERS = {
-    "API-Version": "2023-10"
+    "API-Version": "2026-01"
 }
 
 DEFAULT_TIMEOUT = 60
