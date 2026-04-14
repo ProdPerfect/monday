@@ -10,5 +10,7 @@ pylint = "*"
 pytest = "*"
 
 [packages]
+requests = "*"
 
 [requires]
+python_version = ">=3.11"
