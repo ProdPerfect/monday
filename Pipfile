@@ -10,5 +10,6 @@ pylint = "*"
 pytest = "*"
 
 [packages]
+requests = "*"
 
 [requires]
