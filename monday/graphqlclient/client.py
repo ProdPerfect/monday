@@ -1,13 +1,9 @@
 import json
-import requests
 
+import urllib3
+
+from monday.constants import DEFAULT_TIMEOUT, TOKEN_HEADER
 from monday.exceptions import MondayQueryError
-
-TOKEN_HEADER = 'Authorization'
-
-DEFAULT_TIMEOUT = 60
-
-DEFAULT_PAGE_LIMIT_ITEMS = 500
 
 
 class GraphQLClient:
@@ -16,6 +12,7 @@ class GraphQLClient:
         self.timeout = timeout
         self.token = None
         self.headers = {}
+        self._http = urllib3.PoolManager()
 
     def execute(self, query, variables=None):
         return self._send(query, variables)
@@ -27,34 +24,46 @@ class GraphQLClient:
         self.headers = headers
 
     def _send(self, query, variables):
-        payload = {'query': query}
         headers = self.headers.copy()
-        files = None
 
         if self.token is not None:
             headers[TOKEN_HEADER] = self.token
 
-        if variables is None:
-            headers.setdefault('Content-Type', 'application/json')
+        if variables is not None and variables.get("file") is not None:
+            file_path = variables["file"]
+            with open(file_path, "rb") as f:
+                file_data = f.read()
 
-            payload = json.dumps({'query': query}).encode('utf-8')
+            response = self._http.request(
+                "POST",
+                self.endpoint,
+                headers=headers,
+                fields={"query": query, "variables[file]": (file_path, file_data)},
+                timeout=self.timeout,
+            )
+        else:
+            headers.setdefault("Content-Type", "application/json")
+            body = json.dumps({"query": query}).encode("utf-8")
 
-        elif variables.get('file', None) is not None:
-            headers.setdefault('content', 'multipart/form-data')
+            response = self._http.request(
+                "POST",
+                self.endpoint,
+                headers=headers,
+                body=body,
+                timeout=self.timeout,
+            )
 
-            files = [
-                ('variables[file]', (variables['file'], open(variables['file'], 'rb')))
-            ]
+        if response.status >= 400:
+            raise urllib3.exceptions.HTTPError(
+                f"HTTP {response.status}: {response.data.decode('utf-8')}"
+            )
 
-        try:
-            response = requests.request("POST", self.endpoint, headers=headers, data=payload, files=files, timeout=self.timeout)
-            response.raise_for_status()
-            response_data = response.json()
-            self._throw_on_error(response_data)
-            return response_data
-        except (requests.HTTPError, json.JSONDecodeError, MondayQueryError) as e:
-            raise e
+        response_data = json.loads(response.data.decode("utf-8"))
+        self._throw_on_error(response_data)
+        return response_data
 
     def _throw_on_error(self, response_data):
-        if 'errors' in response_data:
-            raise MondayQueryError(response_data['errors'][0]['message'], response_data['errors'])
+        if "errors" in response_data:
+            raise MondayQueryError(
+                response_data["errors"][0]["message"], response_data["errors"]
+            )

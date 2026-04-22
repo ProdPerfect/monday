@@ -7,17 +7,26 @@ monday.client
 """
 
 from .__version__ import __version__
-from .resources import CustomResource, ItemResource, ColumnsResource, UpdateResource, TagResource, BoardResource, \
-    UserResource, GroupResource, ComplexityResource, WorkspaceResource, NotificationResource, MeResource
+from .resources import (
+    BoardResource,
+    ColumnsResource,
+    ComplexityResource,
+    CustomResource,
+    GroupResource,
+    ItemResource,
+    MeResource,
+    NotificationResource,
+    TagResource,
+    UpdateResource,
+    UserResource,
+    WorkspaceResource,
+)
 
-_DEFAULT_HEADERS = {
-    "API-Version": "2026-01"
-}
+_DEFAULT_HEADERS = {"API-Version": "2026-01"}
 
-DEFAULT_TIMEOUT = 60
 
 class MondayClient:
-    def __init__(self, token, headers=None, timeout=DEFAULT_TIMEOUT):
+    def __init__(self, token, headers=None, timeout=None):
         """
         :param token: API token for the new :class:`BaseResource` object.
         :param headers: (optional) headers for the new :class:`BaseResource` object.
@@ -34,13 +43,19 @@ class MondayClient:
         self.boards = BoardResource(token=token, headers=headers, timeout=timeout)
         self.users = UserResource(token=token, headers=headers, timeout=timeout)
         self.groups = GroupResource(token=token, headers=headers, timeout=timeout)
-        self.complexity = ComplexityResource(token=token, headers=headers, timeout=timeout)
-        self.workspaces = WorkspaceResource(token=token, headers=headers, timeout=timeout)
-        self.notifications = NotificationResource(token=token, headers=headers, timeout=timeout)
+        self.complexity = ComplexityResource(
+            token=token, headers=headers, timeout=timeout
+        )
+        self.workspaces = WorkspaceResource(
+            token=token, headers=headers, timeout=timeout
+        )
+        self.notifications = NotificationResource(
+            token=token, headers=headers, timeout=timeout
+        )
         self.me = MeResource(token=token, headers=headers, timeout=timeout)
 
     def __str__(self):
-        return f'MondayClient {__version__}'
+        return f"MondayClient {__version__}"
 
     def __repr__(self):
-        return f'MondayClient {__version__}'
+        return f"MondayClient {__version__}"

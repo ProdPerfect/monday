@@ -7,10 +7,13 @@ _URLS = {
 
 
 class BaseResource:
-    def __init__(self, token, headers, timeout):
+    def __init__(self, token, headers, timeout=None):
         self._token = token
-        self.client = GraphQLClient(_URLS['prod'], timeout=timeout)
-        self.file_upload_client = GraphQLClient(_URLS['file'], timeout=timeout)
+        kwargs = {}
+        if timeout is not None:
+            kwargs['timeout'] = timeout
+        self.client = GraphQLClient(_URLS['prod'], **kwargs)
+        self.file_upload_client = GraphQLClient(_URLS['file'], **kwargs)
         self.client.inject_token(token)
         self.client.inject_headers(headers)
         self.file_upload_client.inject_token(token)
