@@ -5,18 +5,20 @@ monday
 
    <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
-|All Contributors| A monday.com Python Client Library
+|All Contributors|
 
-For an overview of the Monday API, `click
-here <https://developer.monday.com/api-reference/docs>`__.
+A monday.com Python Client Library
+
+For an overview of the Monday API, `click here <https://developer.monday.com/api-reference/docs>`__.
 
 Requirements
-^^^^^^^^^^^^
+============
 
--  Python >= 3.11
+- Python >= 3.11
+- urllib3 >= 2.6.0
 
 Getting started
-^^^^^^^^^^^^^^^
+===============
 
 ``pip install monday``
 
@@ -30,8 +32,17 @@ Getting started
 
    monday.items.create_item(board_id='12345678', group_id='today', item_name='Do a thing')
 
+Custom Timeout
+^^^^^^^^^^^^^^
+
+To specify a custom timeout (default: 60 seconds), you can pass the ``timeout`` parameter:
+
+.. code:: python
+
+   monday = MondayClient('your token', timeout=120)
+
 Available methods
-^^^^^^^^^^^^^^^^^
+=================
 
 Items Resource (monday.items)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -369,11 +380,5 @@ Taylor Cochran💻
 
    <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-Bug Reports
-~~~~~~~~~~~
-
-TBD
-
 .. |All Contributors| image:: https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square
    :target: #contributors-
-

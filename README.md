@@ -8,6 +8,7 @@ For an overview of the Monday API, [click here](https://developer.monday.com/api
 
 #### Requirements
 - Python >= 3.11
+- urllib3 >= 2.6.0
 
 #### Getting started
 `pip install monday`
@@ -54,6 +55,3 @@ monday.items.create_item(board_id='12345678', group_id='today', item_name='Do a 
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
-### Bug Reports
-TBD
