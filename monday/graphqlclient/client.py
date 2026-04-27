@@ -12,7 +12,7 @@ class GraphQLClient:
         self.timeout = timeout
         self.token = None
         self.headers = {}
-        self._http = urllib3.PoolManager()
+        self._http = urllib3.PoolManager(maxsize=10)
 
     def execute(self, query, variables=None):
         return self._send(query, variables)
