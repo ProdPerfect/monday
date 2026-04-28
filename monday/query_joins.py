@@ -1,20 +1,31 @@
 import json
 from enum import Enum
-from typing import List, Union, Optional, Mapping, Any
+from typing import Any, List, Mapping, Optional, Union
 
-from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateType, ColumnType
-from monday.utils import monday_json_stringify, gather_params
-
+from monday.resources.types import (
+    BoardKind,
+    BoardsOrderBy,
+    BoardState,
+    ColumnType,
+    DuplicateType,
+)
+from monday.utils import gather_params, monday_json_stringify
 
 # Eventually I will organize this file better but you know what today is not that day.
 
+
 # ITEM RESOURCE QUERIES
-def mutate_item_query(board_id, group_id, item_name, column_values, create_labels_if_missing):
+def mutate_item_query(
+    board_id, group_id, item_name, column_values, create_labels_if_missing
+):
     # Monday does not allow passing through non-JSON null values here,
     # so if you choose not to specify column values, need to set column_values to empty object.
     column_values = column_values or {}
 
-    query = '''mutation
+    # Escape backslashes first, then double quotes
+    escaped_name = item_name.replace("\\", "\\\\").replace('"', '\\"')
+
+    query = """mutation
     {
         create_item (
             board_id: %s,
@@ -25,17 +36,26 @@ def mutate_item_query(board_id, group_id, item_name, column_values, create_label
         ) {
             id
         }
-    }''' % (board_id, group_id, item_name, monday_json_stringify(column_values),
-            str(create_labels_if_missing).lower())
+    }""" % (
+        board_id,
+        group_id,
+        escaped_name,
+        monday_json_stringify(column_values),
+        str(create_labels_if_missing).lower(),
+    )
 
     return query
 
 
-def mutate_subitem_query(parent_item_id, subitem_name, column_values,
-                         create_labels_if_missing):
+def mutate_subitem_query(
+    parent_item_id, subitem_name, column_values, create_labels_if_missing
+):
     column_values = column_values or {}
 
-    return '''mutation
+    # Escape backslashes first, then double quotes
+    escaped_name = subitem_name.replace("\\", "\\\\").replace('"', '\\"')
+
+    return """mutation
     {
         create_subitem (
             parent_item_id: %s,
@@ -54,23 +74,33 @@ def mutate_subitem_query(parent_item_id, subitem_name, column_values,
                 name
             }
         }
-    }''' % (parent_item_id, subitem_name, monday_json_stringify(column_values),
-            str(create_labels_if_missing).lower())
+    }""" % (
+        parent_item_id,
+        escaped_name,
+        monday_json_stringify(column_values),
+        str(create_labels_if_missing).lower(),
+    )
 
 
 def mutate_multiple_items_query(items_data):
     mutation_parts = []
     for index, item_data in enumerate(items_data):
-        method = item_data.pop('method')
-        params = ', '.join([f"{key}: %s" for key in item_data.keys()])
+        method = item_data.pop("method")
+        params = ", ".join([f"{key}: %s" for key in item_data.keys()])
         values = [
-            monday_json_stringify(value) if not isinstance(value, (int, bool, str)) else
-            (str(value).lower() if isinstance(value, bool) else
-             f'"{value}"' if isinstance(value, str) else value)
+            (
+                monday_json_stringify(value)
+                if not isinstance(value, (int, bool, str))
+                else (
+                    str(value).lower()
+                    if isinstance(value, bool)
+                    else f'"{value}"' if isinstance(value, str) else value
+                )
+            )
             for value in item_data.values()
         ]
 
-        mutation_part = f'''
+        mutation_part = f"""
             item{index}: {method}({params}) {{
                 id
                 name
@@ -79,13 +109,17 @@ def mutate_multiple_items_query(items_data):
                     text
                 }}
             }}
-        ''' % tuple(values)
+        """ % tuple(
+            values
+        )
 
         mutation_parts.append(mutation_part)
 
-    query = '''mutation {
+    query = """mutation {
         %s
-    }''' % ' '.join(mutation_parts)
+    }""" % " ".join(
+        mutation_parts
+    )
     return query
 
 
@@ -93,12 +127,19 @@ def get_item_query(board_id, column_id, value, limit=None, cursor=None):
     if not isinstance(value, list):
         value = [value]
 
-    columns = [{"column_id": str(column_id), "column_values": [str(v) for v in value]}] if not cursor else None
+    columns = (
+        [{"column_id": str(column_id), "column_values": [str(v) for v in value]}]
+        if not cursor
+        else None
+    )
 
     raw_params = locals().items()
-    items_page_params = gather_params(raw_params, excluded_params=["column_id", "value"])
+    items_page_params = gather_params(
+        raw_params, excluded_params=["column_id", "value"]
+    )
 
-    query = '''query
+    query = (
+        """query
         {
             items_page_by_column_values (%s) {
                 cursor
@@ -120,13 +161,16 @@ def get_item_query(board_id, column_id, value, limit=None, cursor=None):
                     }
                 }
             }
-        }''' % items_page_params
+        }"""
+        % items_page_params
+    )
 
     return query
 
 
 def get_item_by_id_query(ids):
-    query = '''query
+    query = (
+        """query
         {
             items (ids: %s) {
                 id,
@@ -141,13 +185,15 @@ def get_item_by_id_query(ids):
                     value
                 }
             }
-        }''' % ids
+        }"""
+        % ids
+    )
 
     return query
 
 
 def update_item_query(board_id, item_id, column_id, value):
-    query = '''mutation
+    query = """mutation
         {
             change_column_value(
                 board_id: %s,
@@ -163,51 +209,68 @@ def update_item_query(board_id, item_id, column_id, value):
                     value
                 }
             }
-        }''' % (board_id, item_id, column_id, monday_json_stringify(value))
+        }""" % (
+        board_id,
+        item_id,
+        column_id,
+        monday_json_stringify(value),
+    )
 
     return query
 
 
 def move_item_to_group_query(item_id, group_id):
-    query = '''
+    query = """
     mutation
     {
         move_item_to_group (item_id: %s, group_id: "%s")
         {
             id
         }
-    }''' % (item_id, group_id)
+    }""" % (
+        item_id,
+        group_id,
+    )
     return query
 
 
 def archive_item_query(item_id):
-    query = '''
+    query = (
+        """
     mutation
     {
         archive_item (item_id: %s)
         {
             id
         }
-    }''' % item_id
+    }"""
+        % item_id
+    )
     return query
 
 
 def delete_item_query(item_id):
-    query = '''
+    query = (
+        """
     mutation
     {
         delete_item (item_id: %s)
         {
             id
         }
-    }''' % item_id
+    }"""
+        % item_id
+    )
     return query
 
 
 # COLUMNS RESOURCE QUERIES
 def create_column(
-        board_id: int, column_title: str, column_type: Optional[ColumnType] = None, defaults: Mapping[str, any] = None,
-        description: str = ""
+    board_id: int,
+    column_title: str,
+    column_type: Optional[ColumnType] = None,
+    defaults: Optional[Mapping[str, Any]] = None,
+    description: str = "",
 ):
     defaults = defaults or {}
 
@@ -225,7 +288,7 @@ def create_column(
     else:
         if isinstance(column_type, str):
             column_type = ColumnType(column_type)
-            
+
         column_type.is_defaults_have_recommended_keys(defaults)
         query = """mutation{
             create_column(board_id: %s, title: "%s", description: "%s", column_type: %s, defaults: %s) {
@@ -245,7 +308,8 @@ def create_column(
 
 
 def get_columns_by_board_query(board_ids):
-    return '''query
+    return (
+        """query
         {
             boards(ids: %s) {
                 id
@@ -261,11 +325,15 @@ def get_columns_by_board_query(board_ids):
                     settings_str
                  }
             }
-        }''' % board_ids
+        }"""
+        % board_ids
+    )
 
 
-def update_multiple_column_values_query(board_id, item_id, column_values, create_labels_if_missing=False):
-    query = '''mutation
+def update_multiple_column_values_query(
+    board_id, item_id, column_values, create_labels_if_missing=False
+):
+    query = """mutation
         {
             change_multiple_column_values (
                 board_id: %s,
@@ -280,13 +348,18 @@ def update_multiple_column_values_query(board_id, item_id, column_values, create
                   text
                 }
             }
-        }''' % (board_id, item_id, monday_json_stringify(column_values), str(create_labels_if_missing).lower())
+        }""" % (
+        board_id,
+        item_id,
+        monday_json_stringify(column_values),
+        str(create_labels_if_missing).lower(),
+    )
 
     return query
 
 
 def add_file_to_column_query(item_id, column_id):
-    query = '''mutation ($file: File!) {
+    query = """mutation ($file: File!) {
         add_file_to_column (
             file: $file,
             item_id: %s,
@@ -294,13 +367,16 @@ def add_file_to_column_query(item_id, column_id):
         ) {
             id
         }
-    }''' % (item_id, column_id)
+    }""" % (
+        item_id,
+        column_id,
+    )
     return query
 
 
 # UPDATE RESOURCE QUERIES
 def create_update_query(item_id, update_value):
-    query = '''mutation
+    query = """mutation
         {
             create_update(
                 item_id: %s,
@@ -308,23 +384,29 @@ def create_update_query(item_id, update_value):
             ) {
                 id
             }
-        }''' % (item_id, json.dumps(update_value))
+        }""" % (
+        item_id,
+        json.dumps(update_value),
+    )
 
     return query
 
 
 def delete_update_query(item_id):
-    query = """mutation {
+    query = (
+        """mutation {
         delete_update (id: %s) {
             id
         }
-    }""" % item_id
+    }"""
+        % item_id
+    )
 
     return query
 
 
 def get_updates_for_item_query(item, limit):
-    query = '''query{
+    query = """query{
         items(ids: %s) {
             updates (limit: %s) {
                 id,
@@ -356,13 +438,16 @@ def get_updates_for_item_query(item, limit):
                 }
             }
         }
-    }''' % (item, limit)
+    }""" % (
+        item,
+        limit,
+    )
 
     return query
 
 
 def get_update_query(limit, page):
-    query = '''query
+    query = """query
         {
             updates (
                 limit: %s,
@@ -371,7 +456,10 @@ def get_update_query(limit, page):
                 id,
                 body
             }
-        }''' % (limit, page or 1)
+        }""" % (
+        limit,
+        page or 1,
+    )
 
     return query
 
@@ -381,26 +469,33 @@ def get_tags_query(tags):
     if tags is None:
         tags = []
 
-    query = '''query
+    query = (
+        """query
         {
             tags (ids: %s) {
                 name,
                 color,
                 id
             }
-        }''' % tags
+        }"""
+        % tags
+    )
 
     return query
 
 
 # BOARD RESOURCE QUERIES
-def get_board_items_query(board_id: Union[str, int], query_params: Optional[Mapping[str, Any]] = None,
-                          limit: Optional[int] = None, cursor: Optional[str] = None) -> str:
+def get_board_items_query(
+    board_id: Union[str, int],
+    query_params: Optional[Mapping[str, Any]] = None,
+    limit: Optional[int] = None,
+    cursor: Optional[str] = None,
+) -> str:
     raw_params = locals().items()
     items_page_params = gather_params(raw_params, excluded_params=["board_id"])
     wrapped_params = f"({items_page_params})" if items_page_params else ""
 
-    query = '''query {
+    query = """query {
         boards(ids: %s) {
             name
             items_page %s {
@@ -421,13 +516,18 @@ def get_board_items_query(board_id: Union[str, int], query_params: Optional[Mapp
                 }
             }
         }
-    }''' % (board_id, wrapped_params)
+    }""" % (
+        board_id,
+        wrapped_params,
+    )
 
     return query
 
 
-def get_next_items_query(limit: Optional[int] = None, cursor: Optional[str] = None) -> str:
-    query = '''query {
+def get_next_items_query(
+    limit: Optional[int] = None, cursor: Optional[str] = None
+) -> str:
+    query = """query {
         next_items_page (limit: %s, cursor: "%s") {
             cursor
             items {
@@ -445,13 +545,23 @@ def get_next_items_query(limit: Optional[int] = None, cursor: Optional[str] = No
                 }
             }
         }
-    }''' % (limit, cursor)
+    }""" % (
+        limit,
+        cursor,
+    )
 
     return query
 
 
-def get_boards_query(limit: int = None, page: int = None, ids: List[int] = None, board_kind: BoardKind = None,
-                     state: BoardState = None, order_by: BoardsOrderBy = None, workspace_ids: List[int] = None):
+def get_boards_query(
+    limit: Optional[int] = None,
+    page: Optional[int] = None,
+    ids: Optional[List[int]] = None,
+    board_kind: Optional[BoardKind] = None,
+    state: Optional[BoardState] = None,
+    order_by: Optional[BoardsOrderBy] = None,
+    workspace_ids: Optional[List[int]] = None,
+):
     parameters = locals().items()
     query_params = []
     for k, v in parameters:
@@ -462,7 +572,8 @@ def get_boards_query(limit: int = None, page: int = None, ids: List[int] = None,
             query_params.append("%s: %s" % (k, value))
     joined_params = f"({', '.join(query_params)})" if query_params else ""
 
-    query = '''query
+    query = (
+        """query
     {
         boards %s {
             id
@@ -482,13 +593,16 @@ def get_boards_query(limit: int = None, page: int = None, ids: List[int] = None,
                 type
             }
         }
-    }''' % joined_params
+    }"""
+        % joined_params
+    )
 
     return query
 
 
 def get_boards_by_id_query(board_ids):
-    return '''query
+    return (
+        """query
     {
         boards (ids: %s) {
             id
@@ -509,15 +623,22 @@ def get_boards_by_id_query(board_ids):
                 settings_str
             }
         }
-    }''' % board_ids
+    }"""
+        % board_ids
+    )
 
 
-def duplicate_board_query(board_id: int, duplicate_type: DuplicateType, board_name: Optional[str] = None,
-                          folder_id: Optional[int] = None, keep_subscribers: Optional[bool] = None,
-                          workspace_id: Optional[int] = None):
+def duplicate_board_query(
+    board_id: int,
+    duplicate_type: DuplicateType,
+    board_name: Optional[str] = None,
+    folder_id: Optional[int] = None,
+    keep_subscribers: Optional[bool] = None,
+    workspace_id: Optional[int] = None,
+):
     optional_params = ""
     if board_name is not None:
-        optional_params += ", board_name: \"%s\"" % board_name
+        optional_params += ', board_name: "%s"' % board_name
     if folder_id is not None:
         optional_params += ", folder_id: %s" % folder_id
     if keep_subscribers is not None:
@@ -533,27 +654,42 @@ def duplicate_board_query(board_id: int, duplicate_type: DuplicateType, board_na
             }
         }
     }
-    """ % (board_id, duplicate_type.value, optional_params)
+    """ % (
+        board_id,
+        duplicate_type.value,
+        optional_params,
+    )
 
     return query
 
 
-def create_board_by_workspace_query(board_name: str, board_kind: BoardKind, workspace_id=None) -> str:
-    workspace_query = f'workspace_id: {workspace_id}' if workspace_id else ''
-    query = '''
+def create_board_by_workspace_query(
+    board_name: str, board_kind: BoardKind, workspace_id=None
+) -> str:
+    workspace_query = f"workspace_id: {workspace_id}" if workspace_id else ""
+    query = """
     mutation {
         create_board (board_name:"%s", board_kind: %s, %s) {
             id
         }
     }
-    ''' % (board_name, board_kind.value, workspace_query)
+    """ % (
+        board_name,
+        board_kind.value,
+        workspace_query,
+    )
     return query
 
 
 # USER RESOURCE QUERIES
 def get_users_query(**kwargs):
-    joined_params = f"({', '.join(['%s: %s' % (arg, kwargs.get(arg)) for arg in kwargs])})" if kwargs else ""
-    query = '''query
+    joined_params = (
+        f"({', '.join(['%s: %s' % (arg, kwargs.get(arg)) for arg in kwargs])})"
+        if kwargs
+        else ""
+    )
+    query = (
+        """query
     {
         users %s {
             id
@@ -565,13 +701,16 @@ def get_users_query(**kwargs):
               name
             }
         }
-    }''' % joined_params
+    }"""
+        % joined_params
+    )
     return query
 
 
 # GROUP RESOURCE QUERIES
 def get_groups_by_board_query(board_ids):
-    query = '''query
+    query = (
+        """query
     {
         boards(ids: %s) {
             groups {
@@ -582,17 +721,25 @@ def get_groups_by_board_query(board_ids):
                 color
             }
         }
-    }''' % board_ids
+    }"""
+        % board_ids
+    )
     return query
 
 
-def get_items_by_group_query(board_id: Union[int, str], group_id: str,
-                             limit: Optional[int] = None, cursor: Optional[str] = None):
+def get_items_by_group_query(
+    board_id: Union[int, str],
+    group_id: str,
+    limit: Optional[int] = None,
+    cursor: Optional[str] = None,
+):
     raw_params = locals().items()
-    items_page_params = gather_params(raw_params, excluded_params=["board_id", "group_id"])
+    items_page_params = gather_params(
+        raw_params, excluded_params=["board_id", "group_id"]
+    )
     wrapped_params = f"({items_page_params})" if items_page_params else ""
 
-    query = '''query
+    query = """query
     {
         boards(ids: %s) {
             groups(ids: "%s") {
@@ -607,36 +754,46 @@ def get_items_by_group_query(board_id: Union[int, str], group_id: str,
                 }
             }
         }
-    }''' % (board_id, group_id, wrapped_params)
+    }""" % (
+        board_id,
+        group_id,
+        wrapped_params,
+    )
     return query
 
 
 def create_group_query(board_id, group_name):
-    query = '''
+    query = """
     mutation
     {
         create_group(board_id: %s, group_name: "%s")
         {
             id
         }
-    }''' % (board_id, group_name)
+    }""" % (
+        board_id,
+        group_name,
+    )
     return query
 
 
 def duplicate_group_query(board_id, group_id):
-    query = '''
+    query = """
     mutation
     {
         duplicate_group(board_id: %s, group_id: "%s")
         {
             id
         }
-    }''' % (board_id, group_id)
+    }""" % (
+        board_id,
+        group_id,
+    )
     return query
 
 
 def archive_group_query(board_id, group_id):
-    query = '''
+    query = """
     mutation
     {
         archive_group(board_id: %s, group_id: "%s")
@@ -644,12 +801,15 @@ def archive_group_query(board_id, group_id):
             id
             archived
         }
-    }''' % (board_id, group_id)
+    }""" % (
+        board_id,
+        group_id,
+    )
     return query
 
 
 def delete_group_query(board_id, group_id):
-    query = '''
+    query = """
     mutation
     {
         delete_group(board_id: %s, group_id: "%s")
@@ -657,25 +817,28 @@ def delete_group_query(board_id, group_id):
             id
             deleted
         }
-    }''' % (board_id, group_id)
+    }""" % (
+        board_id,
+        group_id,
+    )
     return query
 
 
 def get_complexity_query():
-    query = '''
+    query = """
     query
     {
         complexity {
             after,
             reset_in_x_seconds
         }
-    }'''
+    }"""
 
     return query
 
 
 def get_workspaces_query():
-    query = '''
+    query = """
     query {
         workspaces {
             id
@@ -684,68 +847,85 @@ def get_workspaces_query():
             description
         }
     }
-    '''
+    """
     return query
 
 
 def create_workspace_query(name, kind, description=""):
-    query = '''
+    query = """
     mutation {
         create_workspace (name:"%s", kind: %s, description: "%s") {
             id
             description
         }
     }
-    ''' % (name, kind, description)
+    """ % (
+        name,
+        kind,
+        description,
+    )
     return query
 
 
 def add_users_to_workspace_query(workspace_id, user_ids, kind):
-    query = '''
+    query = """
     mutation {
         add_users_to_workspace (workspace_id: %s, user_ids: %s, kind: %s) {
             id
         }
     }
-    ''' % (workspace_id, user_ids, kind)
+    """ % (
+        workspace_id,
+        user_ids,
+        kind,
+    )
     return query
 
 
 def delete_users_from_workspace_query(workspace_id, user_ids):
-    query = '''
+    query = """
     mutation {
         add_users_to_workspace (workspace_id: %s, user_ids: %s) {
             id
         }
     }
-    ''' % (workspace_id, user_ids)
+    """ % (
+        workspace_id,
+        user_ids,
+    )
     return query
 
 
 def add_teams_to_workspace_query(workspace_id, team_ids):
-    query = '''
+    query = """
     mutation {
         add_teams_to_workspace (workspace_id: %s, team_ids: %s) {
             id
         }
     }
-    ''' % (workspace_id, team_ids)
+    """ % (
+        workspace_id,
+        team_ids,
+    )
     return query
 
 
 def delete_teams_from_workspace_query(workspace_id, team_ids):
-    query = '''
+    query = """
     mutation {
         delete_teams_from_workspace (workspace_id: %s, team_ids: %s) {
             id
         }
     }
-    ''' % (workspace_id, team_ids)
+    """ % (
+        workspace_id,
+        team_ids,
+    )
     return query
 
 
 def create_notification_query(user_id, target_id, text, target_type):
-    query = '''
+    query = """
     mutation {
         create_notification (user_id: %s, target_id: %s, text: "%s", target_type: %s) {
             text
@@ -754,7 +934,12 @@ def create_notification_query(user_id, target_id, text, target_type):
             target_type
         }
     }
-    ''' % (user_id, target_id, text, target_type)
+    """ % (
+        user_id,
+        target_id,
+        text,
+        target_type,
+    )
     # Target type may be: Project/Post
     return query
 

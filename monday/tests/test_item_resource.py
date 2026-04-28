@@ -1,7 +1,17 @@
+from monday.query_joins import (
+    add_file_to_column_query,
+    archive_item_query,
+    delete_item_query,
+    get_item_by_id_query,
+    get_item_query,
+    move_item_to_group_query,
+    mutate_item_query,
+    mutate_multiple_items_query,
+    mutate_subitem_query,
+    update_item_query,
+    update_multiple_column_values_query,
+)
 from monday.tests.test_case_resource import BaseTestCase
-from monday.query_joins import mutate_item_query, get_item_query, update_item_query, get_item_by_id_query, \
-    update_multiple_column_values_query, mutate_subitem_query, add_file_to_column_query, delete_item_query, \
-    archive_item_query, move_item_to_group_query, mutate_multiple_items_query
 from monday.utils import monday_json_stringify
 
 
@@ -17,6 +27,24 @@ class ItemTestCase(BaseTestCase):
         self.assertIn(self.item_name, query)
         self.assertIn(monday_json_stringify(self.column_values), query)
         self.assertNotIn("create_labels_if_missing: true", query)
+
+    def test_mutate_item_query_with_double_quotes(self):
+        item_name_with_quotes = 'My "special" item'
+        query = mutate_item_query(board_id=self.board_id, group_id=self.group_id, item_name=item_name_with_quotes,
+                                  column_values=self.column_values, create_labels_if_missing=False)
+        self.assertIn('My \\"special\\" item', query)
+
+    def test_mutate_item_query_with_single_quotes(self):
+        item_name_with_single_quotes = "My 'special' item"
+        query = mutate_item_query(board_id=self.board_id, group_id=self.group_id, item_name=item_name_with_single_quotes,
+                                  column_values=self.column_values, create_labels_if_missing=False)
+        self.assertIn("My 'special' item", query)
+
+    def test_mutate_item_query_with_backslashes(self):
+        item_name_with_backslash = 'My item \\ test'
+        query = mutate_item_query(board_id=self.board_id, group_id=self.group_id, item_name=item_name_with_backslash,
+                                  column_values=self.column_values, create_labels_if_missing=False)
+        self.assertIn('My item \\\\ test', query)
 
     def test_get_item_query(self):
         query = get_item_query(board_id=self.board_id,
@@ -69,6 +97,24 @@ class ItemTestCase(BaseTestCase):
         self.assertIn(str(self.item_id), query)
         self.assertIn(self.subitem_name, query)
         self.assertNotIn("create_labels_if_missing: true", query)
+
+    def test_mutate_subitem_query_with_double_quotes(self):
+        subitem_name_with_quotes = 'My "special" subitem'
+        query = mutate_subitem_query(parent_item_id=self.item_id, subitem_name=subitem_name_with_quotes,
+                                     column_values=None, create_labels_if_missing=False)
+        self.assertIn('My \\"special\\" subitem', query)
+
+    def test_mutate_subitem_query_with_single_quotes(self):
+        subitem_name_with_single_quotes = "My 'special' subitem"
+        query = mutate_subitem_query(parent_item_id=self.item_id, subitem_name=subitem_name_with_single_quotes,
+                                     column_values=None, create_labels_if_missing=False)
+        self.assertIn("My 'special' subitem", query)
+
+    def test_mutate_subitem_query_with_backslashes(self):
+        subitem_name_with_backslash = 'My subitem \\ test'
+        query = mutate_subitem_query(parent_item_id=self.item_id, subitem_name=subitem_name_with_backslash,
+                                     column_values=None, create_labels_if_missing=False)
+        self.assertIn('My subitem \\\\ test', query)
 
     def test_add_file_to_column_query(self):
         query = add_file_to_column_query(
@@ -123,7 +169,7 @@ class ItemTestCase(BaseTestCase):
             }
         ]
         query = mutate_multiple_items_query(items_data)
-        
+
         # Test for item 1
         item1_format = (
             'item0: create_item(board_id: %s, group_id: %s, '
@@ -134,7 +180,7 @@ class ItemTestCase(BaseTestCase):
             monday_json_stringify({'text': 'Test Value 1'})
         )
         item1_query = item1_format % item1_args
-        
+
         # Test for item 2
         item2_format = (
             'item1: create_item(board_id: %s, group_id: %s, '
