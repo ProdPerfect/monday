@@ -2,7 +2,7 @@ import json
 
 import urllib3
 
-from monday.constants import DEFAULT_TIMEOUT, TOKEN_HEADER
+from monday.constants import DEFAULT_TIMEOUT, HTTP_MAX_SIZE, TOKEN_HEADER
 from monday.exceptions import MondayQueryError
 
 
@@ -12,7 +12,7 @@ class GraphQLClient:
         self.timeout = timeout
         self.token = None
         self.headers = {}
-        self._http = urllib3.PoolManager(maxsize=10)
+        self._http = urllib3.PoolManager(maxsize=HTTP_MAX_SIZE)
 
     def execute(self, query, variables=None):
         return self._send(query, variables)
