@@ -23,7 +23,7 @@ setup(
     zip_safe=False,
     license="BSD",
     install_requires=[
-        "requests>=2.30.0",
+        "urllib3>=2.6.0",
     ],
     python_requires=">=3.11",
     classifiers=[

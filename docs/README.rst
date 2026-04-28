@@ -5,18 +5,20 @@ monday
 
    <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
-|All Contributors| A monday.com Python Client Library
+|All Contributors|
 
-For an overview of the Monday API, `click
-here <https://developer.monday.com/api-reference/docs>`__.
+A monday.com Python Client Library
+
+For an overview of the Monday API, `click here <https://developer.monday.com/api-reference/docs>`__.
 
 Requirements
-^^^^^^^^^^^^
+============
 
--  Python >= 3.11
+- Python >= 3.11
+- urllib3 >= 2.6.0
 
 Getting started
-^^^^^^^^^^^^^^^
+===============
 
 ``pip install monday``
 
@@ -30,11 +32,20 @@ Getting started
 
    monday.items.create_item(board_id='12345678', group_id='today', item_name='Do a thing')
 
+Custom Timeout
+--------------
+
+To specify a custom timeout (default: 60 seconds), you can pass the ``timeout`` parameter:
+
+.. code:: python
+
+   monday = MondayClient('your token', timeout=120)
+
 Available methods
-^^^^^^^^^^^^^^^^^
+=================
 
 Items Resource (monday.items)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------
 
 -  ``create_item(board_id, group_id, item_name, column_values=None, create_labels_if_missing=False)``
    - Create an item on a board in the given group with name item_name.
@@ -71,7 +82,7 @@ Items Resource (monday.items)
 -  ``delete_item_by_id(item_id)`` - Delete the item by item_id.
 
 Updates Resource (monday.updates)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------
 
 -  ``create_update(item_id, update_body)`` - Create an update attached
    to a given item.
@@ -84,14 +95,14 @@ Updates Resource (monday.updates)
    set by you. Default is 100 updates
 
 Tags Resource (monday.tags)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------
 
 -  ``fetch_tags(tag_ids=None)`` - Fetch all tags associated with an
    account. Optionally takes a list containing tag ids (if you know
    them). Returns IDs, names, and colors.
 
 Boards Resource (monday.boards)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 
 -  ``fetch_boards(**kwargs)`` - Fetch boards associated with an account.
    Returns boards and their groups, tags, and columns. Accepts keyword
@@ -138,14 +149,14 @@ Boards Resource (monday.boards)
    with the given name and kind by (and optional) workspace id.
 
 Users Resource (monday.users)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------
 
 -  ``fetch_users(**kwargs)`` - Fetch user information associated with an
    account. See Monday API docs for a list of accepted keyword
    arguments.
 
 Workspaces Resource (monday.workspaces)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------
 
 -  ``get_workspaces()`` - Get all workspaces.
 
@@ -165,7 +176,7 @@ Workspaces Resource (monday.workspaces)
    given teams from the given workspace.
 
 Groups Resource (monday.groups)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 
 -  ``get_groups_by_board([board_ids])`` - Get all groups associated with
    a certain board or boards. Accepts a single id or a comma separated
@@ -187,7 +198,7 @@ Groups Resource (monday.groups)
    board.
 
 Notifications Resource (monday.notifications)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------------
 
 -  ``create_notification(user_id, target_id, text, target_type)`` - The
    create_notification mutation allows to trigger a notification within
@@ -195,13 +206,13 @@ Notifications Resource (monday.notifications)
    preferences are set up accordingly).
 
 Additional Resources and Code Samples
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------
 
 -  `Read and format all of the items on a
    board <https://github.com/ProdPerfect/monday/wiki/Code-Examples#whole-board-formatting-example>`__
 
 Contributors
-------------
+============
 
 .. raw:: html
 
@@ -369,11 +380,5 @@ Taylor Cochran💻
 
    <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-Bug Reports
-~~~~~~~~~~~
-
-TBD
-
 .. |All Contributors| image:: https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square
    :target: #contributors-
-

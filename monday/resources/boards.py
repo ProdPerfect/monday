@@ -1,35 +1,61 @@
-from typing import List, Optional, Union, Any, Mapping
+from typing import Any, List, Mapping, Optional, Union
 
-from monday.query_joins import get_boards_query, get_boards_by_id_query, get_board_items_query, \
-    get_next_items_query, get_columns_by_board_query, create_board_by_workspace_query, \
-    duplicate_board_query
+from monday.constants import DEFAULT_PAGE_LIMIT_ITEMS
+from monday.query_joins import (
+    create_board_by_workspace_query,
+    duplicate_board_query,
+    get_board_items_query,
+    get_boards_by_id_query,
+    get_boards_query,
+    get_columns_by_board_query,
+    get_next_items_query,
+)
 from monday.resources.base import BaseResource
-from monday.resources.types import BoardKind, BoardState, BoardsOrderBy, DuplicateType
-from monday.graphqlclient.client import DEFAULT_PAGE_LIMIT_ITEMS
+from monday.resources.types import BoardKind, BoardsOrderBy, BoardState, DuplicateType
 
 
 class BoardResource(BaseResource):
-    def fetch_boards(self, limit: Optional[int] = None, page: Optional[int] = None, ids: Optional[List[int]] = None,
-                     board_kind: Optional[BoardKind] = None, state: Optional[BoardState] = None,
-                     order_by: Optional[BoardsOrderBy] = None, workspace_ids: Optional[List[int]] = None):
-        query = get_boards_query(limit, page, ids, board_kind, state, order_by, workspace_ids)
+    def fetch_boards(
+        self,
+        limit: Optional[int] = None,
+        page: Optional[int] = None,
+        ids: Optional[List[int]] = None,
+        board_kind: Optional[BoardKind] = None,
+        state: Optional[BoardState] = None,
+        order_by: Optional[BoardsOrderBy] = None,
+        workspace_ids: Optional[List[int]] = None,
+    ):
+        query = get_boards_query(
+            limit, page, ids, board_kind, state, order_by, workspace_ids
+        )
         return self.client.execute(query)
 
     def fetch_boards_by_id(self, board_ids: Union[int, str]):
         query = get_boards_by_id_query(board_ids)
         return self.client.execute(query)
 
-    def fetch_items_by_board_id(self, board_ids: Union[int, str], query_params: Optional[Mapping[str, Any]] = None,
-                                limit: Optional[int] = DEFAULT_PAGE_LIMIT_ITEMS, cursor: Optional[str] = None):
-        query = get_board_items_query(board_ids, query_params=query_params, limit=limit, cursor=cursor)
+    def fetch_items_by_board_id(
+        self,
+        board_ids: Union[int, str],
+        query_params: Optional[Mapping[str, Any]] = None,
+        limit: Optional[int] = DEFAULT_PAGE_LIMIT_ITEMS,
+        cursor: Optional[str] = None,
+    ):
+        query = get_board_items_query(
+            board_ids, query_params=query_params, limit=limit, cursor=cursor
+        )
         return self.client.execute(query)
 
     def fetch_next_items_by_cursor(self, cursor: str, limit: Optional[int] = None):
         query = get_next_items_query(limit=limit, cursor=cursor)
         return self.client.execute(query)
 
-    def fetch_all_items_by_board_id(self, board_ids: Union[int, str], query_params: Optional[Mapping[str, Any]] = None,
-                                    limit: Optional[int] = DEFAULT_PAGE_LIMIT_ITEMS) -> List[dict]:
+    def fetch_all_items_by_board_id(
+        self,
+        board_ids: Union[int, str],
+        query_params: Optional[Mapping[str, Any]] = None,
+        limit: Optional[int] = DEFAULT_PAGE_LIMIT_ITEMS,
+    ) -> List[dict]:
         items: List[dict] = []
         cursor: Optional[str] = None
 
@@ -38,8 +64,9 @@ class BoardResource(BaseResource):
                 response = self.fetch_next_items_by_cursor(cursor=cursor, limit=limit)
                 items_page = response["data"]["next_items_page"]
             else:
-                response = self.fetch_items_by_board_id(board_ids, query_params=query_params,
-                                                        limit=limit, cursor=cursor)
+                response = self.fetch_items_by_board_id(
+                    board_ids, query_params=query_params, limit=limit, cursor=cursor
+                )
                 items_page = response["data"]["boards"][0]["items_page"]
 
             items.extend(items_page.get("items", []))
@@ -54,12 +81,27 @@ class BoardResource(BaseResource):
         query = get_columns_by_board_query(board_ids)
         return self.client.execute(query)
 
-    def create_board(self, board_name: str, board_kind: BoardKind, workspace_id: Optional[int] = None):
+    def create_board(
+        self, board_name: str, board_kind: BoardKind, workspace_id: Optional[int] = None
+    ):
         query = create_board_by_workspace_query(board_name, board_kind, workspace_id)
         return self.client.execute(query)
 
-    def duplicate_board(self, board_id: int, duplicate_type: DuplicateType, board_name: Optional[str] = None,
-                        folder_id: Optional[int] = None, keep_subscribers: Optional[bool] = None,
-                        workspace_id: Optional[int] = None):
-        query = duplicate_board_query(board_id, duplicate_type, board_name, folder_id, keep_subscribers, workspace_id)
+    def duplicate_board(
+        self,
+        board_id: int,
+        duplicate_type: DuplicateType,
+        board_name: Optional[str] = None,
+        folder_id: Optional[int] = None,
+        keep_subscribers: Optional[bool] = None,
+        workspace_id: Optional[int] = None,
+    ):
+        query = duplicate_board_query(
+            board_id,
+            duplicate_type,
+            board_name,
+            folder_id,
+            keep_subscribers,
+            workspace_id,
+        )
         return self.client.execute(query)
