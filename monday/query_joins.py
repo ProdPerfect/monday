@@ -68,10 +68,6 @@ def mutate_subitem_query(
             column_values {
                 id,
                 text
-            },
-            board {
-                id,
-                name
             }
         }
     }""" % (
@@ -109,17 +105,13 @@ def mutate_multiple_items_query(items_data):
                     text
                 }}
             }}
-        """ % tuple(
-            values
-        )
+        """ % tuple(values)
 
         mutation_parts.append(mutation_part)
 
     query = """mutation {
         %s
-    }""" % " ".join(
-        mutation_parts
-    )
+    }""" % " ".join(mutation_parts)
     return query
 
 
@@ -138,8 +130,7 @@ def get_item_query(board_id, column_id, value, limit=None, cursor=None):
         raw_params, excluded_params=["column_id", "value"]
     )
 
-    query = (
-        """query
+    query = """query
         {
             items_page_by_column_values (%s) {
                 cursor
@@ -161,16 +152,13 @@ def get_item_query(board_id, column_id, value, limit=None, cursor=None):
                     }
                 }
             }
-        }"""
-        % items_page_params
-    )
+        }""" % items_page_params
 
     return query
 
 
 def get_item_by_id_query(ids):
-    query = (
-        """query
+    query = """query
         {
             items (ids: %s) {
                 id,
@@ -185,9 +173,7 @@ def get_item_by_id_query(ids):
                     value
                 }
             }
-        }"""
-        % ids
-    )
+        }""" % ids
 
     return query
 
@@ -235,32 +221,26 @@ def move_item_to_group_query(item_id, group_id):
 
 
 def archive_item_query(item_id):
-    query = (
-        """
+    query = """
     mutation
     {
         archive_item (item_id: %s)
         {
             id
         }
-    }"""
-        % item_id
-    )
+    }""" % item_id
     return query
 
 
 def delete_item_query(item_id):
-    query = (
-        """
+    query = """
     mutation
     {
         delete_item (item_id: %s)
         {
             id
         }
-    }"""
-        % item_id
-    )
+    }""" % item_id
     return query
 
 
@@ -308,8 +288,7 @@ def create_column(
 
 
 def get_columns_by_board_query(board_ids):
-    return (
-        """query
+    return """query
         {
             boards(ids: %s) {
                 id
@@ -325,9 +304,7 @@ def get_columns_by_board_query(board_ids):
                     settings_str
                  }
             }
-        }"""
-        % board_ids
-    )
+        }""" % board_ids
 
 
 def update_multiple_column_values_query(
@@ -393,14 +370,11 @@ def create_update_query(item_id, update_value):
 
 
 def delete_update_query(item_id):
-    query = (
-        """mutation {
+    query = """mutation {
         delete_update (id: %s) {
             id
         }
-    }"""
-        % item_id
-    )
+    }""" % item_id
 
     return query
 
@@ -469,17 +443,14 @@ def get_tags_query(tags):
     if tags is None:
         tags = []
 
-    query = (
-        """query
+    query = """query
         {
             tags (ids: %s) {
                 name,
                 color,
                 id
             }
-        }"""
-        % tags
-    )
+        }""" % tags
 
     return query
 
@@ -572,8 +543,7 @@ def get_boards_query(
             query_params.append("%s: %s" % (k, value))
     joined_params = f"({', '.join(query_params)})" if query_params else ""
 
-    query = (
-        """query
+    query = """query
     {
         boards %s {
             id
@@ -593,16 +563,13 @@ def get_boards_query(
                 type
             }
         }
-    }"""
-        % joined_params
-    )
+    }""" % joined_params
 
     return query
 
 
 def get_boards_by_id_query(board_ids):
-    return (
-        """query
+    return """query
     {
         boards (ids: %s) {
             id
@@ -623,9 +590,7 @@ def get_boards_by_id_query(board_ids):
                 settings_str
             }
         }
-    }"""
-        % board_ids
-    )
+    }""" % board_ids
 
 
 def duplicate_board_query(
@@ -688,8 +653,7 @@ def get_users_query(**kwargs):
         if kwargs
         else ""
     )
-    query = (
-        """query
+    query = """query
     {
         users %s {
             id
@@ -701,16 +665,13 @@ def get_users_query(**kwargs):
               name
             }
         }
-    }"""
-        % joined_params
-    )
+    }""" % joined_params
     return query
 
 
 # GROUP RESOURCE QUERIES
 def get_groups_by_board_query(board_ids):
-    query = (
-        """query
+    query = """query
     {
         boards(ids: %s) {
             groups {
@@ -721,9 +682,7 @@ def get_groups_by_board_query(board_ids):
                 color
             }
         }
-    }"""
-        % board_ids
-    )
+    }""" % board_ids
     return query
 
 
