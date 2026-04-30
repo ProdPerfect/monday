@@ -101,6 +101,10 @@ Tags Resource (monday.tags)
    account. Optionally takes a list containing tag ids (if you know
    them). Returns IDs, names, and colors.
 
+-  ``create_or_get_tag(tag_name)`` - Creates new tags or retrieves their data
+   if they already exist. After creating a tag, it only appears in
+   the UI after being used at least once.
+
 Boards Resource (monday.boards)
 -------------------------------
 

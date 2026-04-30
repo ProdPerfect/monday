@@ -455,6 +455,18 @@ def get_tags_query(tags):
     return query
 
 
+def create_or_get_tag_query(tag_name):
+    query = """mutation {
+        create_or_get_tag(
+            tag_name: "%s"
+        ) {
+            id
+        }
+    }""" % tag_name
+
+    return query
+
+
 # BOARD RESOURCE QUERIES
 def get_board_items_query(
     board_id: Union[str, int],
